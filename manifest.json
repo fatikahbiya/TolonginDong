@@ -1,0 +1,54 @@
+{
+  "id": "./",
+  "name": "Warung Hijau",
+  "short_name": "Warung Hijau",
+  "description": "Menampilkan katalog UMKM lokal ramah lingkungan (eco-friendly) lengkap dengan informasi singkat, kategori, dan detail usaha. Aplikasi membantu pengguna menemukan UMKM yang mendukung praktik berkelanjutan sesuai SDG 8 dan SDG 12.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2E7D32",
+  "orientation": "portrait",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "icons/icon 192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon 512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot1.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/screenshot2.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buka Beranda",
+      "short_name": "Home",
+      "url": "/index.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    "productivity",
+    "utilities"
+  ]
+}
