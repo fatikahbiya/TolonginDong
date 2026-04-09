@@ -1,1475 +1,1429 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#2563EB">
-<meta name="description" content="TolonginDong - Platform jasa suruh cepat dan praktis">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="TolonginDong">
-<title>TolonginDong</title>
-<link rel="manifest" href="#" id="manifest-link">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#1a6fc4"/>
+<meta name="description" content="Tolongin Dong - Platform on-demand errands di Banda Aceh. Jasa titip, antar, antre, dan bantuan personal."/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="Tolongin Dong"/>
+<title>Tolongin Dong – Jasa Titip & Bantuan Personal Banda Aceh</title>
+<link rel="manifest" href="#" id="manifest-link"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a6fc4'/><text y='.9em' font-size='75' x='12'>🤝</text></svg>"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-  :root {
-    --blue: #2563EB;
-    --blue-light: #EFF6FF;
-    --blue-dark: #1D4ED8;
-    --orange: #F97316;
-    --orange-light: #FFF7ED;
-    --orange-dark: #EA580C;
-    --gray-50: #F9FAFB;
-    --gray-100: #F3F4F6;
-    --gray-200: #E5E7EB;
-    --gray-400: #9CA3AF;
-    --gray-600: #4B5563;
-    --gray-800: #1F2937;
-    --success: #10B981;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --shadow: 0 4px 20px rgba(37,99,235,0.08);
-    --shadow-card: 0 2px 12px rgba(0,0,0,0.06);
-  }
-  * { box-sizing: border-box; }
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-800);
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    padding-bottom: 80px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-  /* Header */
-  .app-header {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
-    padding: 20px 20px 28px;
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-  .app-header::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 0; right: 0;
-    height: 40px;
-    background: var(--gray-50);
-    border-radius: 50% 50% 0 0 / 30px 30px 0 0;
-  }
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  .logo-text { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-  .logo-text span { color: var(--orange); }
-  .notif-btn {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    border-radius: 10px;
-    width: 38px; height: 38px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 18px; cursor: pointer; position: relative;
-  }
-  .notif-dot {
-    position: absolute;
-    top: 6px; right: 6px;
-    width: 8px; height: 8px;
-    background: var(--orange);
-    border-radius: 50%;
-    border: 2px solid var(--blue);
-  }
-  .greeting { font-size: 14px; opacity: 0.85; margin-bottom: 4px; }
-  .greeting-name { font-size: 20px; font-weight: 700; }
-  /* Balance card */
-  .balance-card {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-top: 14px;
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .balance-label { font-size: 12px; opacity: 0.8; margin-bottom: 2px; }
-  .balance-amount { font-size: 22px; font-weight: 700; }
-  .topup-btn {
-    background: var(--orange);
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 8px 14px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  /* Pages */
-  .page { display: none; padding: 0 16px 16px; }
-  .page.active { display: block; }
-  /* Section title */
-  .section-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--gray-800);
-    margin: 20px 0 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .section-title a { font-size: 13px; font-weight: 500; color: var(--blue); text-decoration: none; }
-  /* Promo banner */
-  .promo-banner {
-    background: linear-gradient(135deg, var(--orange) 0%, #FB923C 100%);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    color: white;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 4px;
-  }
-  .promo-banner::after {
-    content: '';
-    position: absolute;
-    right: -20px; top: -20px;
-    width: 100px; height: 100px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-  }
-  .promo-badge {
-    background: white;
-    color: var(--orange);
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 6px;
-  }
-  .promo-title { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
-  .promo-sub { font-size: 12px; opacity: 0.85; }
-  /* Category cards */
-  .category-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .cat-card {
-    background: white;
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow-card);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-  }
-  .cat-card:hover, .cat-card:active { transform: translateY(-2px); box-shadow: var(--shadow); }
-  .cat-card.selected { border-color: var(--blue); }
-  .cat-icon {
-    width: 46px; height: 46px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-  .cat-level {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 6px;
-  }
-  .cat-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: var(--gray-800); }
-  .cat-desc { font-size: 11px; color: var(--gray-400); line-height: 1.5; }
-  .cat-price { font-size: 13px; font-weight: 700; color: var(--blue); margin-top: 8px; }
-  /* Level colors */
-  .level-easy { background: #DCFCE7; color: #166534; }
-  .level-easy .cat-icon { background: #F0FDF4; }
-  .level-medium { background: #FEF3C7; color: #92400E; }
-  .level-medium .cat-icon { background: #FFFBEB; }
-  .level-hard { background: #FEE2E2; color: #991B1B; }
-  .level-hard .cat-icon { background: #FFF5F5; }
-  .level-expert { background: #EDE9FE; color: #5B21B6; }
-  .level-expert .cat-icon { background: #F5F3FF; }
-  /* Quick actions */
-  .quick-actions {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  .quick-btn {
-    background: white;
-    border-radius: var(--radius-sm);
-    padding: 12px 6px;
-    text-align: center;
-    box-shadow: var(--shadow-card);
-    cursor: pointer;
-    border: none;
-    transition: transform 0.2s;
-  }
-  .quick-btn:active { transform: scale(0.96); }
-  .quick-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: var(--blue-light);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    margin: 0 auto 6px;
-  }
-  .quick-label { font-size: 10px; font-weight: 600; color: var(--gray-600); }
-  /* Gas Suruh Button */
-  .gas-suruh-btn {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    padding: 18px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    width: 100%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 6px 20px rgba(249,115,22,0.35);
-    transition: transform 0.2s, box-shadow 0.2s;
-    letter-spacing: 0.3px;
-  }
-  .gas-suruh-btn:active { transform: scale(0.98); box-shadow: 0 3px 10px rgba(249,115,22,0.3); }
-  /* Bottom nav */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 480px;
-    background: white;
-    border-top: 1px solid var(--gray-200);
-    display: flex;
-    z-index: 100;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
-  }
-  .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: var(--gray-400);
-    font-family: 'Poppins', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    gap: 3px;
-    transition: color 0.2s;
-  }
-  .nav-item.active { color: var(--blue); }
-  .nav-item i { font-size: 22px; }
-  .nav-fab {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 0 6px;
-  }
-  .fab-btn {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-    border: 4px solid white;
-    border-radius: 50%;
-    width: 58px; height: 58px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(249,115,22,0.4);
-    margin-top: -24px;
-    transition: transform 0.2s;
-  }
-  .fab-btn:active { transform: scale(0.94); }
-  .fab-label { font-size: 10px; font-weight: 600; color: var(--orange); margin-top: 2px; }
-  /* Modals */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 200;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-sheet {
-    background: white;
-    border-radius: 24px 24px 0 0;
-    padding: 0 20px 32px;
-    width: 100%;
-    max-width: 480px;
-    max-height: 90vh;
-    overflow-y: auto;
-    animation: slideUp 0.3s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
-  .modal-handle {
-    width: 40px; height: 4px;
-    background: var(--gray-200);
-    border-radius: 2px;
-    margin: 14px auto 20px;
-  }
-  .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .modal-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 20px; }
-  /* Form elements */
-  .form-label-custom { font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; }
-  .form-input {
-    width: 100%;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: var(--gray-800);
-    background: var(--gray-50);
-    outline: none;
-    transition: border-color 0.2s;
-    margin-bottom: 14px;
-  }
-  .form-input:focus { border-color: var(--blue); background: white; }
-  .form-select {
-    width: 100%;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: var(--gray-800);
-    background: var(--gray-50);
-    outline: none;
-    margin-bottom: 14px;
-    appearance: none;
-    cursor: pointer;
-  }
-  .form-textarea {
-    width: 100%;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: var(--gray-800);
-    background: var(--gray-50);
-    outline: none;
-    resize: none;
-    min-height: 100px;
-    margin-bottom: 14px;
-  }
-  .form-textarea:focus, .form-select:focus { border-color: var(--blue); background: white; }
-  /* Price estimator */
-  .price-estimate {
-    background: var(--blue-light);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .price-label { font-size: 13px; color: var(--blue-dark); font-weight: 500; }
-  .price-value { font-size: 20px; font-weight: 800; color: var(--blue); }
-  /* Request cards */
-  .request-card {
-    background: white;
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow-card);
-    margin-bottom: 12px;
-    border-left: 4px solid transparent;
-  }
-  .request-card.status-pending { border-left-color: var(--warning); }
-  .request-card.status-accepted { border-left-color: var(--blue); }
-  .request-card.status-done { border-left-color: var(--success); }
-  .request-card.status-cancelled { border-left-color: var(--danger); }
-  .req-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-  .req-title { font-size: 14px; font-weight: 700; }
-  .status-badge {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
-  .badge-pending { background: #FEF3C7; color: #92400E; }
-  .badge-accepted { background: var(--blue-light); color: var(--blue-dark); }
-  .badge-done { background: #DCFCE7; color: #166534; }
-  .badge-cancelled { background: #FEE2E2; color: #991B1B; }
-  .req-meta { font-size: 12px; color: var(--gray-400); margin-bottom: 6px; }
-  .req-price { font-size: 15px; font-weight: 700; color: var(--blue); }
-  /* Profile */
-  .profile-header {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
-    padding: 32px 20px 50px;
-    text-align: center;
-    color: white;
-    margin: 0 -16px;
-    margin-bottom: -24px;
-  }
-  .avatar {
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    background: var(--orange);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 32px; font-weight: 800; color: white;
-    margin: 0 auto 12px;
-    border: 4px solid rgba(255,255,255,0.3);
-  }
-  .profile-name { font-size: 20px; font-weight: 700; }
-  .profile-email { font-size: 13px; opacity: 0.8; }
-  .profile-stats {
-    background: white;
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow-card);
-    display: flex;
-    margin-bottom: 16px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .stat-item { flex: 1; }
-  .stat-item + .stat-item { border-left: 1px solid var(--gray-200); }
-  .stat-num { font-size: 22px; font-weight: 800; color: var(--blue); }
-  .stat-lbl { font-size: 11px; color: var(--gray-400); font-weight: 500; }
-  .menu-list { background: white; border-radius: var(--radius); box-shadow: var(--shadow-card); overflow: hidden; }
-  .menu-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 16px;
-    cursor: pointer;
-    transition: background 0.15s;
-    text-decoration: none;
-    color: var(--gray-800);
-    border-bottom: 1px solid var(--gray-100);
-  }
-  .menu-item:last-child { border-bottom: none; }
-  .menu-item:hover { background: var(--gray-50); }
-  .menu-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: var(--blue-light);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    color: var(--blue);
-  }
-  .menu-text { flex: 1; font-size: 14px; font-weight: 500; }
-  /* Notifications */
-  .notif-item {
-    background: white;
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    box-shadow: var(--shadow-card);
-    margin-bottom: 10px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .notif-icon {
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-  .notif-content { flex: 1; }
-  .notif-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-  .notif-desc { font-size: 12px; color: var(--gray-400); line-height: 1.5; }
-  .notif-time { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
-  .notif-unread { background: var(--blue-light); border-left: 3px solid var(--blue); }
-  /* Toast */
-  .toast {
-    position: fixed;
-    top: 20px;
-    left: 50%; transform: translateX(-50%);
-    background: var(--gray-800);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    z-index: 500;
-    opacity: 0;
-    transition: opacity 0.3s;
-    white-space: nowrap;
-    max-width: 90%;
-  }
-  .toast.show { opacity: 1; }
-  /* Search bar */
-  .search-bar {
-    position: relative;
-    margin-bottom: 16px;
-  }
-  .search-bar i {
-    position: absolute;
-    left: 14px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray-400);
-    font-size: 18px;
-  }
-  .search-input {
-    width: 100%;
-    border: 1.5px solid var(--gray-200);
-    border-radius: 50px;
-    padding: 12px 14px 12px 42px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    background: white;
-    outline: none;
-  }
-  .search-input:focus { border-color: var(--blue); }
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--gray-400);
-  }
-  .empty-state .empty-icon { font-size: 60px; margin-bottom: 16px; }
-  .empty-state p { font-size: 14px; }
-  /* Pricing table */
-  .pricing-card {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-card);
-    margin-bottom: 12px;
-    overflow: hidden;
-  }
-  .pricing-header {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .pricing-body { padding: 0 16px 16px; }
-  .pricing-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-top: 1px solid var(--gray-100);
-    font-size: 13px;
-  }
-  .pricing-row:first-child { border-top: none; }
-  .pricing-service { color: var(--gray-600); }
-  .pricing-cost { font-weight: 700; color: var(--blue); }
-  /* Tabs */
-  .tab-bar {
-    display: flex;
-    background: var(--gray-100);
-    border-radius: 10px;
-    padding: 4px;
-    margin-bottom: 16px;
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 9px 6px;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    background: transparent;
-    color: var(--gray-400);
-    transition: all 0.2s;
-  }
-  .tab-btn.active { background: white; color: var(--blue); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-  /* Category select */
-  .cat-select-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-  .cat-select-item {
-    border: 2px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    padding: 10px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s;
-  }
-  .cat-select-item.active { border-color: var(--blue); background: var(--blue-light); }
-  .cat-select-item .icon { font-size: 24px; margin-bottom: 4px; }
-  .cat-select-item .name { font-size: 12px; font-weight: 600; }
-  .cat-select-item .price { font-size: 11px; color: var(--gray-400); }
-  /* Install banner */
-  .install-banner {
-    background: linear-gradient(135deg, #0F172A, #1E293B);
-    border-radius: var(--radius);
-    padding: 16px;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-    cursor: pointer;
-  }
-  .install-icon { font-size: 36px; flex-shrink: 0; }
-  .install-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-  .install-text p { font-size: 12px; opacity: 0.7; margin: 0; }
-  .install-btn {
-    margin-left: auto;
-    background: var(--orange);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 8px 14px;
-    cursor: pointer;
-    white-space: nowrap;
-    font-family: 'Poppins', sans-serif;
-  }
-  /* Pulse animation for FAB */
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(249,115,22,0.5); }
-    70% { box-shadow: 0 0 0 12px rgba(249,115,22,0); }
-    100% { box-shadow: 0 0 0 0 rgba(249,115,22,0); }
-  }
-  .fab-btn { animation: pulse 2s infinite; }
-  .page-header-simple {
-    padding: 20px 0 8px;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--gray-800);
-  }
-  .page-header-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; }
-  .loc-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 10px;
-  }
+:root {
+  --primary: #1a6fc4;
+  --primary-dark: #1456a0;
+  --primary-light: #e8f0fd;
+  --accent: #f97316;
+  --accent-dark: #ea6c0a;
+  --accent-light: #fff4ed;
+  --bg: #ffffff;
+  --bg2: #f8faff;
+  --bg3: #f1f5f9;
+  --text: #111827;
+  --text2: #374151;
+  --text3: #6b7280;
+  --border: #e5e7eb;
+  --card-bg: #ffffff;
+  --nav-bg: rgba(255,255,255,0.96);
+  --footer-bg: #0f172a;
+  --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  --shadow-hover: 0 8px 32px rgba(26,111,196,0.16);
+  --radius: 14px;
+  --transition: 0.2s ease;
+}
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg2: #1e293b;
+  --bg3: #0f172a;
+  --text: #f1f5f9;
+  --text2: #cbd5e1;
+  --text3: #94a3b8;
+  --border: #334155;
+  --card-bg: #1e293b;
+  --nav-bg: rgba(15,23,42,0.96);
+  --shadow: 0 2px 16px rgba(0,0,0,0.3);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); transition: background var(--transition), color var(--transition); scroll-behavior: smooth; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { color: var(--primary-dark); }
+
+/* NAV */
+#mainNav { background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1050; transition: background var(--transition); }
+.nav-logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+.nav-logo span { color: var(--accent); }
+.nav-link { color: var(--text2) !important; font-weight: 500; padding: 0.4rem 0.8rem !important; border-radius: 8px; transition: all var(--transition); }
+.nav-link:hover, .nav-link.active { background: var(--primary-light); color: var(--primary) !important; }
+.btn-nav-cta { background: var(--primary); color: #fff !important; border-radius: 8px; padding: 0.4rem 1.2rem !important; font-weight: 600; transition: all var(--transition); }
+.btn-nav-cta:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.dark-toggle { cursor: pointer; background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; font-size: 0.85rem; color: var(--text3); transition: all var(--transition); }
+.dark-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
+/* HERO */
+.hero-section { background: linear-gradient(135deg, #e8f0fd 0%, #fff4ed 50%, #fef9f0 100%); padding: 80px 0 60px; }
+[data-theme="dark"] .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1a1f2e 100%); }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); color: var(--primary); border: 1px solid rgba(26,111,196,0.2); border-radius: 20px; padding: 6px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 1.2rem; }
+[data-theme="dark"] .hero-badge { background: rgba(26,111,196,0.15); }
+.hero-title { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.2; color: var(--text); }
+.hero-title .highlight { color: var(--primary); }
+.hero-subtitle { font-size: 1.1rem; color: var(--text3); line-height: 1.7; margin: 1rem 0 2rem; max-width: 500px; }
+.btn-hero { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 14px 28px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+.btn-hero:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(249,115,22,0.3); color: #fff; }
+.btn-outline-hero { background: transparent; color: var(--primary); border: 2px solid var(--primary); border-radius: 10px; padding: 12px 24px; font-weight: 600; cursor: pointer; transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+.btn-outline-hero:hover { background: var(--primary); color: #fff; }
+.hero-stats { display: flex; gap: 32px; margin-top: 2.5rem; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat .num { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+.hero-stat .lbl { font-size: 0.78rem; color: var(--text3); font-weight: 500; }
+.hero-visual { position: relative; }
+.hero-card-float { background: var(--card-bg); border-radius: 14px; padding: 16px; box-shadow: var(--shadow-hover); border: 1px solid var(--border); }
+.hero-card-float .task-icon { font-size: 1.8rem; }
+.ping-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; display: inline-block; animation: ping 1.5s ease-in-out infinite; }
+@keyframes ping { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.3); } }
+
+/* SECTION COMMON */
+.section-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; color: var(--text); }
+.section-sub { color: var(--text3); font-size: 1rem; margin-top: 0.5rem; }
+.section-badge { display: inline-block; background: var(--primary-light); color: var(--primary); border-radius: 6px; padding: 3px 12px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.6rem; }
+[data-theme="dark"] .section-badge { background: rgba(26,111,196,0.2); }
+
+/* TIER CARDS */
+.tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media(max-width:992px) { .tier-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:576px) { .tier-grid { grid-template-columns: 1fr; } }
+.tier-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px 20px; cursor: pointer; transition: all 0.25s ease; position: relative; overflow: hidden; }
+.tier-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--tier-color, #e5e7eb); }
+.tier-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); border-color: var(--tier-color, var(--primary)); }
+.tier-card.featured { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.12); }
+.tier-badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 20px; padding: 4px 12px; font-size: 0.78rem; font-weight: 700; margin-bottom: 1rem; }
+.tier-price { font-size: 1.8rem; font-weight: 800; color: var(--text); }
+.tier-price span { font-size: 0.85rem; font-weight: 500; color: var(--text3); }
+.tier-desc { font-size: 0.88rem; color: var(--text3); margin: 0.5rem 0 1rem; line-height: 1.6; }
+.tier-items li { font-size: 0.85rem; color: var(--text2); padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
+.tier-items li i { color: #22c55e; font-size: 0.85rem; margin-top: 2px; flex-shrink: 0; }
+.btn-tier { display: block; width: 100%; text-align: center; margin-top: 1.2rem; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all var(--transition); border: none; }
+
+/* HOW IT WORKS */
+.step-card { text-align: center; padding: 32px 20px; background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); transition: all var(--transition); }
+.step-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+.step-num { width: 52px; height: 52px; border-radius: 50%; background: var(--primary-light); color: var(--primary); font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+
+/* CALCULATOR */
+#calcSection { background: var(--bg2); }
+.calc-card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.calc-header { background: var(--primary); color: #fff; padding: 20px 24px; }
+.calc-body { padding: 24px; }
+#map { height: 300px; border-radius: 10px; border: 1px solid var(--border); margin-top: 12px; }
+.price-display { background: var(--primary-light); border-radius: 10px; padding: 20px; text-align: center; }
+[data-theme="dark"] .price-display { background: rgba(26,111,196,0.15); }
+.price-total { font-size: 2.2rem; font-weight: 800; color: var(--primary); transition: all 0.3s ease; }
+.price-breakdown { font-size: 0.85rem; color: var(--text3); margin-top: 6px; }
+.price-animated { animation: priceUpdate 0.4s ease; }
+@keyframes priceUpdate { 0% { transform: scale(1.1); color: var(--accent); } 100% { transform: scale(1); } }
+
+/* ORDER STEPPER */
+.stepper { display: flex; align-items: center; margin-bottom: 2rem; }
+.step-item { flex: 1; text-align: center; position: relative; }
+.step-circle { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); background: var(--card-bg); color: var(--text3); font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; transition: all 0.3s; }
+.step-item.active .step-circle { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 0 0 4px rgba(26,111,196,0.15); }
+.step-item.done .step-circle { background: #22c55e; border-color: #22c55e; color: #fff; }
+.step-label { font-size: 0.75rem; color: var(--text3); font-weight: 500; }
+.step-item.active .step-label { color: var(--primary); font-weight: 600; }
+.step-line { flex: 1; height: 2px; background: var(--border); margin-top: -18px; }
+.step-line.done { background: #22c55e; }
+.form-step { display: none; }
+.form-step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.form-control, .form-select { background: var(--bg); color: var(--text); border-color: var(--border); border-radius: 8px; }
+.form-control:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.12); background: var(--bg); color: var(--text); }
+.form-label { font-weight: 600; font-size: 0.9rem; color: var(--text2); }
+.invalid-feedback { font-size: 0.8rem; }
+.btn-primary { background: var(--primary); border-color: var(--primary); border-radius: 8px; font-weight: 600; padding: 10px 20px; transition: all var(--transition); }
+.btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); transform: translateY(-1px); }
+.btn-accent { background: var(--accent); border: none; color: #fff; border-radius: 8px; font-weight: 600; padding: 12px 24px; transition: all var(--transition); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn-accent:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,0.3); }
+.order-summary { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+
+/* TESTIMONIALS */
+#testimoniSection { background: var(--bg2); }
+.testimoni-card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); padding: 24px; transition: all var(--transition); height: 100%; }
+.testimoni-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.stars i { color: #f59e0b; font-size: 0.9rem; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+
+/* FAQ */
+.accordion-item { background: var(--card-bg); border: 1px solid var(--border) !important; border-radius: 10px !important; margin-bottom: 10px; overflow: hidden; }
+.accordion-button { background: var(--card-bg) !important; color: var(--text) !important; font-weight: 600; box-shadow: none !important; }
+.accordion-button:not(.collapsed) { color: var(--primary) !important; }
+.accordion-body { background: var(--card-bg); color: var(--text2); font-size: 0.93rem; line-height: 1.7; }
+
+/* MITRA FORM */
+#mitraSection { background: var(--primary); color: #fff; }
+#mitraSection .form-control, #mitraSection .form-select { border-radius: 8px; }
+#mitraSection .form-label { color: rgba(255,255,255,0.85); font-size: 0.88rem; }
+#mitraSection .form-control, #mitraSection .form-select { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; }
+#mitraSection .form-control::placeholder { color: rgba(255,255,255,0.5); }
+#mitraSection .form-control:focus, #mitraSection .form-select:focus { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); box-shadow: none; color: #fff; }
+#mitraSection .form-select option { background: #1456a0; }
+.btn-white { background: #fff; color: var(--primary); border: none; border-radius: 8px; font-weight: 700; padding: 12px 28px; cursor: pointer; transition: all var(--transition); }
+.btn-white:hover { background: #f1f5f9; transform: translateY(-1px); }
+
+/* T&C MODAL */
+.modal-content { background: var(--card-bg); color: var(--text); border-radius: 14px; border: 1px solid var(--border); }
+.modal-header { border-bottom: 1px solid var(--border); }
+.modal-footer { border-top: 1px solid var(--border); }
+
+/* FOOTER */
+footer { background: var(--footer-bg); color: #94a3b8; padding: 60px 0 0; }
+.footer-logo { font-size: 1.4rem; font-weight: 800; color: #fff; }
+.footer-logo span { color: var(--accent); }
+.footer-heading { color: #fff; font-weight: 700; font-size: 0.95rem; margin-bottom: 1rem; }
+.footer-links { list-style: none; padding: 0; }
+.footer-links li { margin-bottom: 0.5rem; }
+.footer-links a { color: #94a3b8; font-size: 0.88rem; transition: color var(--transition); }
+.footer-links a:hover { color: #fff; }
+.footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); color: #94a3b8; margin-right: 8px; transition: all var(--transition); }
+.footer-social a:hover { background: var(--primary); color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding: 20px 0; margin-top: 40px; font-size: 0.83rem; }
+
+/* INSTALL BANNER */
+#installBanner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-hover); padding: 14px 20px; display: none; align-items: center; gap: 14px; z-index: 2000; max-width: 380px; width: calc(100% - 32px); }
+#installBanner.show { display: flex; animation: slideUp 0.4s ease; }
+@keyframes slideUp { from { opacity:0; transform: translateX(-50%) translateY(20px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+
+/* MISC */
+.bg-primary { background: var(--primary) !important; }
+.text-primary { color: var(--primary) !important; }
+.text-accent { color: var(--accent) !important; }
+.divider { height: 1px; background: var(--border); }
+.input-group-text { background: var(--bg3); border-color: var(--border); color: var(--text3); }
+.sticky-price-bar { position: sticky; top: 72px; z-index: 100; }
+section { scroll-margin-top: 72px; }
+@media(max-width:768px) {
+  .hero-section { padding: 50px 0 40px; }
+  .hero-stats { gap: 20px; }
+}
 </style>
 </head>
 <body>
 
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- Header (shown on home) -->
-<div id="app-header" class="app-header">
-  <div class="header-top">
-    <div class="logo-text">Tolongin<span>Dong</span> 🤝</div>
-    <button class="notif-btn" onclick="showPage('notif')">
-      <i class="bi bi-bell-fill"></i>
-      <span class="notif-dot" id="notif-dot"></span>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg py-2" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand nav-logo d-flex align-items-center gap-2" href="#">
+      <i class="bi bi-hand-thumbs-up-fill" style="color:var(--accent)"></i>
+      Tolongin<span>Dong</span>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+      <span class="navbar-toggler-icon"></span>
     </button>
-  </div>
-  <div class="greeting">Halo, selamat datang 👋</div>
-  <div class="greeting-name" id="header-name">Kak User!</div>
-  <div class="loc-chip"><i class="bi bi-geo-alt-fill"></i> Jakarta Selatan</div>
-  <div class="balance-card">
-    <div>
-      <div class="balance-label">Saldo TolDong</div>
-      <div class="balance-amount" id="balance-display">Rp 0</div>
-    </div>
-    <button class="topup-btn" onclick="openTopup()">+ Top Up</button>
-  </div>
-</div>
-
-<!-- Pages -->
-<!-- HOME PAGE -->
-<div class="page active" id="page-home">
-  <!-- Install banner -->
-  <div class="install-banner" id="install-banner" style="display:none;" onclick="installApp()">
-    <div class="install-icon">📱</div>
-    <div class="install-text">
-      <h4>Install TolonginDong</h4>
-      <p>Akses lebih cepat dari home screen!</p>
-    </div>
-    <button class="install-btn">Install</button>
-  </div>
-
-  <!-- Promo -->
-  <div class="promo-banner" onclick="showToast('Promo berhasil disalin!')">
-    <div class="promo-badge">🔥 PROMO</div>
-    <div class="promo-title">Diskon 30% untuk order pertama!</div>
-    <div class="promo-sub">Kode: <strong>TOLONGAKU</strong> • Berlaku sampai akhir bulan</div>
-  </div>
-
-  <!-- Quick Actions -->
-  <div class="section-title">Layanan Cepat</div>
-  <div class="quick-actions">
-    <button class="quick-btn" onclick="openRequest('titip')">
-      <div class="quick-icon">🛒</div>
-      <div class="quick-label">Titip Beli</div>
-    </button>
-    <button class="quick-btn" onclick="openRequest('antri')">
-      <div class="quick-icon">⏳</div>
-      <div class="quick-label">Antri-in</div>
-    </button>
-    <button class="quick-btn" onclick="openRequest('kirim')">
-      <div class="quick-icon">📦</div>
-      <div class="quick-label">Kirim Barang</div>
-    </button>
-    <button class="quick-btn" onclick="openRequest('custom')">
-      <div class="quick-icon">✨</div>
-      <div class="quick-label">Lainnya</div>
-    </button>
-  </div>
-
-  <!-- Categories -->
-  <div class="section-title">Pilih Kategori <a href="#" onclick="showPage('kategori'); return false;">Lihat semua</a></div>
-  <div class="category-grid">
-    <div class="cat-card" onclick="openRequest('easy')">
-      <div class="cat-level level-easy">⚡ Easy</div>
-      <div class="cat-icon">😊</div>
-      <div class="cat-name">Tugas Ringan</div>
-      <div class="cat-desc">Print, fotokopi, beli makanan sekitar</div>
-      <div class="cat-price">Mulai Rp 5.000</div>
-    </div>
-    <div class="cat-card" onclick="openRequest('medium')">
-      <div class="cat-level level-medium">⏱ Medium</div>
-      <div class="cat-icon">💪</div>
-      <div class="cat-name">Perlu Waktu</div>
-      <div class="cat-desc">Antri, belanja, jemput barang</div>
-      <div class="cat-price">Mulai Rp 20.000</div>
-    </div>
-    <div class="cat-card" onclick="openRequest('hard')">
-      <div class="cat-level level-hard">🔥 Hard</div>
-      <div class="cat-icon">🛠️</div>
-      <div class="cat-name">Tenaga Lebih</div>
-      <div class="cat-desc">Pindahan barang, bersih-bersih</div>
-      <div class="cat-price">Mulai Rp 50.000</div>
-    </div>
-    <div class="cat-card" onclick="openRequest('expert')">
-      <div class="cat-level level-expert">🧠 Expert</div>
-      <div class="cat-icon">⭐</div>
-      <div class="cat-name">Keahlian Khusus</div>
-      <div class="cat-desc">Edit video, desain, konsultasi</div>
-      <div class="cat-price">Mulai Rp 100.000</div>
+    <div class="collapse navbar-collapse" id="navContent">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="#layananSection">Layanan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#calcSection">Kalkulator</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pesanSection">Pesan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faqSection">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#mitraSection">Jadi Mitra</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+        <button class="dark-toggle" onclick="toggleDark()" id="darkBtn"><i class="bi bi-moon-fill"></i></button>
+        <a href="#pesanSection" class="btn-nav-cta nav-link">Pesan Sekarang</a>
+      </div>
     </div>
   </div>
-
-  <!-- Active Orders -->
-  <div class="section-title">Pesanan Aktif</div>
-  <div id="active-orders">
-    <div class="empty-state" id="no-active">
-      <div class="empty-icon">📋</div>
-      <p>Belum ada pesanan aktif.<br>Yuk buat permintaan pertamamu!</p>
-    </div>
-  </div>
-
-  <!-- Gas Suruh Button -->
-  <button class="gas-suruh-btn" onclick="openRequest()">
-    <span>🚀</span> Gas Suruh Sekarang!
-  </button>
-</div>
-
-<!-- KATEGORI PAGE -->
-<div class="page" id="page-kategori">
-  <div class="page-header-simple">Semua Kategori</div>
-  <div class="search-bar">
-    <i class="bi bi-search"></i>
-    <input type="text" class="search-input" placeholder="Cari layanan..." oninput="filterCategories(this.value)">
-  </div>
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="filterLevel('all', this)">Semua</button>
-    <button class="tab-btn" onclick="filterLevel('easy', this)">Easy</button>
-    <button class="tab-btn" onclick="filterLevel('medium', this)">Medium</button>
-    <button class="tab-btn" onclick="filterLevel('hard', this)">Hard</button>
-    <button class="tab-btn" onclick="filterLevel('expert', this)">Expert</button>
-  </div>
-  <div id="categories-list"></div>
-</div>
-
-<!-- RIWAYAT PAGE -->
-<div class="page" id="page-riwayat">
-  <div class="page-header-simple">Riwayat Pesanan</div>
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="filterHistory('all', this)">Semua</button>
-    <button class="tab-btn" onclick="filterHistory('pending', this)">Pending</button>
-    <button class="tab-btn" onclick="filterHistory('accepted', this)">Aktif</button>
-    <button class="tab-btn" onclick="filterHistory('done', this)">Selesai</button>
-  </div>
-  <div id="history-list"></div>
-</div>
-
-<!-- NOTIF PAGE -->
-<div class="page" id="page-notif">
-  <div class="page-header-simple">Notifikasi</div>
-  <div id="notif-list"></div>
-</div>
-
-<!-- PROFIL PAGE -->
-<div class="page" id="page-profil">
-  <div class="profile-header" style="margin:0 -16px; padding: 32px 20px 50px; margin-bottom: 16px;">
-    <div class="avatar" id="profile-avatar">U</div>
-    <div class="profile-name" id="profile-name-display">User</div>
-    <div class="profile-email">user@email.com</div>
-  </div>
-  <div class="profile-stats" style="margin-top:0;">
-    <div class="stat-item">
-      <div class="stat-num" id="stat-total">0</div>
-      <div class="stat-lbl">Total Order</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-done">0</div>
-      <div class="stat-lbl">Selesai</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-rating">5.0</div>
-      <div class="stat-lbl">Rating ⭐</div>
-    </div>
-  </div>
-  <div class="section-title">Pengaturan Akun</div>
-  <div class="menu-list">
-    <div class="menu-item" onclick="editProfile()">
-      <div class="menu-icon"><i class="bi bi-person-fill"></i></div>
-      <div class="menu-text">Edit Profil</div>
-      <i class="bi bi-chevron-right" style="color:var(--gray-400)"></i>
-    </div>
-    <div class="menu-item" onclick="showToast('Fitur segera hadir!')">
-      <div class="menu-icon"><i class="bi bi-wallet2"></i></div>
-      <div class="menu-text">Dompet Digital</div>
-      <i class="bi bi-chevron-right" style="color:var(--gray-400)"></i>
-    </div>
-    <div class="menu-item" onclick="showToast('Fitur segera hadir!')">
-      <div class="menu-icon"><i class="bi bi-geo-alt-fill"></i></div>
-      <div class="menu-text">Alamat Tersimpan</div>
-      <i class="bi bi-chevron-right" style="color:var(--gray-400)"></i>
-    </div>
-    <div class="menu-item" onclick="showPage('harga')">
-      <div class="menu-icon"><i class="bi bi-tag-fill"></i></div>
-      <div class="menu-text">Daftar Harga</div>
-      <i class="bi bi-chevron-right" style="color:var(--gray-400)"></i>
-    </div>
-    <div class="menu-item" onclick="showToast('Hubungi: cs@tolongindong.id')">
-      <div class="menu-icon" style="background:#DCFCE7; color:#166534;"><i class="bi bi-headset"></i></div>
-      <div class="menu-text">Customer Support</div>
-      <i class="bi bi-chevron-right" style="color:var(--gray-400)"></i>
-    </div>
-    <div class="menu-item" onclick="logOut()">
-      <div class="menu-icon" style="background:#FEE2E2; color:#991B1B;"><i class="bi bi-box-arrow-right"></i></div>
-      <div class="menu-text" style="color:#991B1B;">Keluar</div>
-    </div>
-  </div>
-  <div style="text-align:center; margin-top:24px; font-size:12px; color:var(--gray-400);">
-    TolonginDong v1.0.0 • Made with ❤️
-  </div>
-</div>
-
-<!-- HARGA PAGE -->
-<div class="page" id="page-harga">
-  <div class="page-header-simple">Daftar Harga</div>
-  <div class="page-header-sub">Estimasi harga tiap kategori layanan</div>
-  <div id="pricing-list"></div>
-</div>
-
-<!-- Bottom Nav -->
-<nav class="bottom-nav">
-  <button class="nav-item active" onclick="showPage('home')" id="nav-home">
-    <i class="bi bi-house-fill"></i>
-    <span>Beranda</span>
-  </button>
-  <button class="nav-item" onclick="showPage('kategori')" id="nav-kategori">
-    <i class="bi bi-grid-fill"></i>
-    <span>Kategori</span>
-  </button>
-  <div class="nav-fab">
-    <div class="fab-btn" onclick="openRequest()">+</div>
-    <div class="fab-label">Suruh</div>
-  </div>
-  <button class="nav-item" onclick="showPage('riwayat')" id="nav-riwayat">
-    <i class="bi bi-clock-history"></i>
-    <span>Riwayat</span>
-  </button>
-  <button class="nav-item" onclick="showPage('profil')" id="nav-profil">
-    <i class="bi bi-person-fill"></i>
-    <span>Profil</span>
-  </button>
 </nav>
 
-<!-- Modal: Buat Permintaan -->
-<div class="modal-overlay" id="modal-request">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">🚀 Buat Permintaan</div>
-    <div class="modal-sub">Isi detail tugasmu, biar kita bantu secepatnya!</div>
-
-    <div class="form-label-custom">Pilih Kategori</div>
-    <div class="cat-select-grid" id="cat-select-grid"></div>
-
-    <div class="form-label-custom">Judul Tugas</div>
-    <input type="text" class="form-input" id="req-title" placeholder="Contoh: Tolong beli nasi padang...">
-
-    <div class="form-label-custom">Detail Permintaan</div>
-    <textarea class="form-textarea" id="req-desc" placeholder="Ceritain detail tugasnya, lokasi, waktu, dll..."></textarea>
-
-    <div class="form-label-custom">Estimasi Harga</div>
-    <div class="price-estimate">
-      <div class="price-label">💡 Perkiraan biaya</div>
-      <div class="price-value" id="price-display">Rp 5.000</div>
+<!-- HERO -->
+<section class="hero-section" id="home">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="hero-badge"><span class="ping-dot"></span> Aktif di Banda Aceh</div>
+        <h1 class="hero-title">Mau <span class="highlight">Dititipin</span> Apa Hari Ini?</h1>
+        <p class="hero-subtitle">Platform on-demand errands terpercaya di Banda Aceh. Dari belanja harian, antre makanan, hingga bantu pindahan kos — mitra kami siap eksekusi!</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#pesanSection" class="btn-hero text-decoration-none"><i class="bi bi-lightning-fill"></i> Pesan Sekarang</a>
+          <a href="#calcSection" class="btn-outline-hero text-decoration-none"><i class="bi bi-calculator"></i> Hitung Tarif</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">2.400+</div><div class="lbl">Pesanan Selesai</div></div>
+          <div class="hero-stat"><div class="num">98%</div><div class="lbl">Kepuasan</div></div>
+          <div class="hero-stat"><div class="num">120+</div><div class="lbl">Mitra Aktif</div></div>
+          <div class="hero-stat"><div class="num">< 10 mnt</div><div class="lbl">Respons Awal</div></div>
+        </div>
+      </div>
+      <div class="col-lg-6 hero-visual d-none d-lg-block">
+        <div class="row g-3">
+          <div class="col-7">
+            <div class="hero-card-float mb-3">
+              <div class="d-flex align-items-center gap-3 mb-2">
+                <div class="task-icon">🛒</div>
+                <div>
+                  <div class="fw-700" style="font-size:0.95rem;font-weight:700;">Belanja Bulanan</div>
+                  <div style="font-size:0.78rem;color:var(--text3);">Pasar Al Mahirah Banda Aceh</div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span style="font-size:0.8rem;background:#dcfce7;color:#16a34a;border-radius:20px;padding:3px 10px;font-weight:600;">Selesai ✓</span>
+                <span style="font-weight:700;color:var(--primary);">Rp 45.000</span>
+              </div>
+            </div>
+            <div class="hero-card-float">
+              <div class="d-flex align-items-center gap-3 mb-2">
+                <div class="task-icon">🍜</div>
+                <div>
+                  <div class="fw-700" style="font-size:0.95rem;font-weight:700;">Antre Makanan</div>
+                  <div style="font-size:0.78rem;color:var(--text3);">Rumah Makan</div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span style="font-size:0.8rem;background:#fef9c3;color:#a16207;border-radius:20px;padding:3px 10px;font-weight:600;">Proses...</span>
+                <span style="font-weight:700;color:var(--primary);">Rp 25.000</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-5 d-flex flex-column gap-3">
+            <div class="hero-card-float text-center">
+              <div style="font-size:2rem;">📦</div>
+              <div style="font-size:0.82rem;font-weight:600;color:var(--text2);margin-top:4px;">Antar Barang</div>
+              <div style="font-size:0.75rem;color:var(--text3);">dalam kota</div>
+            </div>
+            <div class="hero-card-float text-center">
+              <div style="font-size:2rem;">🏠</div>
+              <div style="font-size:0.82rem;font-weight:600;color:var(--text2);margin-top:4px;">Bantu Kos</div>
+              <div style="font-size:0.75rem;color:var(--text3);">pindahan & bersih</div>
+            </div>
+            <div class="hero-card-float text-center">
+              <div style="font-size:2rem;">📋</div>
+              <div style="font-size:0.82rem;font-weight:600;color:var(--text2);margin-top:4px;">Fotokopi & Print</div>
+              <div style="font-size:0.75rem;color:var(--text3);">dokumen penting</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="form-label-custom">Kode Promo (Opsional)</div>
-    <input type="text" class="form-input" id="promo-input" placeholder="Masukkan kode promo..." style="text-transform:uppercase">
-
-    <button class="gas-suruh-btn" onclick="submitRequest()" style="margin-top:4px;">
-      <span>🔥</span> Gas Suruh!
-    </button>
-    <button onclick="closeModal('modal-request')" style="width:100%; padding:14px; border:none; background:none; font-family:Poppins,sans-serif; font-size:14px; color:var(--gray-400); cursor:pointer; margin-top:8px;">Batal</button>
   </div>
-</div>
+</section>
 
-<!-- Modal: Top Up -->
-<div class="modal-overlay" id="modal-topup">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">💰 Top Up Saldo</div>
-    <div class="modal-sub">Pilih nominal top up</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px;">
-      <button class="topup-nominal" data-val="20000">Rp 20K</button>
-      <button class="topup-nominal" data-val="50000">Rp 50K</button>
-      <button class="topup-nominal" data-val="100000">Rp 100K</button>
-      <button class="topup-nominal" data-val="200000">Rp 200K</button>
-      <button class="topup-nominal" data-val="500000">Rp 500K</button>
-      <button class="topup-nominal" data-val="1000000">Rp 1 Jt</button>
+<!-- HOW IT WORKS -->
+<section class="py-5" style="background:var(--bg);" id="howSection">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <div class="section-badge">Cara Kerja</div>
+      <h2 class="section-title">Mudah. Cepat. Terpercaya.</h2>
+      <p class="section-sub">4 langkah simpel untuk mendapatkan bantuan yang kamu butuhkan</p>
     </div>
-    <style>
-      .topup-nominal {
-        border: 2px solid var(--gray-200);
-        background: white;
-        border-radius: 10px;
-        padding: 12px 8px;
-        font-family: Poppins, sans-serif;
-        font-size: 13px;
-        font-weight: 700;
-        cursor: pointer;
-        color: var(--gray-800);
-        transition: all 0.2s;
-      }
-      .topup-nominal.selected { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
-    </style>
-    <div class="form-label-custom">Atau masukkan nominal lain</div>
-    <input type="number" class="form-input" id="custom-topup" placeholder="Rp ...">
-    <button class="gas-suruh-btn" onclick="processTopup()" style="background: linear-gradient(135deg, var(--blue), var(--blue-dark));">
-      <span>💳</span> Top Up Sekarang
-    </button>
-    <button onclick="closeModal('modal-topup')" style="width:100%; padding:14px; border:none; background:none; font-family:Poppins,sans-serif; font-size:14px; color:var(--gray-400); cursor:pointer; margin-top:8px;">Batal</button>
+    <div class="row g-4">
+      <div class="col-6 col-lg-3">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div style="font-size:2rem;margin-bottom:0.8rem;">🎯</div>
+          <h5 style="font-weight:700;font-size:1rem;">Pilih Layanan</h5>
+          <p style="font-size:0.85rem;color:var(--text3);margin:0;line-height:1.6;">Pilih kategori Easy, Medium, Hard, atau Expert sesuai kebutuhanmu</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div style="font-size:2rem;margin-bottom:0.8rem;">✏️</div>
+          <h5 style="font-weight:700;font-size:1rem;">Isi Detail Pesanan</h5>
+          <p style="font-size:0.85rem;color:var(--text3);margin:0;line-height:1.6;">Deskripsikan tugas, lokasi, dan waktu pelaksanaan secara spesifik</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div style="font-size:2rem;margin-bottom:0.8rem;">💬</div>
+          <h5 style="font-weight:700;font-size:1rem;">Konfirmasi via WA</h5>
+          <p style="font-size:0.85rem;color:var(--text3);margin:0;line-height:1.6;">Pesanan dikirim otomatis ke WhatsApp admin untuk konfirmasi cepat</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div style="font-size:2rem;margin-bottom:0.8rem;">🚀</div>
+          <h5 style="font-weight:700;font-size:1rem;">Mitra Beraksi</h5>
+          <p style="font-size:0.85rem;color:var(--text3);margin:0;line-height:1.6;">Mitra kami memverifikasi dan langsung mengeksekusi tugasmu</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN / TIER -->
+<section class="py-5" style="background:var(--bg2);" id="layananSection">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <div class="section-badge">Paket Layanan</div>
+      <h2 class="section-title">Semua Jenis Bantuan Ada di Sini</h2>
+      <p class="section-sub">Tarif transparan berdasarkan tingkat kesulitan tugas + biaya jarak Rp3.000/km</p>
+    </div>
+    <div class="tier-grid">
+      <!-- EASY -->
+      <div class="tier-card" style="--tier-color:#22c55e" onclick="selectTier('easy')">
+        <div class="tier-badge" style="background:#dcfce7;color:#16a34a;"><i class="bi bi-emoji-smile-fill"></i> Easy</div>
+        <div class="tier-price">Rp 15.000 <span>/ tugas</span></div>
+        <p class="tier-desc">Tugas ringan tidak perlu keahlian khusus, bisa diselesaikan <30 menit.</p>
+        <ul class="tier-items list-unstyled">
+          <li><i class="bi bi-check-circle-fill"></i>Beli makanan/minuman</li>
+          <li><i class="bi bi-check-circle-fill"></i>Antre di warung</li>
+          <li><i class="bi bi-check-circle-fill"></i>Fotokopi & print dokumen</li>
+          <li><i class="bi bi-check-circle-fill"></i>Beli obat di apotek</li>
+          <li><i class="bi bi-check-circle-fill"></i>Beli pulsa/token listrik</li>
+          <li><i class="bi bi-check-circle-fill"></i>Ambil titipan di indomaret</li>
+        </ul>
+        <button class="btn-tier" style="background:#dcfce7;color:#16a34a;" onclick="selectTier('easy')">Pilih Easy →</button>
+      </div>
+      <!-- MEDIUM -->
+      <div class="tier-card featured" style="--tier-color:#1a6fc4" onclick="selectTier('medium')">
+        <div style="position:absolute;top:16px;right:16px;background:var(--primary);color:#fff;font-size:0.7rem;font-weight:700;border-radius:20px;padding:3px 10px;">POPULER</div>
+        <div class="tier-badge" style="background:#dbeafe;color:#1d4ed8;"><i class="bi bi-star-fill"></i> Medium</div>
+        <div class="tier-price">Rp 35.000 <span>/ tugas</span></div>
+        <p class="tier-desc">Tugas memerlukan sedikit usaha fisik atau koordinasi multi-lokasi.</p>
+        <ul class="tier-items list-unstyled">
+          <li><i class="bi bi-check-circle-fill"></i>Belanja bulanan supermarket</li>
+          <li><i class="bi bi-check-circle-fill"></i>Antar jemput dokumen/barang</li>
+          <li><i class="bi bi-check-circle-fill"></i>Beli tiket antrian RS</li>
+          <li><i class="bi bi-check-circle-fill"></i>Bayar tagihan offline</li>
+          <li><i class="bi bi-check-circle-fill"></i>Kirim/ambil laundry</li>
+          <li><i class="bi bi-check-circle-fill"></i>Beli oleh-oleh pesanan</li>
+        </ul>
+        <button class="btn-tier" style="background:var(--primary);color:#fff;" onclick="selectTier('medium')">Pilih Medium →</button>
+      </div>
+      <!-- HARD -->
+      <div class="tier-card" style="--tier-color:#f97316" onclick="selectTier('hard')">
+        <div class="tier-badge" style="background:#ffedd5;color:#c2410c;"><i class="bi bi-lightning-fill"></i> Hard</div>
+        <div class="tier-price">Rp 75.000 <span>/ tugas</span></div>
+        <p class="tier-desc">Tugas butuh waktu >1 jam, tenaga besar, atau keahlian tertentu.</p>
+        <ul class="tier-items list-unstyled">
+          <li><i class="bi bi-check-circle-fill"></i>Bantu pindahan kos/rumah</li>
+          <li><i class="bi bi-check-circle-fill"></i>Bersih-bersih kos/apartemen</li>
+          <li><i class="bi bi-check-circle-fill"></i>Urus administrasi instansi</li>
+          <li><i class="bi bi-check-circle-fill"></i>Jemput/antar jarak jauh</li>
+          <li><i class="bi bi-check-circle-fill"></i>Rakit furniture flat-pack</li>
+          <li><i class="bi bi-check-circle-fill"></i>Urusan kampus/kantor</li>
+        </ul>
+        <button class="btn-tier" style="background:#ffedd5;color:#c2410c;" onclick="selectTier('hard')">Pilih Hard →</button>
+      </div>
+      <!-- EXPERT -->
+      <div class="tier-card" style="--tier-color:#8b5cf6" onclick="selectTier('expert')">
+        <div class="tier-badge" style="background:#ede9fe;color:#7c3aed;"><i class="bi bi-award-fill"></i> Expert</div>
+        <div class="tier-price">Rp 150.000 <span>/ tugas</span></div>
+        <p class="tier-desc">Tugas spesialis butuh mitra dengan kompetensi & pengalaman khusus.</p>
+        <ul class="tier-items list-unstyled">
+          <li><i class="bi bi-check-circle-fill"></i>Asisten belanja fashion/gadget</li>
+          <li><i class="bi bi-check-circle-fill"></i>Bantuan medis dasar / lansia</li>
+          <li><i class="bi bi-check-circle-fill"></i>Riset harga pasar</li>
+          <li><i class="bi bi-check-circle-fill"></i>Koordinasi logistik banyak vendor</li>
+          <li><i class="bi bi-check-circle-fill"></i>Full-day personal assistant</li>
+          <li><i class="bi bi-check-circle-fill"></i>Event kecil / surprise planning</li>
+        </ul>
+        <button class="btn-tier" style="background:#ede9fe;color:#7c3aed;" onclick="selectTier('expert')">Pilih Expert →</button>
+      </div>
+    </div>
+    <p class="text-center mt-4" style="font-size:0.85rem;color:var(--text3);"><i class="bi bi-info-circle"></i> Semua tarif di atas adalah <strong>tarif dasar</strong>. Biaya akhir = Tarif Dasar + Rp3.000/km jarak tempuh mitra.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="py-5" id="calcSection">
+  <div class="container py-4">
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6">
+        <div class="section-badge">Kalkulator Tarif</div>
+        <h2 class="section-title">Hitung Biaya Real-Time</h2>
+        <p class="section-sub">Masukkan lokasi jemput & tujuan, dan kami hitung otomatis total biayamu.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <a href="#pesanSection" class="btn-accent text-decoration-none" style="display:inline-flex;"><i class="bi bi-cart-plus"></i> Langsung Pesan</a>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="calc-card">
+          <div class="calc-header">
+            <h5 style="margin:0;font-weight:700;"><i class="bi bi-calculator-fill me-2"></i>Kalkulator Biaya Perjalanan</h5>
+          </div>
+          <div class="calc-body">
+            <div class="mb-3">
+              <label class="form-label"><i class="bi bi-geo-alt-fill text-success me-1"></i>Paket Layanan</label>
+              <select class="form-select" id="calcTier" onchange="updateCalc()">
+                <option value="15000">Easy — Rp 15.000</option>
+                <option value="35000" selected>Medium — Rp 35.000</option>
+                <option value="75000">Hard — Rp 75.000</option>
+                <option value="150000">Expert — Rp 150.000</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="bi bi-pin-map-fill text-danger me-1"></i>Titik Awal / Lokasi Mitra</label>
+              <input type="text" class="form-control" id="calcFrom" placeholder="Cth: Kampus UIN/USK" oninput="geocodeDebounce('from')"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="bi bi-flag-fill text-primary me-1"></i>Titik Tujuan</label>
+              <input type="text" class="form-control" id="calcTo" placeholder="Cth: Suzuya Mall" oninput="geocodeDebounce('to')"/>
+            </div>
+            <div id="map"></div>
+            <button class="btn btn-primary w-100 mt-3" onclick="calculateRoute()"><i class="bi bi-arrows-angle-expand me-2"></i>Hitung Rute & Biaya</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="sticky-price-bar">
+          <div class="price-display mb-3">
+            <div style="font-size:0.85rem;color:var(--text3);margin-bottom:4px;">Estimasi Total Biaya</div>
+            <div class="price-total" id="priceTotal">Rp 35.000</div>
+            <div class="price-breakdown" id="priceBreakdown">Tarif dasar Medium • Belum termasuk biaya jarak</div>
+            <div id="routeInfo" style="display:none;margin-top:10px;font-size:0.83rem;color:var(--text3);"></div>
+          </div>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+                <div style="font-size:1.6rem;font-weight:800;color:var(--primary);" id="calcBaseFee">Rp 35.000</div>
+                <div style="font-size:0.8rem;color:var(--text3);">Tarif Dasar Layanan</div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+                <div style="font-size:1.6rem;font-weight:800;color:var(--accent);" id="calcDistFee">+ Rp 0</div>
+                <div style="font-size:0.8rem;color:var(--text3);" id="calcDistLabel">Biaya Jarak (0 km)</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px;">
+            <h6 style="font-weight:700;margin-bottom:10px;font-size:0.9rem;"><i class="bi bi-info-circle me-2 text-primary"></i>Rincian Tarif</h6>
+            <table style="width:100%;font-size:0.85rem;color:var(--text2);">
+              <tr><td>Tarif Dasar</td><td id="tb1" style="text-align:right;font-weight:600;">Rp 35.000</td></tr>
+              <tr><td>Biaya Jarak (Rp 3.000/km)</td><td id="tb2" style="text-align:right;font-weight:600;">Rp 0</td></tr>
+              <tr><td style="border-top:1px solid var(--border);padding-top:8px;font-weight:700;">Total</td><td id="tb3" style="text-align:right;font-weight:800;color:var(--primary);border-top:1px solid var(--border);padding-top:8px;">Rp 35.000</td></tr>
+            </table>
+          </div>
+          <button class="btn-accent w-100 mt-3 justify-content-center" onclick="goToOrder()" style="border-radius:10px;padding:14px;font-size:1rem;">
+            <i class="bi bi-whatsapp"></i> Pesan dengan Biaya Ini
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="py-5" style="background:var(--bg2);" id="pesanSection">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <div class="section-badge">Formulir Pemesanan</div>
+      <h2 class="section-title">Ceritakan Kebutuhanmu</h2>
+      <p class="section-sub">Isi detail pesanan — sistem kami akan otomatis format pesan ke WhatsApp admin</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- STEPPER -->
+        <div class="stepper mb-4" id="stepper">
+          <div class="step-item active" id="si1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Layanan</div>
+          </div>
+          <div class="step-line" id="sl1"></div>
+          <div class="step-item" id="si2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Detail Tugas</div>
+          </div>
+          <div class="step-line" id="sl2"></div>
+          <div class="step-item" id="si3">
+            <div class="step-circle">3</div>
+            <div class="step-label">Identitas</div>
+          </div>
+          <div class="step-line" id="sl3"></div>
+          <div class="step-item" id="si4">
+            <div class="step-circle">4</div>
+            <div class="step-label">Konfirmasi</div>
+          </div>
+        </div>
+
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px;">
+
+          <!-- STEP 1: SERVICE -->
+          <div class="form-step active" id="step1">
+            <h5 style="font-weight:700;margin-bottom:1.2rem;"><i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>Pilih Paket Layanan</h5>
+            <div class="row g-3" id="tierSelectGrid">
+              <div class="col-6 col-md-3">
+                <div class="tier-card text-center py-3 px-2" style="--tier-color:#22c55e;cursor:pointer;" id="ts_easy" onclick="selectTierForm('easy')">
+                  <div style="font-size:1.8rem;">😊</div>
+                  <div style="font-weight:700;font-size:0.92rem;">Easy</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 15.000</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="tier-card text-center py-3 px-2 featured" style="--tier-color:#1a6fc4;cursor:pointer;" id="ts_medium" onclick="selectTierForm('medium')">
+                  <div style="font-size:1.8rem;">⭐</div>
+                  <div style="font-weight:700;font-size:0.92rem;">Medium</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 35.000</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="tier-card text-center py-3 px-2" style="--tier-color:#f97316;cursor:pointer;" id="ts_hard" onclick="selectTierForm('hard')">
+                  <div style="font-size:1.8rem;">⚡</div>
+                  <div style="font-weight:700;font-size:0.92rem;">Hard</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 75.000</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="tier-card text-center py-3 px-2" style="--tier-color:#8b5cf6;cursor:pointer;" id="ts_expert" onclick="selectTierForm('expert')">
+                  <div style="font-size:1.8rem;">🏆</div>
+                  <div style="font-weight:700;font-size:0.92rem;">Expert</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 150.000</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:1.2rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;" id="tierHint">
+              <i class="bi bi-info-circle text-primary me-2"></i><span id="tierHintText" style="font-size:0.85rem;color:var(--text2);">Pilih paket yang sesuai dengan jenis tugasmu.</span>
+            </div>
+            <div class="text-end mt-4">
+              <button class="btn btn-primary" onclick="nextStep(1)">Lanjut: Detail Tugas <i class="bi bi-arrow-right ms-1"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 2: TASK DETAIL -->
+          <div class="form-step" id="step2">
+            <h5 style="font-weight:700;margin-bottom:1.2rem;"><i class="bi bi-pencil-fill me-2 text-primary"></i>Detail Tugas & Lokasi</h5>
+            <div class="mb-3">
+              <label class="form-label">Deskripsi Tugas <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="taskDesc" rows="4" placeholder="Cth: Tolong belikan nasi gudeg Bu Citro di Pasar Gede. Pesan 1 porsi nasi + ayam + telur. Nanti saya transfer biaya makanan + ongkos."></textarea>
+              <div class="invalid-feedback" id="errDesc">Deskripsi tugas wajib diisi (min 20 karakter)</div>
+              <div style="font-size:0.78rem;color:var(--text3);margin-top:4px;"><span id="charCount">0</span>/500 karakter</div>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Lokasi Penjemputan <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pickupLoc" placeholder="Cth: Darussalam/>
+                <div class="invalid-feedback" id="errPickup">Lokasi penjemputan wajib diisi</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Lokasi Tujuan <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dropLoc" placeholder="Cth: jl. T. Panglima Nyak Makam"/>
+                <div class="invalid-feedback" id="errDrop">Lokasi tujuan wajib diisi</div>
+              </div>
+            </div>
+            <div class="row g-3 mt-1">
+              <div class="col-md-6">
+                <label class="form-label">Tanggal Pelaksanaan <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="taskDate"/>
+                <div class="invalid-feedback" id="errDate">Tanggal wajib diisi</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Jam Pelaksanaan <span class="text-danger">*</span></label>
+                <input type="time" class="form-control" id="taskTime"/>
+                <div class="invalid-feedback" id="errTime">Waktu wajib diisi</div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <label class="form-label">Catatan Tambahan</label>
+              <input type="text" class="form-control" id="taskNote" placeholder="Cth: Tolong foto struk belanja ya"/>
+            </div>
+            <div class="d-flex gap-3 justify-content-between mt-4">
+              <button class="btn btn-outline-secondary" onclick="prevStep(2)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
+              <button class="btn btn-primary" onclick="nextStep(2)">Lanjut: Identitas <i class="bi bi-arrow-right ms-1"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 3: IDENTITY -->
+          <div class="form-step" id="step3">
+            <h5 style="font-weight:700;margin-bottom:1.2rem;"><i class="bi bi-person-fill me-2 text-primary"></i>Data Dirimu</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="custName" placeholder="Nama kamu"/>
+                <div class="invalid-feedback" id="errName">Nama wajib diisi</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Nomor WhatsApp <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text">+62</span>
+                  <input type="tel" class="form-control" id="custPhone" placeholder="8xxx-xxxx-xxxx"/>
+                </div>
+                <div class="invalid-feedback" id="errPhone">Nomor WA wajib diisi (min 9 digit)</div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <label class="form-label">Sumber Tahu Tolongin Dong</label>
+              <select class="form-select" id="custSource">
+                <option value="">Pilih...</option>
+                <option>Instagram</option>
+                <option>TikTok</option>
+                <option>Rekomendasi teman</option>
+                <option>Google Search</option>
+                <option>Poster/Flyer</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+            <div class="mt-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="agreeTC"/>
+                <label class="form-check-label" style="font-size:0.88rem;">
+                  Saya setuju dengan <a href="#" onclick="showTC(event)">Syarat & Ketentuan</a> Tolongin Dong
+                </label>
+              </div>
+              <div class="invalid-feedback d-block" id="errTC" style="display:none !important;"></div>
+            </div>
+            <div class="d-flex gap-3 justify-content-between mt-4">
+              <button class="btn btn-outline-secondary" onclick="prevStep(3)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
+              <button class="btn btn-primary" onclick="nextStep(3)">Preview Pesanan <i class="bi bi-arrow-right ms-1"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 4: CONFIRMATION -->
+          <div class="form-step" id="step4">
+            <h5 style="font-weight:700;margin-bottom:1.2rem;"><i class="bi bi-check2-circle me-2 text-success"></i>Review & Kirim Pesanan</h5>
+            <div class="order-summary mb-4" id="orderPreview">
+              <!-- filled by JS -->
+            </div>
+            <div style="background:var(--accent-light);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:14px;font-size:0.85rem;color:var(--accent-dark);margin-bottom:1.2rem;">
+              <i class="bi bi-whatsapp me-2"></i><strong>Pesanan akan dikirim otomatis ke WhatsApp admin</strong> untuk dikonfirmasi dan dicarikan mitra terbaik!
+            </div>
+            <div class="d-flex gap-3 justify-content-between">
+              <button class="btn btn-outline-secondary" onclick="prevStep(4)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
+              <button class="btn-accent" onclick="sendToWhatsApp()" style="border-radius:8px;padding:12px 24px;">
+                <i class="bi bi-whatsapp"></i> Kirim ke WhatsApp Admin
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-5" id="testimoniSection">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <div class="section-badge">Testimoni</div>
+      <h2 class="section-title">Kata Mereka yang Sudah Pakai</h2>
+      <p class="section-sub">⭐⭐⭐⭐⭐ 4.9/5 rata-rata dari 520 ulasan terverifikasi</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card">
+          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Beneran ngebantu banget! Lagi masa UAS gak sempet beli makan, pesen via Tolongin Dong nasi gudeg udah nyampe kos dalam 20 menit. Harganya juga transparan gak ada biaya tersembunyi."</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar" style="background:#dbeafe;color:#1d4ed8;">RA</div>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Rania A.</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Mahasiswi UNS • Easy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card">
+          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Pakai layanan Hard buat bantu pindahan dari kos lama ke kos baru. Mitranya super ramah, hati-hati bawa barang elektronik saya, dan tepat waktu. Worth it banget dengan harga segitu!"</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar" style="background:#dcfce7;color:#16a34a;">BP</div>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Aqila</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Mahasiswa USK • Hard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card">
+          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half-fill"></i></div>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Hamil 8 bulan susah gerak, Tolongin Dong jadi penyelamat harian. Belanja sayur, beli obat, bayar listrik semua bisa dititip. Mitranya juga pengertian & sabaran. Highly recommended!"</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar" style="background:#ffedd5;color:#c2410c;">DW</div>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Nada</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Ibu Hamil, Banda Aceh • Medium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card">
+          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Sebagai pegawai kantoran, Tolongin Dong udah kayak asisten pribadi. Tiap minggu pakai Medium buat belanja kebutuhan bulanan. Admin responsif, laporan foto produk juga dikasih."</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar" style="background:#ede9fe;color:#7c3aed;">HK</div>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Arkan</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Karyawan Swasta • Medium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card">
+          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Pakai Expert buat urusin surprise birthday partner. Koordinasi bunga, kue, dekorasi kafe semuanya dihandle. Hasilnya melebihi ekspektasi! Gak nyangka bisa seprofesional itu."</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar" style="background:#fce7f3;color:#be185d;">FS</div>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Adam</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Pelajar SMA • Expert</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card">
+          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Anak saya lansia, sering butuh bantu beli obat di apotek yang jauh. Tolongin Dong sangat membantu. Mitranya sabar & amanah, obat selalu dikasih nota dan foto struk."</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar" style="background:#d1fae5;color:#065f46;">SR</div>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Siti R.</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Ibu Rumah Tangga • Easy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-5" style="background:var(--bg);" id="faqSection">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <div class="section-badge">FAQ</div>
+        <h2 class="section-title">Ada Pertanyaan?</h2>
+        <p style="color:var(--text3);line-height:1.7;margin-top:0.5rem;">Kami menjawab pertanyaan paling sering ditanya seputar layanan Tolongin Dong.</p>
+        <div style="margin-top:1.5rem;">
+          <a href="#pesanSection" class="btn-accent text-decoration-none d-inline-flex" style="border-radius:8px;padding:12px 20px;"><i class="bi bi-chat-dots-fill"></i> Tanya ke Admin WA</a>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item mb-2 border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Bagaimana cara memesan layanan Tolongin Dong?</button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">Kamu cukup mengisi formulir pemesanan di halaman ini, pilih paket layanan (Easy/Medium/Hard/Expert), isi detail tugas dan lokasi, kemudian tekan tombol "Kirim ke WhatsApp Admin". Pesananmu akan diformat otomatis dan dikirim ke admin kami untuk segera dicarikan mitra terbaik.</div>
+            </div>
+          </div>
+          <div class="accordion-item mb-2 border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Berapa lama waktu respon setelah memesan?</button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">Admin kami merespons dalam waktu kurang dari 10 menit pada jam operasional (07.00–22.00 WIB). Setelah dikonfirmasi, mitra akan langsung diarahkan menuju lokasi tugas. Untuk pesanan mendadak, kami sarankan memesan minimal 30 menit sebelumnya.</div>
+            </div>
+          </div>
+          <div class="accordion-item mb-2 border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Bagaimana mekanisme pembayaran?</button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">Pembayaran dilakukan via transfer bank / dompet digital (GoPay, OVO, DANA, BCA, BRI) sebelum mitra berangkat melaksanakan tugas. Admin akan mengirimkan nomor rekening/akun saat konfirmasi di WhatsApp. Untuk pembelian barang, kamu juga perlu mentransfer estimasi harga barang terlebih dahulu.</div>
+            </div>
+          </div>
+          <div class="accordion-item mb-2 border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">Apakah layanan tersedia 24 jam?</button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">Jam operasional standar kami adalah 07.00–22.00 WIB. Untuk kebutuhan mendesak di luar jam tersebut, silakan hubungi admin via WhatsApp — kami akan berusaha mencarikan mitra yang tersedia, dengan kemungkinan dikenakan biaya tambahan.</div>
+            </div>
+          </div>
+          <div class="accordion-item mb-2 border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">Apa yang terjadi jika mitra tidak dapat menyelesaikan tugas?</button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">Jika mitra tidak dapat menyelesaikan tugas karena alasan yang di luar kendali (stok habis, toko tutup, dll), admin akan segera menginformasikan kamu dan memberikan opsi: mencari alternatif, menjadwalkan ulang, atau refund penuh dalam 1x24 jam kerja.</div>
+            </div>
+          </div>
+          <div class="accordion-item mb-2 border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">Apakah ada batasan wilayah layanan?</button>
+            </h2>
+            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">Saat ini kami melayani area Banda Aceh yang meliputi Aceh Besar. Untuk lokasi di luar area tersebut, hubungi admin untuk penyesuaian tarif dan ketersediaan mitra.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MITRA REGISTRATION -->
+<section class="py-5" id="mitraSection">
+  <div class="container py-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div style="display:inline-flex;background:rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:3px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;margin-bottom:0.8rem;">DAFTAR JADI MITRA</div>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:1rem;">Bergabung jadi Tasker Tolongin Dong!</h2>
+        <p style="color:rgba(255,255,255,0.8);line-height:1.7;">Jadikan waktumu lebih produktif dan menghasilkan. Kamu yang punya motor, smartphone, dan semangat melayani — kami butuh kamu!</p>
+        <div class="row g-3 mt-2">
+          <div class="col-6">
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-size:1.6rem;font-weight:800;color:#fff;">Rp 5jt+</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Potensi penghasilan/bln</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-size:1.6rem;font-weight:800;color:#fff;">Fleksibel</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Atur jadwalmu sendiri</div>
+            </div>
+          </div>
+        </div>
+        <ul style="list-style:none;padding:0;margin-top:1rem;">
+          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Komisi kompetitif + tips dari pelanggan</li>
+          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Tidak perlu modal — cukup motor & HP</li>
+          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Dukungan penuh dari admin 7 hari/mgg</li>
+          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Asuransi dasar untuk setiap penugasan</li>
+        </ul>
+      </div>
+      <div class="col-lg-7">
+        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius);padding:28px;border:1px solid rgba(255,255,255,0.15);">
+          <h5 style="color:#fff;font-weight:700;margin-bottom:1.2rem;">Formulir Pendaftaran Mitra</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-control" id="mitraName" placeholder="Nama sesuai KTP"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">No. WhatsApp Aktif</label>
+              <input type="tel" class="form-control" id="mitraPhone" placeholder="08xxxxxxxxxx"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Usia</label>
+              <input type="number" class="form-control" id="mitraAge" placeholder="Cth: 22" min="17" max="60"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Kendaraan yang Dimiliki</label>
+              <select class="form-select" id="mitraVehicle">
+                <option value="">Pilih...</option>
+                <option>Motor</option>
+                <option>Mobil</option>
+                <option>Motor & Mobil</option>
+                <option>Tidak punya kendaraan</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Domisili Saat Ini</label>
+              <input type="text" class="form-control" id="mitraCity" placeholder="Cth: Ulee Kareng, Kota Banda Aceh"/>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Ketersediaan Waktu</label>
+              <select class="form-select" id="mitraTime">
+                <option value="">Pilih...</option>
+                <option>Full-time (8+ jam/hari)</option>
+                <option>Part-time (4-8 jam/hari)</option>
+                <option>Weekend saja</option>
+                <option>Fleksibel sesuai pesanan</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Motivasi / Keahlian Khusus (opsional)</label>
+              <textarea class="form-control" id="mitraMotiv" rows="3" placeholder="Cth: Saya memiliki pengalaman sebagai kurir 2 tahun, familiar dengan area Banda Aceh..."></textarea>
+            </div>
+          </div>
+          <button class="btn-white mt-4 w-100" onclick="submitMitra()">
+            <i class="bi bi-send-fill me-2"></i> Kirim Pendaftaran via WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="footer-logo mb-3"><i class="bi bi-hand-thumbs-up-fill me-2" style="color:var(--accent)"></i>Tolongin<span>Dong</span></div>
+        <p style="font-size:0.88rem;line-height:1.7;max-width:280px;">Platform on-demand errands terpercaya di Banda Aceh. Apapun tugasnya, kami siap tolongin dong!</p>
+        <div class="footer-social mt-3">
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-tiktok"></i></a>
+          <a href="#"><i class="bi bi-whatsapp"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="footer-heading">Layanan</div>
+        <ul class="footer-links">
+          <li><a href="#layananSection">Easy</a></li>
+          <li><a href="#layananSection">Medium</a></li>
+          <li><a href="#layananSection">Hard</a></li>
+          <li><a href="#layananSection">Expert</a></li>
+          <li><a href="#calcSection">Kalkulator Tarif</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <div class="footer-heading">Perusahaan</div>
+        <ul class="footer-links">
+          <li><a href="#mitraSection">Jadi Mitra</a></li>
+          <li><a href="#faqSection">FAQ</a></li>
+          <li><a href="#" onclick="showTC(event)">Syarat & Ketentuan</a></li>
+          <li><a href="#" onclick="showPrivacy(event)">Kebijakan Privasi</a></li>
+          <li><a href="#">Tentang Kami</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <div class="footer-heading">Kontak & Jam Operasional</div>
+        <ul class="footer-links">
+          <li><i class="bi bi-whatsapp me-2" style="color:var(--accent)"></i><a href="https://wa.me/6281234567890">+62 812-3456-7890</a></li>
+          <li><i class="bi bi-envelope me-2" style="color:var(--accent)"></i><a href="mailto:halo@tolongindong.id">halo@tolongindong.id</a></li>
+          <li><i class="bi bi-geo-alt me-2" style="color:var(--accent)"></i>Banda Aceh, Aceh</li>
+          <li style="margin-top:8px;"><i class="bi bi-clock me-2" style="color:var(--accent)"></i>Senin – Minggu: 07.00–22.00 WIB</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="row align-items-center">
+        <div class="col-md-6">© 2025 Tolongin Dong. Hak Cipta Dilindungi.</div>
+        <div class="col-md-6 text-md-end" style="font-size:0.8rem;">
+          <a href="#" onclick="showTC(event)" style="color:#64748b;margin-right:16px;">Syarat & Ketentuan</a>
+          <a href="#" onclick="showPrivacy(event)" style="color:#64748b;">Kebijakan Privasi</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TC MODAL -->
+<div class="modal fade" id="tcModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-700"><i class="bi bi-file-text me-2 text-primary"></i>Syarat & Ketentuan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="font-size:0.9rem;line-height:1.8;color:var(--text2);">
+        <h6 class="fw-700 mt-2">1. Batasan Tanggung Jawab atas Barang</h6>
+        <p>Tolongin Dong bertindak sebagai perantara antara pengguna dan mitra tasker. Kami tidak bertanggung jawab atas kerusakan atau kehilangan barang yang terjadi akibat kondisi barang itu sendiri, kemasan yang tidak memadai, atau force majeure. Untuk barang bernilai tinggi (elektronik, perhiasan, dokumen penting), kami mewajibkan pengguna untuk mendokumentasikan kondisi barang sebelum penyerahan kepada mitra.</p>
+        <h6 class="fw-700 mt-3">2. Kompensasi Kerusakan/Kehilangan</h6>
+        <p>Dalam hal kerusakan/kehilangan yang terbukti merupakan kelalaian mitra, Tolongin Dong akan memberikan kompensasi maksimal sebesar 5x (lima kali) tarif layanan yang dibayarkan, atau sebesar nilai barang yang dapat dibuktikan dengan bukti pembelian, mana yang lebih kecil. Klaim harus diajukan dalam 24 jam setelah tugas selesai.</p>
+        <h6 class="fw-700 mt-3">3. Pembatalan & Refund</h6>
+        <p>Pembatalan oleh pengguna sebelum mitra berangkat: refund penuh. Pembatalan setelah mitra berangkat namun sebelum tugas dimulai: dikenakan biaya perjalanan mitra sesuai jarak tempuh. Pembatalan saat tugas sedang berlangsung: tidak ada refund atas tarif dasar.</p>
+        <h6 class="fw-700 mt-3">4. Penggunaan Layanan yang Dilarang</h6>
+        <p>Pengguna dilarang menggunakan layanan untuk kegiatan ilegal, termasuk pengiriman barang terlarang, penipuan, atau kegiatan yang melanggar hukum Indonesia. Pelanggaran akan dilaporkan kepada pihak berwajib dan akun pengguna akan diblokir permanen.</p>
+        <h6 class="fw-700 mt-3">5. Privasi & Data Pengguna</h6>
+        <p>Data pribadi pengguna hanya digunakan untuk keperluan pemesanan dan tidak akan dibagikan kepada pihak ketiga tanpa persetujuan, kecuali diwajibkan oleh hukum yang berlaku.</p>
+        <h6 class="fw-700 mt-3">6. Perubahan Layanan</h6>
+        <p>Tolongin Dong berhak mengubah tarif, kebijakan, dan ketentuan layanan dengan pemberitahuan minimal 7 hari sebelumnya melalui media sosial resmi atau WhatsApp.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-dismiss="modal">Mengerti & Setuju</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Modal: Edit Profil -->
-<div class="modal-overlay" id="modal-profile">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">✏️ Edit Profil</div>
-    <div class="form-label-custom">Nama</div>
-    <input type="text" class="form-input" id="edit-name" placeholder="Nama kamu">
-    <div class="form-label-custom">Email</div>
-    <input type="email" class="form-input" id="edit-email" placeholder="Email kamu">
-    <button class="gas-suruh-btn" onclick="saveProfile()" style="background: linear-gradient(135deg, var(--blue), var(--blue-dark));">
-      <span>✅</span> Simpan Profil
-    </button>
-    <button onclick="closeModal('modal-profile')" style="width:100%; padding:14px; border:none; background:none; font-family:Poppins,sans-serif; font-size:14px; color:var(--gray-400); cursor:pointer; margin-top:8px;">Batal</button>
+<!-- PRIVACY MODAL -->
+<div class="modal fade" id="privacyModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-700"><i class="bi bi-shield-check me-2 text-primary"></i>Kebijakan Privasi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="font-size:0.9rem;line-height:1.8;color:var(--text2);">
+        <p>Tolongin Dong menghargai privasi pengguna. Dokumen ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda.</p>
+        <h6 class="fw-700 mt-3">Data yang Dikumpulkan</h6>
+        <p>Kami mengumpulkan nama, nomor WhatsApp, lokasi tugas, dan riwayat pesanan. Data lokasi hanya digunakan selama proses pemesanan berlangsung.</p>
+        <h6 class="fw-700 mt-3">Penggunaan Data</h6>
+        <p>Data digunakan untuk: memproses pesanan, menghubungkan dengan mitra, meningkatkan kualitas layanan, dan mengirimkan notifikasi terkait pesanan.</p>
+        <h6 class="fw-700 mt-3">Keamanan Data</h6>
+        <p>Kami menggunakan enkripsi dan protokol keamanan standar industri untuk melindungi data pengguna dari akses tidak sah.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- INSTALL BANNER -->
+<div id="installBanner">
+  <div style="font-size:1.8rem;">📱</div>
+  <div style="flex:1;">
+    <div style="font-weight:700;font-size:0.9rem;">Install Tolongin Dong</div>
+    <div style="font-size:0.78rem;color:var(--text3);">Akses lebih cepat dari layar utama</div>
+  </div>
+  <button onclick="installPWA()" class="btn btn-primary btn-sm" style="white-space:nowrap;">Install</button>
+  <button onclick="document.getElementById('installBanner').classList.remove('show')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;">✕</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ========== DATA ==========
-const CATEGORIES = [
-  { id: 'easy', level: 'Easy', icon: '😊', name: 'Tugas Ringan', desc: 'Print, fotokopi, beli makanan sekitar kampus/kantor, bayar sesuatu yang dekat', price: 5000, maxPrice: 20000, levelClass: 'level-easy', services: ['Print & Fotokopi', 'Beli Makanan Sekitar', 'Bayar di Counter', 'Ambil/Titip Kunci', 'Pesan Minuman'] },
-  { id: 'medium', level: 'Medium', icon: '💪', name: 'Perlu Waktu', desc: 'Antri, belanja, jemput barang, tugas yang butuh 30-60 menit', price: 20000, maxPrice: 75000, levelClass: 'level-medium', services: ['Antri Bank/BPJS', 'Belanja Supermarket', 'Jemput Paket/Barang', 'Antar Dokumen', 'Urus Administrasi'] },
-  { id: 'hard', level: 'Hard', icon: '🛠️', name: 'Tenaga Lebih', desc: 'Pindahan barang berat, bersih-bersih, pekerjaan fisik yang butuh tenaga ekstra', price: 50000, maxPrice: 200000, levelClass: 'level-hard', services: ['Bantu Pindahan', 'Bersih-bersih Kamar/Kos', 'Angkat Barang Berat', 'Cuci Motor/Mobil', 'Cat Tembok Sederhana'] },
-  { id: 'expert', level: 'Expert', icon: '⭐', name: 'Keahlian Khusus', desc: 'Edit video/foto, desain grafis, konsultasi, pekerjaan yang butuh skill tertentu', price: 100000, maxPrice: 500000, levelClass: 'level-expert', services: ['Edit Video/Foto', 'Desain Grafis', 'Konsultasi Akademik', 'Translate Dokumen', 'Programming/IT Help'] },
-];
+// ===== DARK MODE =====
+function toggleDark() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('darkBtn').innerHTML = isDark ? '<i class="bi bi-moon-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', saved);
+  if (saved === 'dark') document.getElementById('darkBtn').innerHTML = '<i class="bi bi-sun-fill"></i>';
+})();
 
-const QUICK_SERVICES = {
-  titip: 'easy',
-  antri: 'medium',
-  kirim: 'medium',
-  custom: 'easy',
-};
+// ===== MAP =====
+let map, pickMarker, dropMarker, routeLine;
+document.addEventListener('DOMContentLoaded', function() {
+  map = L.map('map', { center: [-7.5667, 110.8167], zoom: 12 });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+  setTimeout(() => map.invalidateSize(), 300);
+});
 
-// ========== STATE ==========
-let state = {
-  page: 'home',
-  requests: [],
-  notifications: [],
-  balance: 0,
-  user: { name: 'User', email: 'user@email.com' },
-  selectedCat: 'easy',
-};
+const greenIcon = L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png', shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png', iconAnchor: [12,41], popupAnchor: [1,-34] });
 
-// ========== LOCALSTORAGE ==========
-function saveState() {
-  localStorage.setItem('toldong_state', JSON.stringify(state));
+let geocodeTimers = {};
+function geocodeDebounce(type) {
+  clearTimeout(geocodeTimers[type]);
+  geocodeTimers[type] = setTimeout(() => geocodeLocation(type), 700);
 }
 
-function loadState() {
-  const saved = localStorage.getItem('toldong_state');
-  if (saved) {
-    try { state = { ...state, ...JSON.parse(saved) }; } catch(e) {}
-  }
+async function geocodeLocation(type) {
+  const val = document.getElementById(type === 'from' ? 'calcFrom' : 'calcTo').value;
+  if (val.length < 4) return;
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val + ', Banda Aceh, Indonesia')}&format=json&limit=1`);
+    const data = await res.json();
+    if (data.length > 0) {
+      const { lat, lon } = data[0];
+      const latlng = [parseFloat(lat), parseFloat(lon)];
+      if (type === 'from') {
+        if (pickMarker) map.removeLayer(pickMarker);
+        pickMarker = L.marker(latlng, { title: 'Titik Awal' }).addTo(map).bindPopup('📍 Titik Awal').openPopup();
+      } else {
+        if (dropMarker) map.removeLayer(dropMarker);
+        dropMarker = L.marker(latlng, { title: 'Tujuan' }).addTo(map).bindPopup('🏁 Tujuan').openPopup();
+      }
+      if (pickMarker && dropMarker) {
+        const bounds = L.latLngBounds([pickMarker.getLatLng(), dropMarker.getLatLng()]);
+        map.fitBounds(bounds, { padding: [30, 30] });
+      } else {
+        map.setView(latlng, 14);
+      }
+    }
+  } catch(e) {}
 }
 
-// ========== PAGES ==========
-function showPage(page) {
-  state.page = page;
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const header = document.getElementById('app-header');
-
-  const targetPage = document.getElementById('page-' + page);
-  if (targetPage) targetPage.classList.add('active');
-
-  const navItem = document.getElementById('nav-' + page);
-  if (navItem) navItem.classList.add('active');
-
-  header.style.display = (page === 'home') ? 'block' : 'none';
-
-  if (page === 'riwayat') renderHistory('all');
-  if (page === 'notif') renderNotifications();
-  if (page === 'profil') renderProfile();
-  if (page === 'kategori') renderCategories('all', '');
-  if (page === 'harga') renderPricing();
-  if (page === 'home') renderActiveOrders();
-}
-
-// ========== RENDER ==========
-function renderActiveOrders() {
-  const container = document.getElementById('active-orders');
-  const noActive = document.getElementById('no-active');
-  const active = state.requests.filter(r => r.status !== 'done' && r.status !== 'cancelled');
-  if (active.length === 0) {
-    container.innerHTML = `<div class="empty-state" id="no-active"><div class="empty-icon">📋</div><p>Belum ada pesanan aktif.<br>Yuk buat permintaan pertamamu!</p></div>`;
+async function calculateRoute() {
+  if (!pickMarker || !dropMarker) {
+    alert('Masukkan titik awal dan tujuan terlebih dahulu!');
     return;
   }
-  container.innerHTML = active.slice(0, 3).map(r => requestCardHTML(r)).join('');
-}
-
-function requestCardHTML(r) {
-  const statusMap = { pending: ['badge-pending','⏳ Menunggu'], accepted: ['badge-accepted','🔵 Dikerjakan'], done: ['badge-done','✅ Selesai'], cancelled: ['badge-cancelled','❌ Dibatalkan'] };
-  const [badgeClass, label] = statusMap[r.status] || statusMap.pending;
-  const cat = CATEGORIES.find(c => c.id === r.category) || CATEGORIES[0];
-  return `<div class="request-card status-${r.status}">
-    <div class="req-header">
-      <div class="req-title">${r.title || 'Tugas Tanpa Judul'}</div>
-      <span class="status-badge ${badgeClass}">${label}</span>
-    </div>
-    <div class="req-meta">${cat.icon} ${cat.name} • ${r.date}</div>
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <div class="req-price">Rp ${r.price.toLocaleString('id')}</div>
-      ${r.status === 'pending' ? `<button onclick="cancelRequest('${r.id}')" style="font-size:11px;color:var(--danger);border:none;background:none;font-family:Poppins,sans-serif;cursor:pointer;font-weight:600;">Batalkan</button>` : ''}
-    </div>
-  </div>`;
-}
-
-function renderHistory(filter) {
-  const container = document.getElementById('history-list');
-  let list = state.requests;
-  if (filter !== 'all') list = list.filter(r => r.status === filter);
-  if (list.length === 0) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🗂️</div><p>Tidak ada riwayat ${filter === 'all' ? '' : filter}.</p></div>`;
-    return;
-  }
-  container.innerHTML = list.slice().reverse().map(r => requestCardHTML(r)).join('');
-}
-
-function renderNotifications() {
-  const container = document.getElementById('notif-list');
-  if (state.notifications.length === 0) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔔</div><p>Belum ada notifikasi.</p></div>`;
-    return;
-  }
-  container.innerHTML = state.notifications.slice().reverse().map(n => `
-    <div class="notif-item ${n.read ? '' : 'notif-unread'}">
-      <div class="notif-icon" style="background:${n.color || '#EFF6FF'}">${n.icon || '📢'}</div>
-      <div class="notif-content">
-        <div class="notif-title">${n.title}</div>
-        <div class="notif-desc">${n.message}</div>
-        <div class="notif-time">${n.time}</div>
-      </div>
-    </div>`).join('');
-  state.notifications = state.notifications.map(n => ({ ...n, read: true }));
-  document.getElementById('notif-dot').style.display = 'none';
-  saveState();
-}
-
-function renderProfile() {
-  const u = state.user;
-  document.getElementById('profile-name-display').textContent = u.name || 'User';
-  document.getElementById('profile-avatar').textContent = (u.name || 'U')[0].toUpperCase();
-  document.getElementById('header-name').textContent = 'Kak ' + (u.name || 'User') + '!';
-  document.getElementById('stat-total').textContent = state.requests.length;
-  document.getElementById('stat-done').textContent = state.requests.filter(r => r.status === 'done').length;
-  updateBalance();
-}
-
-function renderCategories(level, search) {
-  const container = document.getElementById('categories-list');
-  let list = CATEGORIES;
-  if (level !== 'all') list = list.filter(c => c.id === level);
-  if (search) list = list.filter(c => c.name.toLowerCase().includes(search.toLowerCase()) || c.desc.toLowerCase().includes(search.toLowerCase()));
-  container.innerHTML = list.map(c => `
-    <div class="pricing-card" onclick="openRequest('${c.id}')">
-      <div class="pricing-header">
-        <div class="cat-icon" style="margin:0;">${c.icon}</div>
-        <div>
-          <span class="cat-level ${c.levelClass}" style="display:inline-block;margin-bottom:4px;">${c.level}</span>
-          <div class="cat-name" style="margin:0;">${c.name}</div>
-          <div class="cat-desc">${c.desc}</div>
-        </div>
-      </div>
-      <div class="pricing-body">
-        ${c.services.map(s => `<div class="pricing-row"><span class="pricing-service">• ${s}</span><span class="pricing-cost">Rp ${c.price.toLocaleString('id')}+</span></div>`).join('')}
-        <button onclick="event.stopPropagation(); openRequest('${c.id}')" style="width:100%;padding:12px;margin-top:8px;border-radius:10px;border:none;background:var(--blue);color:white;font-family:Poppins,sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Gas Suruh! 🚀</button>
-      </div>
-    </div>`).join('');
-}
-
-function renderPricing() {
-  const container = document.getElementById('pricing-list');
-  container.innerHTML = CATEGORIES.map(c => `
-    <div class="pricing-card">
-      <div class="pricing-header">
-        <div style="font-size:28px;margin-right:4px;">${c.icon}</div>
-        <div>
-          <span class="cat-level ${c.levelClass}" style="display:inline-block;margin-bottom:2px;">${c.level}</span>
-          <div class="cat-name" style="margin:0;">${c.name}</div>
-        </div>
-        <div style="margin-left:auto;text-align:right;">
-          <div style="font-size:14px;font-weight:800;color:var(--blue);">Rp ${c.price.toLocaleString('id')}</div>
-          <div style="font-size:10px;color:var(--gray-400);">s/d Rp ${c.maxPrice.toLocaleString('id')}</div>
-        </div>
-      </div>
-      <div class="pricing-body">
-        ${c.services.map(s => `<div class="pricing-row"><span class="pricing-service">• ${s}</span><span class="pricing-cost">Rp ${c.price.toLocaleString('id')}+</span></div>`).join('')}
-      </div>
-    </div>`).join('');
-}
-
-// ========== CAT SELECTOR IN MODAL ==========
-function renderCatSelector() {
-  const grid = document.getElementById('cat-select-grid');
-  grid.innerHTML = CATEGORIES.map(c => `
-    <div class="cat-select-item ${c.id === state.selectedCat ? 'active' : ''}" onclick="selectCat('${c.id}')">
-      <div class="icon">${c.icon}</div>
-      <div class="name">${c.name}</div>
-      <div class="price">Rp ${c.price.toLocaleString('id')}+</div>
-    </div>`).join('');
-  updatePriceDisplay();
-}
-
-function selectCat(id) {
-  state.selectedCat = id;
-  document.querySelectorAll('.cat-select-item').forEach(el => el.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  updatePriceDisplay();
-}
-
-function updatePriceDisplay() {
-  const cat = CATEGORIES.find(c => c.id === state.selectedCat);
-  if (!cat) return;
-  const promo = document.getElementById('promo-input')?.value?.toUpperCase();
-  let price = cat.price;
-  if (promo === 'TOLONGAKU') price = Math.round(price * 0.7);
-  document.getElementById('price-display').textContent = 'Rp ' + price.toLocaleString('id');
-}
-
-// ========== MODALS ==========
-function openRequest(catId) {
-  if (catId && QUICK_SERVICES[catId]) state.selectedCat = QUICK_SERVICES[catId];
-  else if (catId) state.selectedCat = catId || 'easy';
-  document.getElementById('req-title').value = '';
-  document.getElementById('req-desc').value = '';
-  document.getElementById('promo-input').value = '';
-  renderCatSelector();
-  openModal('modal-request');
-}
-
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-
-function openTopup() { openModal('modal-topup'); }
-function editProfile() {
-  document.getElementById('edit-name').value = state.user.name;
-  document.getElementById('edit-email').value = state.user.email;
-  openModal('modal-profile');
-}
-
-// Click outside modal to close
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
-
-// ========== ACTIONS ==========
-function submitRequest() {
-  const title = document.getElementById('req-title').value.trim();
-  const desc = document.getElementById('req-desc').value.trim();
-  if (!title) { showToast('⚠️ Isi judul tugas dulu!'); return; }
-  const cat = CATEGORIES.find(c => c.id === state.selectedCat);
-  const promo = document.getElementById('promo-input')?.value?.toUpperCase();
-  let price = cat.price;
-  let discount = false;
-  if (promo === 'TOLONGAKU') { price = Math.round(price * 0.7); discount = true; }
-  const req = {
-    id: 'req_' + Date.now(),
-    title, desc,
-    category: state.selectedCat,
-    price,
-    date: new Date().toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }),
-    time: new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' }),
-    status: 'pending',
-  };
-  state.requests.push(req);
-  addNotification('🎉', 'Permintaan Dibuat!', `"${title}" telah dikirim. Tunggu konfirmasi ya!`, '#EFF6FF');
-  saveState();
-  closeModal('modal-request');
-  showToast(discount ? '🔥 Promo berhasil! Hemat 30%' : '✅ Permintaan berhasil dikirim!');
-  renderActiveOrders();
-  setTimeout(() => simulateAccept(req.id), 5000 + Math.random() * 5000);
-}
-
-function simulateAccept(id) {
-  const req = state.requests.find(r => r.id === id);
-  if (!req || req.status !== 'pending') return;
-  req.status = 'accepted';
-  saveState();
-  addNotification('🙌', 'Permintaan Diterima!', `"${req.title}" sedang dikerjakan. Estimasi selesai 30 menit.`, '#DCFCE7');
-  showToast('🙌 Permintaan diterima!');
-  if (state.page === 'home') renderActiveOrders();
-  setTimeout(() => simulateDone(id), 10000 + Math.random() * 10000);
-}
-
-function simulateDone(id) {
-  const req = state.requests.find(r => r.id === id);
-  if (!req || req.status !== 'accepted') return;
-  req.status = 'done';
-  state.balance = Math.max(0, (state.balance || 0) - req.price);
-  saveState();
-  addNotification('✅', 'Tugas Selesai!', `"${req.title}" sudah selesai! Saldo dipotong Rp ${req.price.toLocaleString('id')}.`, '#F0FDF4');
-  showToast('✅ Tugas selesai! Terima kasih.');
-  if (state.page === 'home') renderActiveOrders();
-  if (state.page === 'profil') renderProfile();
-}
-
-function cancelRequest(id) {
-  const req = state.requests.find(r => r.id === id);
-  if (!req) return;
-  req.status = 'cancelled';
-  saveState();
-  showToast('❌ Permintaan dibatalkan.');
-  renderActiveOrders();
-}
-
-function processTopup() {
-  const selected = document.querySelector('.topup-nominal.selected');
-  const custom = document.getElementById('custom-topup').value;
-  let amount = 0;
-  if (selected) amount = parseInt(selected.dataset.val);
-  else if (custom) amount = parseInt(custom);
-  if (!amount || amount < 1000) { showToast('⚠️ Masukkan nominal yang valid!'); return; }
-  state.balance = (state.balance || 0) + amount;
-  saveState();
-  updateBalance();
-  addNotification('💰', 'Top Up Berhasil!', `Saldo Rp ${amount.toLocaleString('id')} berhasil ditambahkan.`, '#FFFBEB');
-  closeModal('modal-topup');
-  showToast('💰 Top up Rp ' + amount.toLocaleString('id') + ' berhasil!');
-  document.querySelectorAll('.topup-nominal').forEach(b => b.classList.remove('selected'));
-  document.getElementById('custom-topup').value = '';
-}
-
-function saveProfile() {
-  const name = document.getElementById('edit-name').value.trim();
-  const email = document.getElementById('edit-email').value.trim();
-  if (!name) { showToast('⚠️ Nama tidak boleh kosong!'); return; }
-  state.user = { name, email };
-  saveState();
-  closeModal('modal-profile');
-  renderProfile();
-  showToast('✅ Profil berhasil disimpan!');
-}
-
-function updateBalance() {
-  document.getElementById('balance-display').textContent = 'Rp ' + (state.balance || 0).toLocaleString('id');
-}
-
-function logOut() {
-  if (confirm('Yakin mau keluar?')) {
-    localStorage.removeItem('toldong_state');
-    showToast('👋 Sampai jumpa!');
-    setTimeout(() => location.reload(), 1000);
+  const from = pickMarker.getLatLng();
+  const to = dropMarker.getLatLng();
+  try {
+    const url = `https://router.project-osrm.org/route/v1/driving/${from.lng},${from.lat};${to.lng},${to.lat}?overview=full&geometries=geojson`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.routes && data.routes.length > 0) {
+      const route = data.routes[0];
+      const distKm = route.distance / 1000;
+      const durationMin = Math.round(route.duration / 60);
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = L.geoJSON(route.geometry, { style: { color: '#1a6fc4', weight: 4, opacity: 0.8 } }).addTo(map);
+      map.fitBounds(routeLine.getBounds(), { padding: [20, 20] });
+      updateCalcWithDistance(distKm, durationMin);
+    }
+  } catch(e) {
+    const R = 6371;
+    const dLat = (to.lat - from.lat) * Math.PI / 180;
+    const dLon = (to.lng - from.lng) * Math.PI / 180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(from.lat*Math.PI/180)*Math.cos(to.lat*Math.PI/180)*Math.sin(dLon/2)**2;
+    const distKm = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    updateCalcWithDistance(distKm, null);
   }
 }
 
-// ========== FILTERS ==========
-function filterHistory(filter, btn) {
-  document.querySelectorAll('#page-riwayat .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderHistory(filter);
+function updateCalcWithDistance(distKm, durationMin) {
+  const base = parseInt(document.getElementById('calcTier').value);
+  const dist = Math.round(distKm * 10) / 10;
+  const distFee = Math.round(dist * 3000);
+  const total = base + distFee;
+  const fmt = n => 'Rp ' + n.toLocaleString('id-ID');
+  document.getElementById('calcBaseFee').textContent = fmt(base);
+  document.getElementById('calcDistFee').textContent = '+ ' + fmt(distFee);
+  document.getElementById('calcDistLabel').textContent = `Biaya Jarak (${dist} km)`;
+  document.getElementById('tb1').textContent = fmt(base);
+  document.getElementById('tb2').textContent = fmt(distFee);
+  document.getElementById('tb3').textContent = fmt(total);
+  const el = document.getElementById('priceTotal');
+  el.textContent = fmt(total);
+  el.classList.remove('price-animated');
+  void el.offsetWidth;
+  el.classList.add('price-animated');
+  document.getElementById('priceBreakdown').textContent = `${getTierLabel()} + ${dist} km perjalanan`;
+  const info = document.getElementById('routeInfo');
+  if (durationMin) {
+    info.style.display = 'block';
+    info.innerHTML = `<i class="bi bi-map me-1"></i> Jarak: ${dist} km &nbsp;|&nbsp; <i class="bi bi-clock me-1"></i> Estimasi: ${durationMin} menit`;
+  }
+  window._calcData = { base, distFee, total, dist };
 }
 
-function filterLevel(level, btn) {
-  document.querySelectorAll('#page-kategori .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderCategories(level, '');
+function updateCalc() {
+  const base = parseInt(document.getElementById('calcTier').value);
+  document.getElementById('calcBaseFee').textContent = 'Rp ' + base.toLocaleString('id-ID');
+  document.getElementById('tb1').textContent = 'Rp ' + base.toLocaleString('id-ID');
+  document.getElementById('priceTotal').textContent = 'Rp ' + (base + (window._calcData ? window._calcData.distFee : 0)).toLocaleString('id-ID');
+  document.getElementById('tb3').textContent = 'Rp ' + (base + (window._calcData ? window._calcData.distFee : 0)).toLocaleString('id-ID');
+  document.getElementById('priceBreakdown').textContent = getTierLabel() + ' • Belum termasuk biaya jarak';
 }
 
-function filterCategories(search) {
-  const level = document.querySelector('#page-kategori .tab-btn.active')?.textContent?.toLowerCase() || 'all';
-  const map = { 'semua': 'all', 'easy': 'easy', 'medium': 'medium', 'hard': 'hard', 'expert': 'expert' };
-  renderCategories(map[level] || 'all', search);
+function getTierLabel() {
+  const v = document.getElementById('calcTier').value;
+  const m = {'15000':'Easy','35000':'Medium','75000':'Hard','150000':'Expert'};
+  return 'Tarif dasar ' + (m[v] || 'Medium');
 }
 
-// ========== NOTIFICATIONS ==========
-function addNotification(icon, title, message, color) {
-  state.notifications.push({
-    id: 'n_' + Date.now(),
-    icon, title, message, color,
-    time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
-    read: false,
-  });
-  document.getElementById('notif-dot').style.display = 'block';
-  saveState();
-}
-
-// ========== TOAST ==========
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// ========== TOPUP NOMINALS ==========
-document.querySelectorAll('.topup-nominal').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.topup-nominal').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    document.getElementById('custom-topup').value = '';
-  });
-});
-
-document.getElementById('promo-input')?.addEventListener('input', updatePriceDisplay);
-
-// ========== PWA - Service Worker & Manifest ==========
-const MANIFEST = {
-  name: 'TolonginDong',
-  short_name: 'TolonginDong',
-  description: 'Platform jasa suruh cepat dan praktis',
-  start_url: '/',
-  display: 'standalone',
-  background_color: '#FFFFFF',
-  theme_color: '#2563EB',
-  orientation: 'portrait',
-  icons: [
-    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='48' fill='%232563EB'/%3E%3Ctext x='96' y='130' font-size='100' text-anchor='middle'%3E🤝%3C/text%3E%3C/svg%3E", sizes: '192x192', type: 'image/svg+xml' },
-    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%232563EB'/%3E%3Ctext x='256' y='345' font-size='260' text-anchor='middle'%3E🤝%3C/text%3E%3C/svg%3E", sizes: '512x512', type: 'image/svg+xml' }
-  ]
+// ===== TIER SELECTION =====
+const tierData = {
+  easy: { price: 15000, label: 'Easy', hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
+  medium: { price: 35000, label: 'Medium', hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
+  hard: { price: 75000, label: 'Hard', hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
+  expert: { price: 150000, label: 'Expert', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' }
 };
+let selectedTier = 'medium';
 
-const manifestBlob = new Blob([JSON.stringify(MANIFEST)], { type: 'application/json' });
-const manifestURL = URL.createObjectURL(manifestBlob);
-document.getElementById('manifest-link').setAttribute('href', manifestURL);
+function selectTier(t) { selectedTier = t; document.getElementById('pesanSection').scrollIntoView({behavior:'smooth'}); selectTierForm(t); }
+function selectTierForm(t) {
+  selectedTier = t;
+  ['easy','medium','hard','expert'].forEach(k => {
+    const el = document.getElementById('ts_' + k);
+    if (el) el.classList.toggle('featured', k === t);
+  });
+  document.getElementById('tierHintText').textContent = tierData[t].hint;
+}
+selectTierForm('medium');
 
-// Service Worker inline
-const SW_CODE = `
-const CACHE = 'toldong-v1';
-const ASSETS = [location.href];
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).catch(() => {}));
-  self.skipWaiting();
-});
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
-  self.clients.claim();
-});
-self.addEventListener('fetch', e => {
-  e.respondWith(caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached)));
-});
-self.addEventListener('push', e => {
-  e.waitUntil(self.registration.showNotification('TolonginDong', { body: e.data ? e.data.text() : 'Ada update baru!' }));
-});
-`;
+function goToOrder() { document.getElementById('pesanSection').scrollIntoView({behavior:'smooth'}); }
 
-if ('serviceWorker' in navigator) {
-  const swBlob = new Blob([SW_CODE], { type: 'application/javascript' });
-  const swURL = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swURL, { scope: '/' }).catch(() => {});
+// ===== STEPPER =====
+let currentStep = 1;
+function updateStepper(step) {
+  for (let i = 1; i <= 4; i++) {
+    const si = document.getElementById('si' + i);
+    const circle = si.querySelector('.step-circle');
+    if (i < step) { si.className = 'step-item done'; circle.innerHTML = '<i class="bi bi-check-lg"></i>'; }
+    else if (i === step) { si.className = 'step-item active'; circle.textContent = i; }
+    else { si.className = 'step-item'; circle.textContent = i; }
+    if (i < 4) {
+      const line = document.getElementById('sl' + i);
+      if (line) line.className = 'step-line' + (i < step ? ' done' : '');
+    }
+  }
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('step' + i).className = 'form-step' + (i === step ? ' active' : '');
+  }
 }
 
-// Install prompt
+function nextStep(from) {
+  if (from === 1) {
+    currentStep = 2; updateStepper(2); return;
+  }
+  if (from === 2) {
+    if (!validateStep2()) return;
+    currentStep = 3; updateStepper(3); return;
+  }
+  if (from === 3) {
+    if (!validateStep3()) return;
+    buildPreview();
+    currentStep = 4; updateStepper(4); return;
+  }
+}
+function prevStep(from) {
+  currentStep = from - 1; updateStepper(currentStep);
+}
+
+function validateStep2() {
+  let ok = true;
+  const desc = document.getElementById('taskDesc').value.trim();
+  const pickup = document.getElementById('pickupLoc').value.trim();
+  const drop = document.getElementById('dropLoc').value.trim();
+  const date = document.getElementById('taskDate').value;
+  const time = document.getElementById('taskTime').value;
+  if (desc.length < 20) { showErr('taskDesc','errDesc'); ok = false; } else hideErr('taskDesc','errDesc');
+  if (!pickup) { showErr('pickupLoc','errPickup'); ok = false; } else hideErr('pickupLoc','errPickup');
+  if (!drop) { showErr('dropLoc','errDrop'); ok = false; } else hideErr('dropLoc','errDrop');
+  if (!date) { showErr('taskDate','errDate'); ok = false; } else hideErr('taskDate','errDate');
+  if (!time) { showErr('taskTime','errTime'); ok = false; } else hideErr('taskTime','errTime');
+  return ok;
+}
+function validateStep3() {
+  let ok = true;
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.replace(/\D/g,'');
+  const tc = document.getElementById('agreeTC').checked;
+  if (!name) { showErr('custName','errName'); ok = false; } else hideErr('custName','errName');
+  if (phone.length < 9) { showErr('custPhone','errPhone'); ok = false; } else hideErr('custPhone','errPhone');
+  if (!tc) { document.getElementById('errTC').textContent = '⚠ Harap setujui syarat & ketentuan'; document.getElementById('errTC').style.display='block'; ok=false; }
+  else { document.getElementById('errTC').style.display='none'; }
+  return ok;
+}
+function showErr(fid, eid) {
+  document.getElementById(fid).classList.add('is-invalid');
+  document.getElementById(eid).style.display = 'block';
+}
+function hideErr(fid, eid) {
+  document.getElementById(fid).classList.remove('is-invalid');
+  document.getElementById(eid).style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const ta = document.getElementById('taskDesc');
+  if (ta) ta.addEventListener('input', function() { document.getElementById('charCount').textContent = this.value.length; });
+  const today = new Date().toISOString().split('T')[0];
+  const dateEl = document.getElementById('taskDate');
+  if (dateEl) dateEl.min = today;
+});
+
+function buildPreview() {
+  const tier = selectedTier;
+  const tData = tierData[tier];
+  const desc = document.getElementById('taskDesc').value;
+  const pickup = document.getElementById('pickupLoc').value;
+  const drop = document.getElementById('dropLoc').value;
+  const date = document.getElementById('taskDate').value;
+  const time = document.getElementById('taskTime').value;
+  const note = document.getElementById('taskNote').value;
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('custPhone').value;
+  const distInfo = window._calcData ? ` + Rp${window._calcData.distFee.toLocaleString('id-ID')} (jarak)` : ' + biaya jarak';
+  document.getElementById('orderPreview').innerHTML = `
+    <div class="row g-2" style="font-size:0.9rem;">
+      <div class="col-12 mb-2"><span style="font-weight:700;font-size:1rem;">Ringkasan Pesanan</span></div>
+      <div class="col-5" style="color:var(--text3);">Paket Layanan</div><div class="col-7" style="font-weight:600;">${tData.label} <span style="font-weight:400;font-size:0.83rem;color:var(--text3);">(Rp${tData.price.toLocaleString('id-ID')}${distInfo})</span></div>
+      <div class="col-5" style="color:var(--text3);">Detail Tugas</div><div class="col-7">${desc}</div>
+      <div class="col-5" style="color:var(--text3);">Lokasi Jemput</div><div class="col-7">${pickup}</div>
+      <div class="col-5" style="color:var(--text3);">Lokasi Tujuan</div><div class="col-7">${drop}</div>
+      <div class="col-5" style="color:var(--text3);">Waktu</div><div class="col-7">${date} pukul ${time} WIB</div>
+      ${note ? `<div class="col-5" style="color:var(--text3);">Catatan</div><div class="col-7">${note}</div>` : ''}
+      <div class="col-12"><div style="border-top:1px solid var(--border);margin:8px 0;"></div></div>
+      <div class="col-5" style="color:var(--text3);">Nama Pemesan</div><div class="col-7" style="font-weight:600;">${name}</div>
+      <div class="col-5" style="color:var(--text3);">No. WhatsApp</div><div class="col-7">+62${phone}</div>
+    </div>`;
+}
+
+function sendToWhatsApp() {
+  const tier = selectedTier;
+  const tData = tierData[tier];
+  const desc = document.getElementById('taskDesc').value;
+  const pickup = document.getElementById('pickupLoc').value;
+  const drop = document.getElementById('dropLoc').value;
+  const date = document.getElementById('taskDate').value;
+  const time = document.getElementById('taskTime').value;
+  const note = document.getElementById('taskNote').value;
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('custPhone').value;
+  const distInfo = window._calcData ? `Rp${(window._calcData.total).toLocaleString('id-ID')} (termasuk biaya jarak ${window._calcData.dist} km)` : `Rp${tData.price.toLocaleString('id-ID')} + biaya jarak`;
+  const msg = `🤝 *PESANAN BARU - TOLONGIN DONG*\n\n` +
+    `📦 *Paket:* ${tData.label}\n` +
+    `💰 *Estimasi Biaya:* ${distInfo}\n\n` +
+    `📝 *Detail Tugas:*\n${desc}\n\n` +
+    `📍 *Lokasi Jemput:* ${pickup}\n` +
+    `🏁 *Lokasi Tujuan:* ${drop}\n` +
+    `🕐 *Waktu:* ${date}, ${time} WIB\n` +
+    `${note ? `📌 *Catatan:* ${note}\n\n` : '\n'}` +
+    `👤 *Pemesan:* ${name}\n` +
+    `📱 *WA:* +62${phone}\n\n` +
+    `_Pesan dikirim via tolongindong.id_`;
+  window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function submitMitra() {
+  const name = document.getElementById('mitraName').value;
+  const phone = document.getElementById('mitraPhone').value;
+  const age = document.getElementById('mitraAge').value;
+  const veh = document.getElementById('mitraVehicle').value;
+  const city = document.getElementById('mitraCity').value;
+  const time = document.getElementById('mitraTime').value;
+  const motiv = document.getElementById('mitraMotiv').value;
+  if (!name || !phone || !age || !veh || !city) { alert('Harap lengkapi data wajib terlebih dahulu!'); return; }
+  const msg = `🚀 *PENDAFTARAN MITRA BARU - TOLONGIN DONG*\n\n` +
+    `👤 *Nama:* ${name}\n📱 *WA:* ${phone}\n🎂 *Usia:* ${age} tahun\n` +
+    `🏍 *Kendaraan:* ${veh}\n📍 *Domisili:* ${city}\n⏰ *Ketersediaan:* ${time}\n` +
+    `${motiv ? `\n💬 *Motivasi:*\n${motiv}\n` : ''}\n_Daftar via tolongindong.id_`;
+  window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function showTC(e) { e.preventDefault(); new bootstrap.Modal(document.getElementById('tcModal')).show(); }
+function showPrivacy(e) { e.preventDefault(); new bootstrap.Modal(document.getElementById('privacyModal')).show(); }
+
+// ===== PWA =====
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', e => {
+window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('install-banner').style.display = 'flex';
+  document.getElementById('installBanner').classList.add('show');
 });
-
-function installApp() {
+function installPWA() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      document.getElementById('install-banner').style.display = 'none';
-    });
-  } else {
-    showToast('💡 Gunakan Chrome/Edge untuk install PWA');
+    deferredPrompt.userChoice.then(() => { document.getElementById('installBanner').classList.remove('show'); deferredPrompt = null; });
   }
 }
 
-// ========== INIT ==========
-function init() {
-  loadState();
-  updateBalance();
-  document.getElementById('header-name').textContent = 'Kak ' + (state.user.name || 'User') + '!';
-  renderActiveOrders();
-  if (state.notifications.some(n => !n.read)) {
-    document.getElementById('notif-dot').style.display = 'block';
-  }
-  // Demo notification
-  if (state.notifications.length === 0) {
-    addNotification('🎉', 'Selamat Datang!', 'Halo! Selamat datang di TolonginDong. Gunakan kode TOLONGAKU untuk diskon 30% order pertamamu!', '#EFF6FF');
-    saveState();
-  }
+// Service Worker & Manifest injection
+const manifest = {
+  name: 'Tolongin Dong',
+  short_name: 'TolonginDong',
+  description: 'Platform on-demand errands Banda Aceh',
+  start_url: '/',
+  display: 'standalone',
+  background_color: '#ffffff',
+  theme_color: '#1a6fc4',
+  icons: [
+    { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='38' fill='%231a6fc4'/><text y='140' x='20' font-size='130'>🤝</text></svg>", sizes: '192x192', type: 'image/svg+xml' },
+    { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%231a6fc4'/><text y='380' x='40' font-size='360'>🤝</text></svg>", sizes: '512x512', type: 'image/svg+xml' }
+  ]
+};
+const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+const manifestUrl = URL.createObjectURL(manifestBlob);
+document.getElementById('manifest-link').setAttribute('href', manifestUrl);
+
+// Inline Service Worker
+const swCode = `
+self.addEventListener('install', e => { self.skipWaiting(); });
+self.addEventListener('activate', e => clients.claim());
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
+  e.respondWith(
+    caches.open('tolongin-v1').then(cache =>
+      fetch(e.request).then(res => { cache.put(e.request, res.clone()); return res; })
+      .catch(() => caches.match(e.request))
+    )
+  );
+});`;
+if ('serviceWorker' in navigator) {
+  const swBlob = new Blob([swCode], {type: 'text/javascript'});
+  const swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl).catch(()=>{});
 }
 
-init();
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+  });
+});
 </script>
 </body>
 </html>
