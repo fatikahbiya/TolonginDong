@@ -95,7 +95,8 @@ a:hover { color: var(--primary-dark); }
 [data-theme="dark"] .section-badge { background: rgba(26,111,196,0.2); }
 
 /* TIER CARDS */
-.tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.tier-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+@media(max-width:1200px) { .tier-grid { grid-template-columns: repeat(3, 1fr); } }
 @media(max-width:992px) { .tier-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(max-width:576px) { .tier-grid { grid-template-columns: 1fr; } }
 .tier-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px 20px; cursor: pointer; transition: all 0.25s ease; position: relative; overflow: hidden; }
@@ -166,13 +167,12 @@ a:hover { color: var(--primary-dark); }
 
 /* MITRA FORM */
 #mitraSection { background: var(--primary); color: #fff; }
-#mitraSection .form-control, #mitraSection .form-select { border-radius: 8px; }
 #mitraSection .form-label { color: rgba(255,255,255,0.85); font-size: 0.88rem; }
-#mitraSection .form-control, #mitraSection .form-select { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; }
+#mitraSection .form-control, #mitraSection .form-select { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; border-radius: 8px; }
 #mitraSection .form-control::placeholder { color: rgba(255,255,255,0.5); }
 #mitraSection .form-control:focus, #mitraSection .form-select:focus { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); box-shadow: none; color: #fff; }
-#mitraSection .form-select option { background: #1456a0; }
-.btn-white { background: #fff; color: var(--primary); border: none; border-radius: 8px; font-weight: 700; padding: 12px 28px; cursor: pointer; transition: all var(--transition); }
+#mitraSection .form-select option { background: #1456a0; color: #fff; }
+.btn-white { background: #fff; color: var(--primary); border: none; border-radius: 8px; font-weight: 700; padding: 12px 28px; cursor: pointer; transition: all var(--transition); width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-white:hover { background: #f1f5f9; transform: translateY(-1px); }
 
 /* T&C MODAL */
@@ -199,7 +199,6 @@ footer { background: var(--footer-bg); color: #94a3b8; padding: 60px 0 0; }
 @keyframes slideUp { from { opacity:0; transform: translateX(-50%) translateY(20px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
 
 /* MISC */
-.bg-primary { background: var(--primary) !important; }
 .text-primary { color: var(--primary) !important; }
 .text-accent { color: var(--accent) !important; }
 .divider { height: 1px; background: var(--border); }
@@ -229,11 +228,14 @@ section { scroll-margin-top: 72px; }
         <li class="nav-item"><a class="nav-link" href="#layananSection">Layanan</a></li>
         <li class="nav-item"><a class="nav-link" href="#calcSection">Kalkulator</a></li>
         <li class="nav-item"><a class="nav-link" href="#pesanSection">Pesan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#lokerSection">Loker</a></li>
+        <li class="nav-item"><a class="nav-link" href="#komunitasSection">Komunitas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#donasiSection">Donasi</a></li>
         <li class="nav-item"><a class="nav-link" href="#faqSection">FAQ</a></li>
-        <li class="nav-item"><a class="nav-link" href="#mitraSection">Jadi Mitra</a></li>
       </ul>
       <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
-        <button class="dark-toggle" onclick="toggleDark()" id="darkBtn"><i class="bi bi-moon-fill"></i></button>
+        <!-- FIX: ganti button jadi element yang lebih semantik -->
+        <button class="dark-toggle" onclick="toggleDark()" id="darkBtn" type="button"><i class="bi bi-moon-fill"></i></button>
         <a href="#pesanSection" class="btn-nav-cta nav-link">Pesan Sekarang</a>
       </div>
     </div>
@@ -256,7 +258,7 @@ section { scroll-margin-top: 72px; }
           <div class="hero-stat"><div class="num">100+</div><div class="lbl">Pesanan Selesai</div></div>
           <div class="hero-stat"><div class="num">98%</div><div class="lbl">Kepuasan</div></div>
           <div class="hero-stat"><div class="num">5</div><div class="lbl">Mitra Aktif</div></div>
-          <div class="hero-stat"><div class="num">< 10 mnt</div><div class="lbl">Respons Awal</div></div>
+          <div class="hero-stat"><div class="num">&lt; 10 mnt</div><div class="lbl">Respons Awal</div></div>
         </div>
       </div>
       <div class="col-lg-6 hero-visual d-none d-lg-block">
@@ -266,7 +268,7 @@ section { scroll-margin-top: 72px; }
               <div class="d-flex align-items-center gap-3 mb-2">
                 <div class="task-icon">🛒</div>
                 <div>
-                  <div class="fw-700" style="font-size:0.95rem;font-weight:700;">Belanja Bulanan</div>
+                  <div style="font-size:0.95rem;font-weight:700;">Belanja Bulanan</div>
                   <div style="font-size:0.78rem;color:var(--text3);">Pasar Al Mahirah Banda Aceh</div>
                 </div>
               </div>
@@ -279,7 +281,7 @@ section { scroll-margin-top: 72px; }
               <div class="d-flex align-items-center gap-3 mb-2">
                 <div class="task-icon">🍜</div>
                 <div>
-                  <div class="fw-700" style="font-size:0.95rem;font-weight:700;">Antre Makanan</div>
+                  <div style="font-size:0.95rem;font-weight:700;">Antre Makanan</div>
                   <div style="font-size:0.78rem;color:var(--text3);">Rumah Makan</div>
                 </div>
               </div>
@@ -363,14 +365,16 @@ section { scroll-margin-top: 72px; }
     <div class="text-center mb-5">
       <div class="section-badge">Paket Layanan</div>
       <h2 class="section-title">Semua Jenis Bantuan Ada di Sini</h2>
+      <!-- FIX: konsistenkan tarif dasar dengan kalkulator (Easy=15k, Medium=35k, Hard=75k, Expert=150k) -->
       <p class="section-sub">Tarif transparan berdasarkan tingkat kesulitan tugas + biaya jarak Rp3.000/km</p>
     </div>
     <div class="tier-grid">
       <!-- EASY -->
       <div class="tier-card" style="--tier-color:#22c55e" onclick="selectTier('easy')">
         <div class="tier-badge" style="background:#dcfce7;color:#16a34a;"><i class="bi bi-emoji-smile-fill"></i> Easy</div>
-        <div class="tier-price">Start from Rp 5.000 <span>/ tugas</span></div>
-        <p class="tier-desc">Tugas ringan tidak perlu keahlian khusus, bisa diselesaikan <30 menit.</p>
+        <!-- FIX: harga diseragamkan jadi Rp 15.000 sesuai kalkulator & tierData JS -->
+        <div class="tier-price">Rp 15.000 <span>/ tugas</span></div>
+        <p class="tier-desc">Tugas ringan tidak perlu keahlian khusus, bisa diselesaikan &lt;30 menit.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Beli makanan/minuman</li>
           <li><i class="bi bi-check-circle-fill"></i>Antre di toko</li>
@@ -378,15 +382,15 @@ section { scroll-margin-top: 72px; }
           <li><i class="bi bi-check-circle-fill"></i>Beli obat di apotek</li>
           <li><i class="bi bi-check-circle-fill"></i>Beli pulsa/token listrik</li>
           <li><i class="bi bi-check-circle-fill"></i>Ambil titipan di indomaret</li>
-          <li><i class="bi bi-check-circle-fill"></i>Ambil Paket</li>
+          <li><i class="bi bi-check-circle-fill"></i>Ambil paket</li>
         </ul>
-        <button class="btn-tier" style="background:#dcfce7;color:#16a34a;" onclick="selectTier('easy')">Pilih Easy →</button>
+        <button class="btn-tier" style="background:#dcfce7;color:#16a34a;" onclick="event.stopPropagation();selectTier('easy')">Pilih Easy →</button>
       </div>
       <!-- MEDIUM -->
       <div class="tier-card featured" style="--tier-color:#1a6fc4" onclick="selectTier('medium')">
         <div style="position:absolute;top:16px;right:16px;background:var(--primary);color:#fff;font-size:0.7rem;font-weight:700;border-radius:20px;padding:3px 10px;">POPULER</div>
         <div class="tier-badge" style="background:#dbeafe;color:#1d4ed8;"><i class="bi bi-star-fill"></i> Medium</div>
-        <div class="tier-price">Start from Rp 15.000 <span>/ tugas</span></div>
+        <div class="tier-price">Rp 35.000 <span>/ tugas</span></div>
         <p class="tier-desc">Tugas memerlukan sedikit usaha fisik atau koordinasi multi-lokasi.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Belanja bulanan supermarket/pasar</li>
@@ -396,13 +400,13 @@ section { scroll-margin-top: 72px; }
           <li><i class="bi bi-check-circle-fill"></i>Kirim/ambil laundry</li>
           <li><i class="bi bi-check-circle-fill"></i>Beli oleh-oleh pesanan</li>
         </ul>
-        <button class="btn-tier" style="background:var(--primary);color:#fff;" onclick="selectTier('medium')">Pilih Medium →</button>
+        <button class="btn-tier" style="background:var(--primary);color:#fff;" onclick="event.stopPropagation();selectTier('medium')">Pilih Medium →</button>
       </div>
       <!-- HARD -->
       <div class="tier-card" style="--tier-color:#f97316" onclick="selectTier('hard')">
         <div class="tier-badge" style="background:#ffedd5;color:#c2410c;"><i class="bi bi-lightning-fill"></i> Hard</div>
-        <div class="tier-price">Start from Rp 30.000 <span>/ tugas</span></div>
-        <p class="tier-desc">Tugas butuh waktu >1 jam, tenaga besar, atau keahlian tertentu.</p>
+        <div class="tier-price">Rp 75.000 <span>/ tugas</span></div>
+        <p class="tier-desc">Tugas butuh waktu &gt;1 jam, tenaga besar, atau keahlian tertentu.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Bantu pindahan kos/rumah</li>
           <li><i class="bi bi-check-circle-fill"></i>Bersih-bersih kos</li>
@@ -411,12 +415,12 @@ section { scroll-margin-top: 72px; }
           <li><i class="bi bi-check-circle-fill"></i>Bongkar pasang perabotan</li>
           <li><i class="bi bi-check-circle-fill"></i>Urusan kampus/kantor</li>
         </ul>
-        <button class="btn-tier" style="background:#ffedd5;color:#c2410c;" onclick="selectTier('hard')">Pilih Hard →</button>
+        <button class="btn-tier" style="background:#ffedd5;color:#c2410c;" onclick="event.stopPropagation();selectTier('hard')">Pilih Hard →</button>
       </div>
       <!-- EXPERT -->
       <div class="tier-card" style="--tier-color:#8b5cf6" onclick="selectTier('expert')">
         <div class="tier-badge" style="background:#ede9fe;color:#7c3aed;"><i class="bi bi-award-fill"></i> Expert</div>
-        <div class="tier-price">Start from Rp 50.000 <span>/ tugas</span></div>
+        <div class="tier-price">Rp 150.000 <span>/ tugas</span></div>
         <p class="tier-desc">Tugas spesialis butuh mitra dengan kompetensi & pengalaman khusus.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Bantu jadi MC atau Acara</li>
@@ -427,7 +431,21 @@ section { scroll-margin-top: 72px; }
           <li><i class="bi bi-check-circle-fill"></i>Event kecil / surprise planning</li>
           <li><i class="bi bi-check-circle-fill"></i>Bantuan kerja harian (setengah hari/full)</li>
         </ul>
-        <button class="btn-tier" style="background:#ede9fe;color:#7c3aed;" onclick="selectTier('expert')">Pilih Expert →</button>
+        <button class="btn-tier" style="background:#ede9fe;color:#7c3aed;" onclick="event.stopPropagation();selectTier('expert')">Pilih Expert →</button>
+      </div>
+      <!-- CUSTOM -->
+      <div class="tier-card" style="--tier-color:#0d9488" onclick="selectTier('custom')">
+        <div class="tier-badge" style="background:#ccfbf1;color:#0f766e;"><i class="bi bi-sliders"></i> Custom</div>
+        <div class="tier-price">Nego <span>/ tugas</span></div>
+        <p class="tier-desc">Kebutuhanmu unik dan tidak masuk kategori mana pun? Ceritakan, kami carikan solusinya.</p>
+        <ul class="tier-items list-unstyled">
+          <li><i class="bi bi-check-circle-fill"></i>Tugas unik di luar kategori</li>
+          <li><i class="bi bi-check-circle-fill"></i>Kebutuhan jangka panjang</li>
+          <li><i class="bi bi-check-circle-fill"></i>Paket bundling beberapa tugas</li>
+          <li><i class="bi bi-check-circle-fill"></i>Permintaan khusus lainnya</li>
+          <li><i class="bi bi-check-circle-fill"></i>Harga disepakati bersama admin</li>
+        </ul>
+        <button class="btn-tier" style="background:#ccfbf1;color:#0f766e;" onclick="event.stopPropagation();selectTier('custom')">Diskusi Custom →</button>
       </div>
     </div>
     <p class="text-center mt-4" style="font-size:0.85rem;color:var(--text3);"><i class="bi bi-info-circle"></i> Semua tarif di atas adalah <strong>tarif dasar</strong>. Biaya akhir = Tarif Dasar + Rp3.000/km jarak tempuh mitra.</p>
@@ -444,7 +462,7 @@ section { scroll-margin-top: 72px; }
         <p class="section-sub">Masukkan lokasi jemput & tujuan, dan kami hitung otomatis total biayamu.</p>
       </div>
       <div class="col-md-6 text-md-end">
-        <a href="#pesanSection" class="btn-accent text-decoration-none" style="display:inline-flex;"><i class="bi bi-cart-plus"></i> Langsung Pesan</a>
+        <a href="#pesanSection" class="btn-accent text-decoration-none" style="display:inline-flex;border-radius:8px;"><i class="bi bi-cart-plus"></i> Langsung Pesan</a>
       </div>
     </div>
     <div class="row g-4">
@@ -455,12 +473,14 @@ section { scroll-margin-top: 72px; }
           </div>
           <div class="calc-body">
             <div class="mb-3">
-              <label class="form-label"><i class="bi bi-geo-alt-fill text-success me-1"></i>Paket Layanan</label>
+              <label class="form-label"><i class="bi bi-grid-3x3-gap-fill text-primary me-1"></i>Paket Layanan</label>
+              <!-- FIX: value diseragamkan dengan tierData JS -->
               <select class="form-select" id="calcTier" onchange="updateCalc()">
                 <option value="15000">Easy — Rp 15.000</option>
                 <option value="35000" selected>Medium — Rp 35.000</option>
                 <option value="75000">Hard — Rp 75.000</option>
                 <option value="150000">Expert — Rp 150.000</option>
+                <option value="0">Custom — Negosiasi</option>
               </select>
             </div>
             <div class="mb-3">
@@ -472,7 +492,8 @@ section { scroll-margin-top: 72px; }
               <input type="text" class="form-control" id="calcTo" placeholder="Cth: Suzuya Mall" oninput="geocodeDebounce('to')"/>
             </div>
             <div id="map"></div>
-            <button class="btn btn-primary w-100 mt-3" onclick="calculateRoute()"><i class="bi bi-arrows-angle-expand me-2"></i>Hitung Rute & Biaya</button>
+            <div id="mapStatus" style="display:none;font-size:0.8rem;margin-top:8px;padding:8px 12px;background:var(--bg2);border-radius:8px;border:1px solid var(--border);"></div>
+            <button class="btn btn-primary w-100 mt-3" type="button" onclick="calculateRoute()"><i class="bi bi-arrows-angle-expand me-2"></i>Hitung Rute & Biaya</button>
           </div>
         </div>
       </div>
@@ -506,7 +527,7 @@ section { scroll-margin-top: 72px; }
               <tr><td style="border-top:1px solid var(--border);padding-top:8px;font-weight:700;">Total</td><td id="tb3" style="text-align:right;font-weight:800;color:var(--primary);border-top:1px solid var(--border);padding-top:8px;">Rp 35.000</td></tr>
             </table>
           </div>
-          <button class="btn-accent w-100 mt-3 justify-content-center" onclick="goToOrder()" style="border-radius:10px;padding:14px;font-size:1rem;">
+          <button type="button" class="btn-accent w-100 mt-3 justify-content-center" onclick="goToOrder()" style="border-radius:10px;padding:14px;font-size:1rem;">
             <i class="bi bi-whatsapp"></i> Pesan dengan Biaya Ini
           </button>
         </div>
@@ -554,32 +575,39 @@ section { scroll-margin-top: 72px; }
           <div class="form-step active" id="step1">
             <h5 style="font-weight:700;margin-bottom:1.2rem;"><i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>Pilih Paket Layanan</h5>
             <div class="row g-3" id="tierSelectGrid">
-              <div class="col-6 col-md-3">
+              <div class="col-6 col-md-4 col-lg">
                 <div class="tier-card text-center py-3 px-2" style="--tier-color:#22c55e;cursor:pointer;" id="ts_easy" onclick="selectTierForm('easy')">
                   <div style="font-size:1.8rem;">😊</div>
                   <div style="font-weight:700;font-size:0.92rem;">Easy</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 5.000</div>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="tier-card text-center py-3 px-2 featured" style="--tier-color:#1a6fc4;cursor:pointer;" id="ts_medium" onclick="selectTierForm('medium')">
-                  <div style="font-size:1.8rem;">⭐</div>
-                  <div style="font-weight:700;font-size:0.92rem;">Medium</div>
                   <div style="font-size:0.8rem;color:var(--text3);">Rp 15.000</div>
                 </div>
               </div>
-              <div class="col-6 col-md-3">
+              <div class="col-6 col-md-4 col-lg">
+                <div class="tier-card text-center py-3 px-2 featured" style="--tier-color:#1a6fc4;cursor:pointer;" id="ts_medium" onclick="selectTierForm('medium')">
+                  <div style="font-size:1.8rem;">⭐</div>
+                  <div style="font-weight:700;font-size:0.92rem;">Medium</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 35.000</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-4 col-lg">
                 <div class="tier-card text-center py-3 px-2" style="--tier-color:#f97316;cursor:pointer;" id="ts_hard" onclick="selectTierForm('hard')">
                   <div style="font-size:1.8rem;">⚡</div>
                   <div style="font-weight:700;font-size:0.92rem;">Hard</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 30.000</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 75.000</div>
                 </div>
               </div>
-              <div class="col-6 col-md-3">
+              <div class="col-6 col-md-4 col-lg">
                 <div class="tier-card text-center py-3 px-2" style="--tier-color:#8b5cf6;cursor:pointer;" id="ts_expert" onclick="selectTierForm('expert')">
                   <div style="font-size:1.8rem;">🏆</div>
                   <div style="font-weight:700;font-size:0.92rem;">Expert</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 50.000</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Rp 150.000</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-4 col-lg">
+                <div class="tier-card text-center py-3 px-2" style="--tier-color:#0d9488;cursor:pointer;" id="ts_custom" onclick="selectTierForm('custom')">
+                  <div style="font-size:1.8rem;">⚙️</div>
+                  <div style="font-weight:700;font-size:0.92rem;">Custom</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Negosiasi</div>
                 </div>
               </div>
             </div>
@@ -587,7 +615,7 @@ section { scroll-margin-top: 72px; }
               <i class="bi bi-info-circle text-primary me-2"></i><span id="tierHintText" style="font-size:0.85rem;color:var(--text2);">Pilih paket yang sesuai dengan jenis tugasmu.</span>
             </div>
             <div class="text-end mt-4">
-              <button class="btn btn-primary" onclick="nextStep(1)">Lanjut: Detail Tugas <i class="bi bi-arrow-right ms-1"></i></button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(1)">Lanjut: Detail Tugas <i class="bi bi-arrow-right ms-1"></i></button>
             </div>
           </div>
 
@@ -603,12 +631,13 @@ section { scroll-margin-top: 72px; }
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">Lokasi Penjemputan <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="pickupLoc" placeholder="Cth: Darussalam/>
+                <!-- FIX: tag input yang tidak tertutup dengan benar -->
+                <input type="text" class="form-control" id="pickupLoc" placeholder="Cth: Darussalam, Banda Aceh"/>
                 <div class="invalid-feedback" id="errPickup">Lokasi penjemputan wajib diisi</div>
               </div>
               <div class="col-md-6">
                 <label class="form-label">Lokasi Tujuan <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="dropLoc" placeholder="Cth: jl. T. Panglima Nyak Makam"/>
+                <input type="text" class="form-control" id="dropLoc" placeholder="Cth: Jl. T. Panglima Nyak Makam"/>
                 <div class="invalid-feedback" id="errDrop">Lokasi tujuan wajib diisi</div>
               </div>
             </div>
@@ -629,8 +658,8 @@ section { scroll-margin-top: 72px; }
               <input type="text" class="form-control" id="taskNote" placeholder="Cth: Tolong foto struk belanja ya"/>
             </div>
             <div class="d-flex gap-3 justify-content-between mt-4">
-              <button class="btn btn-outline-secondary" onclick="prevStep(2)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
-              <button class="btn btn-primary" onclick="nextStep(2)">Lanjut: Identitas <i class="bi bi-arrow-right ms-1"></i></button>
+              <button type="button" class="btn btn-outline-secondary" onclick="prevStep(2)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(2)">Lanjut: Identitas <i class="bi bi-arrow-right ms-1"></i></button>
             </div>
           </div>
 
@@ -667,15 +696,16 @@ section { scroll-margin-top: 72px; }
             <div class="mt-3">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="agreeTC"/>
-                <label class="form-check-label" style="font-size:0.88rem;">
+                <label class="form-check-label" style="font-size:0.88rem;" for="agreeTC">
                   Saya setuju dengan <a href="#" onclick="showTC(event)">Syarat & Ketentuan</a> Tolongin Dong
                 </label>
               </div>
-              <div class="invalid-feedback d-block" id="errTC" style="display:none !important;"></div>
+              <!-- FIX: hapus inline display:none !important yang konflik dengan JS -->
+              <div class="text-danger mt-1" id="errTC" style="font-size:0.8rem;display:none;"></div>
             </div>
             <div class="d-flex gap-3 justify-content-between mt-4">
-              <button class="btn btn-outline-secondary" onclick="prevStep(3)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
-              <button class="btn btn-primary" onclick="nextStep(3)">Preview Pesanan <i class="bi bi-arrow-right ms-1"></i></button>
+              <button type="button" class="btn btn-outline-secondary" onclick="prevStep(3)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(3)">Preview Pesanan <i class="bi bi-arrow-right ms-1"></i></button>
             </div>
           </div>
 
@@ -689,8 +719,8 @@ section { scroll-margin-top: 72px; }
               <i class="bi bi-whatsapp me-2"></i><strong>Pesanan akan dikirim otomatis ke WhatsApp admin</strong> untuk dikonfirmasi dan dicarikan mitra terbaik!
             </div>
             <div class="d-flex gap-3 justify-content-between">
-              <button class="btn btn-outline-secondary" onclick="prevStep(4)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
-              <button class="btn-accent" onclick="sendToWhatsApp()" style="border-radius:8px;padding:12px 24px;">
+              <button type="button" class="btn btn-outline-secondary" onclick="prevStep(4)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
+              <button type="button" class="btn-accent" onclick="sendToWhatsApp()" style="border-radius:8px;padding:12px 24px;">
                 <i class="bi bi-whatsapp"></i> Kirim ke WhatsApp Admin
               </button>
             </div>
@@ -718,7 +748,7 @@ section { scroll-margin-top: 72px; }
             <div class="avatar" style="background:#dbeafe;color:#1d4ed8;">RA</div>
             <div>
               <div style="font-weight:700;font-size:0.9rem;">Rania A.</div>
-              <div style="font-size:0.78rem;color:var(--text3);">Mahasiswi UNS • Easy</div>
+              <div style="font-size:0.78rem;color:var(--text3);">Mahasiswi USK • Easy</div>
             </div>
           </div>
         </div>
@@ -728,7 +758,7 @@ section { scroll-margin-top: 72px; }
           <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
           <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Pakai layanan Hard buat bantu pindahan dari kos lama ke kos baru. Mitranya super ramah, hati-hati bawa barang elektronik saya, dan tepat waktu. Worth it banget dengan harga segitu!"</p>
           <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#dcfce7;color:#16a34a;">BP</div>
+            <div class="avatar" style="background:#dcfce7;color:#16a34a;">AQ</div>
             <div>
               <div style="font-weight:700;font-size:0.9rem;">Aqila</div>
               <div style="font-size:0.78rem;color:var(--text3);">Mahasiswa USK • Hard</div>
@@ -741,7 +771,7 @@ section { scroll-margin-top: 72px; }
           <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half-fill"></i></div>
           <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Hamil 8 bulan susah gerak, Tolongin Dong jadi penyelamat harian. Belanja sayur, beli obat, bayar listrik semua bisa dititip. Mitranya juga pengertian & sabaran. Highly recommended!"</p>
           <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#ffedd5;color:#c2410c;">DW</div>
+            <div class="avatar" style="background:#ffedd5;color:#c2410c;">ND</div>
             <div>
               <div style="font-weight:700;font-size:0.9rem;">Nada</div>
               <div style="font-size:0.78rem;color:var(--text3);">Ibu Hamil, Banda Aceh • Medium</div>
@@ -754,7 +784,7 @@ section { scroll-margin-top: 72px; }
           <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
           <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Sebagai pegawai kantoran, Tolongin Dong udah kayak asisten pribadi. Tiap minggu pakai Medium buat belanja kebutuhan bulanan. Admin responsif, laporan foto produk juga dikasih."</p>
           <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#ede9fe;color:#7c3aed;">HK</div>
+            <div class="avatar" style="background:#ede9fe;color:#7c3aed;">AR</div>
             <div>
               <div style="font-weight:700;font-size:0.9rem;">Arkan</div>
               <div style="font-size:0.78rem;color:var(--text3);">Karyawan Swasta • Medium</div>
@@ -765,9 +795,9 @@ section { scroll-margin-top: 72px; }
       <div class="col-md-6 col-lg-4">
         <div class="testimoni-card">
           <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Pakai Expert buat urusin surprise ultah adek. beli kue,dekorasi sampe MC semuanya dihandle. Hasilnya melebihi ekspektasi! Gak nyangka bisa seprofesional itu."</p>
+          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Pakai Expert buat urusin surprise ultah adek. Beli kue, dekorasi sampe MC semuanya dihandle. Hasilnya melebihi ekspektasi! Gak nyangka bisa seprofesional itu."</p>
           <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#fce7f3;color:#be185d;">FS</div>
+            <div class="avatar" style="background:#fce7f3;color:#be185d;">AD</div>
             <div>
               <div style="font-weight:700;font-size:0.9rem;">Adam</div>
               <div style="font-size:0.78rem;color:var(--text3);">Pelajar SMA • Expert</div>
@@ -801,7 +831,7 @@ section { scroll-margin-top: 72px; }
         <h2 class="section-title">Ada Pertanyaan?</h2>
         <p style="color:var(--text3);line-height:1.7;margin-top:0.5rem;">Kami menjawab pertanyaan paling sering ditanya seputar layanan Tolongin Dong.</p>
         <div style="margin-top:1.5rem;">
-          <a href="#pesanSection" class="btn-accent text-decoration-none d-inline-flex" style="border-radius:8px;padding:12px 20px;"><i class="bi bi-chat-dots-fill"></i> Tanya ke Admin WA</a>
+          <a href="https://wa.me/6282379078920" target="_blank" class="btn-accent text-decoration-none d-inline-flex" style="border-radius:8px;padding:12px 20px;"><i class="bi bi-chat-dots-fill"></i> Tanya ke Admin WA</a>
         </div>
       </div>
       <div class="col-lg-8">
@@ -860,83 +890,383 @@ section { scroll-margin-top: 72px; }
   </div>
 </section>
 
-<!-- MITRA REGISTRATION -->
+<!-- LOKER / INFO MITRA -->
+<section class="py-5" id="lokerSection" style="background:var(--bg2);">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <div class="section-badge">Lowongan Terbuka</div>
+      <h2 class="section-title">Kami Lagi Buka Loker Nih! 🔥</h2>
+      <p class="section-sub">Tolongin Dong membuka kesempatan buat kamu yang mau punya penghasilan tambahan fleksibel di Banda Aceh</p>
+    </div>
+    <div class="row g-4 mb-5">
+      <!-- Posisi 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card" style="border-top:3px solid #22c55e;">
+          <div style="display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#16a34a;border-radius:20px;padding:4px 12px;font-size:0.75rem;font-weight:700;margin-bottom:1rem;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block;animation:ping 1.5s infinite;"></span> BUKA
+          </div>
+          <h5 style="font-weight:700;font-size:1rem;color:var(--text);">Tasker Easy & Medium</h5>
+          <p style="font-size:0.85rem;color:var(--text3);line-height:1.7;margin:0.5rem 0 1rem;">Cocok buat mahasiswa atau siapapun yang punya waktu luang. Kerjakan tugas titip beli, antar barang, fotokopi, dan sejenisnya.</p>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:0.83rem;color:var(--text2);">
+            <div><i class="bi bi-clock me-2" style="color:var(--primary);"></i>Fleksibel, minimal 2 jam/hari</div>
+            <div><i class="bi bi-geo-alt me-2" style="color:var(--primary);"></i>Area Banda Aceh & sekitarnya</div>
+            <div><i class="bi bi-scooter me-2" style="color:var(--primary);"></i>Wajib punya kendaraan</div>
+            <div><i class="bi bi-cash-coin me-2" style="color:var(--primary);"></i>Komisi per tugas + tips</div>
+          </div>
+        </div>
+      </div>
+      <!-- Posisi 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card" style="border-top:3px solid #1a6fc4;">
+          <div style="display:inline-flex;align-items:center;gap:6px;background:#dbeafe;color:#1d4ed8;border-radius:20px;padding:4px 12px;font-size:0.75rem;font-weight:700;margin-bottom:1rem;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#1d4ed8;display:inline-block;animation:ping 1.5s infinite;"></span> BUKA
+          </div>
+          <h5 style="font-weight:700;font-size:1rem;color:var(--text);">Tasker Hard & Expert</h5>
+          <p style="font-size:0.85rem;color:var(--text3);line-height:1.7;margin:0.5rem 0 1rem;">Buat kamu yang punya keahlian khusus — bisa bantu pindahan, urusan kampus/kantor, event organizing, atau tugas teknis lainnya.</p>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:0.83rem;color:var(--text2);">
+            <div><i class="bi bi-clock me-2" style="color:var(--primary);"></i>Part-time atau full-time</div>
+            <div><i class="bi bi-geo-alt me-2" style="color:var(--primary);"></i>Area Banda Aceh & Aceh Besar</div>
+            <div><i class="bi bi-star me-2" style="color:var(--primary);"></i>Ada keahlian/pengalaman relevan</div>
+            <div><i class="bi bi-cash-coin me-2" style="color:var(--primary);"></i>Tarif lebih tinggi + bonus performa</div>
+          </div>
+        </div>
+      </div>
+      <!-- Posisi 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="testimoni-card" style="border-top:3px solid #f97316;">
+          <div style="display:inline-flex;align-items:center;gap:6px;background:#ffedd5;color:#c2410c;border-radius:20px;padding:4px 12px;font-size:0.75rem;font-weight:700;margin-bottom:1rem;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#c2410c;display:inline-block;animation:ping 1.5s infinite;"></span> BUKA
+          </div>
+          <h5 style="font-weight:700;font-size:1rem;color:var(--text);">Admin & CS (Online)</h5>
+          <p style="font-size:0.85rem;color:var(--text3);line-height:1.7;margin:0.5rem 0 1rem;">Handle pesanan masuk, koordinasi dengan mitra, dan pastikan pelanggan puas. Cocok buat yang aktif di HP dan suka komunikasi.</p>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:0.83rem;color:var(--text2);">
+            <div><i class="bi bi-phone me-2" style="color:var(--accent);"></i>Kerja via WhatsApp & media sosial</div>
+            <div><i class="bi bi-house me-2" style="color:var(--accent);"></i>Bisa dari rumah / kos</div>
+            <div><i class="bi bi-chat-dots me-2" style="color:var(--accent);"></i>Komunikatif & responsif</div>
+            <div><i class="bi bi-cash-coin me-2" style="color:var(--accent);"></i>Gaji tetap + insentif bulanan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keuntungan jadi mitra -->
+    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:2.5rem;">
+      <h5 style="font-weight:700;text-align:center;margin-bottom:1.5rem;color:var(--text);">🎁 Keuntungan Jadi Bagian Tolongin Dong</h5>
+      <div class="row g-3 text-center">
+        <div class="col-6 col-md-3">
+          <div style="font-size:2rem;margin-bottom:0.4rem;">💰</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--text);">Penghasilan Fleksibel</div>
+          <div style="font-size:0.8rem;color:var(--text3);">Komisi per tugas, makin banyak order makin besar cuan</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div style="font-size:2rem;margin-bottom:0.4rem;">🕐</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--text);">Jadwal Bebas</div>
+          <div style="font-size:0.8rem;color:var(--text3);">Kamu yang atur kapan mau aktif dan istirahat</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div style="font-size:2rem;margin-bottom:0.4rem;">🤝</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--text);">Support Penuh</div>
+          <div style="font-size:0.8rem;color:var(--text3);">Admin siap bantu 7 hari seminggu kalau ada kendala</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div style="font-size:2rem;margin-bottom:0.4rem;">📈</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--text);">Berkembang Bersama</div>
+          <div style="font-size:0.8rem;color:var(--text3);">Ikut tumbuh bareng platform yang terus berkembang</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA daftar -->
+    <div class="text-center">
+      <p style="color:var(--text3);font-size:0.95rem;margin-bottom:1.2rem;">Tertarik? Yuk daftar sekarang — prosesnya cepat dan mudah lewat Google Form kami! 🚀</p>
+      <a href="https://bit.ly/DaftarJadiMitraTolonginDong" target="_blank" class="btn-accent text-decoration-none" style="border-radius:10px;padding:14px 36px;font-size:1rem;display:inline-flex;align-items:center;gap:8px;">
+        <i class="bi bi-box-arrow-up-right"></i> Daftar Jadi Mitra Sekarang
+      </a>
+      <p style="font-size:0.78rem;color:var(--text3);margin-top:0.75rem;"><i class="bi bi-clock me-1"></i>Proses seleksi 1–3 hari kerja. Admin akan menghubungi via WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MITRA REGISTRATION (ringkas, redirect ke GForm) -->
 <section class="py-5" id="mitraSection">
   <div class="container py-4">
     <div class="row align-items-center g-5">
-      <div class="col-lg-5">
-        <div style="display:inline-flex;background:rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:3px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;margin-bottom:0.8rem;">DAFTAR JADI MITRA</div>
-        <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:1rem;">Bergabung jadi Tasker Tolongin Dong!</h2>
-        <p style="color:rgba(255,255,255,0.8);line-height:1.7;">Jadikan waktumu lebih produktif dan menghasilkan. Kamu yang punya motor, smartphone, dan semangat melayani — kami butuh kamu!</p>
-        <div class="row g-3 mt-2">
+      <div class="col-lg-6">
+        <div style="display:inline-flex;background:rgba(255,255,255,0.15);color:#fff;border-radius:6px;padding:3px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;margin-bottom:0.8rem;">GABUNG TIM KAMI</div>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:1rem;">Jadikan Harimu Lebih Produktif & Menghasilkan</h2>
+        <p style="color:rgba(255,255,255,0.82);line-height:1.7;margin-bottom:1.5rem;">Bergabunglah bersama mitra-mitra aktif kami. Tidak perlu modal besar — cukup semangat, kendaraan, dan HP kamu sudah cukup untuk mulai!</p>
+        <div class="row g-3 mb-4">
           <div class="col-6">
-            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
               <div style="font-size:1.6rem;font-weight:800;color:#fff;">Rp 5jt+</div>
-              <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Potensi penghasilan/bln</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);">Potensi penghasilan/bln</div>
             </div>
           </div>
           <div class="col-6">
-            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;">
-              <div style="font-size:1.6rem;font-weight:800;color:#fff;">Fleksibel</div>
-              <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Atur jadwalmu sendiri</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:16px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
+              <div style="font-size:1.6rem;font-weight:800;color:#fff;">5 Mitra</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);">Aktif saat ini</div>
             </div>
           </div>
         </div>
-        <ul style="list-style:none;padding:0;margin-top:1rem;">
-          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Komisi kompetitif + tips dari pelanggan</li>
-          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Tidak perlu modal — cukup motor & HP</li>
-          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Dukungan penuh dari admin 7 hari/mgg</li>
-          <li style="padding:6px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Asuransi dasar untuk setiap penugasan</li>
+        <ul style="list-style:none;padding:0;">
+          <li style="padding:7px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;border-bottom:1px solid rgba(255,255,255,0.1);"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Komisi kompetitif + tips langsung dari pelanggan</li>
+          <li style="padding:7px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;border-bottom:1px solid rgba(255,255,255,0.1);"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Tidak perlu modal — cukup motor &amp; HP</li>
+          <li style="padding:7px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;border-bottom:1px solid rgba(255,255,255,0.1);"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Dukungan penuh dari admin 7 hari/minggu</li>
+          <li style="padding:7px 0;color:rgba(255,255,255,0.85);font-size:0.9rem;"><i class="bi bi-check-circle-fill me-2" style="color:#4ade80;"></i>Komunitas mitra yang solid dan saling support</li>
         </ul>
       </div>
-      <div class="col-lg-7">
-        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius);padding:28px;border:1px solid rgba(255,255,255,0.15);">
-          <h5 style="color:#fff;font-weight:700;margin-bottom:1.2rem;">Formulir Pendaftaran Mitra</h5>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Nama Lengkap</label>
-              <input type="text" class="form-control" id="mitraName" placeholder="Nama sesuai KTP"/>
+      <div class="col-lg-6">
+        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius);padding:36px;border:1px solid rgba(255,255,255,0.2);text-align:center;">
+          <div style="font-size:4rem;margin-bottom:1rem;">🤝</div>
+          <h4 style="color:#fff;font-weight:800;margin-bottom:0.75rem;">Siap Bergabung?</h4>
+          <p style="color:rgba(255,255,255,0.75);font-size:0.92rem;line-height:1.7;margin-bottom:1.5rem;">Pendaftaran mitra dilakukan lewat Google Form kami. Isi data diri dan profil singkatmu — admin akan menghubungi via WhatsApp dalam 1–3 hari kerja.</p>
+
+          <!-- Langkah daftar -->
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.75rem;text-align:left;">
+            <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:0.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+              <span style="color:rgba(255,255,255,0.85);font-size:0.88rem;">Klik tombol di bawah → isi Google Form</span>
             </div>
-            <div class="col-md-6">
-              <label class="form-label">No. WhatsApp Aktif</label>
-              <input type="tel" class="form-control" id="mitraPhone" placeholder="08xxxxxxxxxx"/>
+            <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:0.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+              <span style="color:rgba(255,255,255,0.85);font-size:0.88rem;">Tim kami review & hubungi via WA</span>
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Usia</label>
-              <input type="number" class="form-control" id="mitraAge" placeholder="Cth: 22" min="17" max="60"/>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Kendaraan yang Dimiliki</label>
-              <select class="form-select" id="mitraVehicle">
-                <option value="">Pilih...</option>
-                <option>Motor</option>
-                <option>Mobil</option>
-                <option>Motor & Mobil</option>
-                <option>Tidak punya kendaraan</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Domisili Saat Ini</label>
-              <input type="text" class="form-control" id="mitraCity" placeholder="Cth: Ulee Kareng, Kota Banda Aceh"/>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Ketersediaan Waktu</label>
-              <select class="form-select" id="mitraTime">
-                <option value="">Pilih...</option>
-                <option>Full-time (8+ jam/hari)</option>
-                <option>Part-time (4-8 jam/hari)</option>
-                <option>Weekend saja</option>
-                <option>Fleksibel sesuai pesanan</option>
-              </select>
-            </div>
-            <div class="col-12">
-              <label class="form-label">Motivasi / Keahlian Khusus (opsional)</label>
-              <textarea class="form-control" id="mitraMotiv" rows="3" placeholder="Cth: Saya memiliki pengalaman sebagai kurir 2 tahun, familiar dengan area Banda Aceh..."></textarea>
+            <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:0.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+              <span style="color:rgba(255,255,255,0.85);font-size:0.88rem;">Onboarding singkat → langsung bisa terima order!</span>
             </div>
           </div>
-          <button class="btn-white mt-4 w-100" onclick="submitMitra()">
-            <i class="bi bi-send-fill me-2"></i> Kirim Pendaftaran via WhatsApp
-          </button>
+
+          <a href="https://bit.ly/DaftarJadiMitraTolonginDong" target="_blank" class="btn-white text-decoration-none" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:10px;font-size:1rem;font-weight:700;">
+            <i class="bi bi-box-arrow-up-right"></i> Daftar via Google Form
+          </a>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:0.75rem;">Gratis. Tidak ada biaya pendaftaran apapun.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KOMUNITAS -->
+<section class="py-5" id="komunitasSection" style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1a6fc4 100%);">
+  <div class="container py-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div style="display:inline-flex;background:rgba(255,255,255,0.12);color:#93c5fd;border-radius:6px;padding:3px 12px;font-size:0.78rem;font-weight:700;letter-spacing:0.06em;margin-bottom:1rem;">🌐 KOMUNITAS</div>
+        <h2 style="font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:1rem;">Gabung Komunitas Tolongin Dong!</h2>
+        <p style="color:rgba(255,255,255,0.75);line-height:1.8;font-size:0.97rem;margin-bottom:1.5rem;">Dapatkan info terbaru soal layanan, promo, lowongan mitra, dan tips produktivitas langsung di genggamanmu. Komunitas kami aktif dan ramah! 🤝</p>
+
+        <!-- Benefit komunitas -->
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:2rem;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🔔</div>
+            <div style="color:rgba(255,255,255,0.85);font-size:0.9rem;"><strong style="color:#fff;">Info Update Terbaru</strong> — promo, fitur baru, dan pengumuman penting</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">💸</div>
+            <div style="color:rgba(255,255,255,0.85);font-size:0.9rem;"><strong style="color:#fff;">Promo Eksklusif Member</strong> — diskon dan voucher khusus anggota komunitas</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📢</div>
+            <div style="color:rgba(255,255,255,0.85);font-size:0.9rem;"><strong style="color:#fff;">Loker & Kesempatan</strong> — info mitra baru dan peluang kerja sama</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🗣️</div>
+            <div style="color:rgba(255,255,255,0.85);font-size:0.9rem;"><strong style="color:#fff;">Diskusi & Aspirasi</strong> — kasih masukan langsung ke tim kami</div>
+          </div>
+        </div>
+
+        <!-- Stats komunitas -->
+        <div style="display:flex;gap:24px;flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <div style="font-size:1.8rem;font-weight:800;color:#fff;">200+</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Member Aktif</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.8rem;font-weight:800;color:#fff;">Daily</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Update Rutin</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.8rem;font-weight:800;color:#fff;">Free</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Gratis Selamanya</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius);padding:32px;">
+          <h5 style="color:#fff;font-weight:700;margin-bottom:0.5rem;text-align:center;">Pilih Platform Favoritmu</h5>
+          <p style="color:rgba(255,255,255,0.55);font-size:0.83rem;text-align:center;margin-bottom:1.5rem;">Semua grup aktif dan dimoderasi admin 🛡️</p>
+
+          <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <!-- WhatsApp Group -->
+            <a href="https://wa.me/6282379078920?text=Halo%20admin%2C%20saya%20mau%20join%20komunitas%20WhatsApp%20Tolongin%20Dong!" target="_blank"
+              style="display:flex;align-items:center;gap:14px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.2s;"
+              onmouseover="this.style.background='rgba(37,211,102,0.25)'" onmouseout="this.style.background='rgba(37,211,102,0.15)'">
+              <div style="width:44px;height:44px;background:#25d366;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-whatsapp" style="color:#fff;font-size:1.3rem;"></i>
+              </div>
+              <div style="flex:1;">
+                <div style="color:#fff;font-weight:700;font-size:0.95rem;">WhatsApp Group</div>
+                <div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Chat langsung, respons cepat</div>
+              </div>
+              <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/tolongindong" target="_blank"
+              style="display:flex;align-items:center;gap:14px;background:rgba(225,48,108,0.15);border:1px solid rgba(225,48,108,0.3);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.2s;"
+              onmouseover="this.style.background='rgba(225,48,108,0.25)'" onmouseout="this.style.background='rgba(225,48,108,0.15)'">
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-instagram" style="color:#fff;font-size:1.3rem;"></i>
+              </div>
+              <div style="flex:1;">
+                <div style="color:#fff;font-weight:700;font-size:0.95rem;">Instagram</div>
+                <div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Update konten, tips & promo visual</div>
+              </div>
+              <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
+            </a>
+
+            <!-- TikTok -->
+            <a href="https://tiktok.com/@tolongindong" target="_blank"
+              style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.2s;"
+              onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+              <div style="width:44px;height:44px;background:#010101;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-tiktok" style="color:#fff;font-size:1.2rem;"></i>
+              </div>
+              <div style="flex:1;">
+                <div style="color:#fff;font-weight:700;font-size:0.95rem;">TikTok</div>
+                <div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Behind the scenes & konten seru</div>
+              </div>
+              <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
+            </a>
+
+            <!-- Telegram (opsional) -->
+            <a href="https://t.me/tolongindong" target="_blank"
+              style="display:flex;align-items:center;gap:14px;background:rgba(0,136,204,0.15);border:1px solid rgba(0,136,204,0.3);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.2s;"
+              onmouseover="this.style.background='rgba(0,136,204,0.25)'" onmouseout="this.style.background='rgba(0,136,204,0.15)'">
+              <div style="width:44px;height:44px;background:#0088cc;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="bi bi-telegram" style="color:#fff;font-size:1.3rem;"></i>
+              </div>
+              <div style="flex:1;">
+                <div style="color:#fff;font-weight:700;font-size:0.95rem;">Telegram Channel</div>
+                <div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Notifikasi loker & info penting</div>
+              </div>
+              <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
+            </a>
+
+          </div>
+
+          <p style="font-size:0.73rem;color:rgba(255,255,255,0.35);text-align:center;margin-top:1.25rem;margin-bottom:0;">
+            <i class="bi bi-shield-check me-1"></i>Komunitas bebas spam, dimoderasi tim Tolongin Dong
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONASI -->
+<section class="py-5" id="donasiSection" style="background:var(--bg);">
+  <div class="container py-4">
+    <div class="text-center mb-5">
+      <div class="section-badge" style="background:rgba(251,191,36,0.15);color:#d97706;">❤️ Dukung Kami</div>
+      <h2 class="section-title">Bantu Tolongin Dong Terus Berkembang</h2>
+      <p class="section-sub">Tolongin Dong dibangun dengan penuh semangat untuk membantu sesama. Donasi kamu — sebesar apapun — sangat berarti untuk kami terus beroperasi dan berkembang.</p>
+    </div>
+    <div class="row justify-content-center g-4">
+      <!-- Card donasi utama -->
+      <div class="col-lg-7">
+        <div style="background:linear-gradient(135deg,#fef3c7,#fff7ed);border:1px solid #fde68a;border-radius:var(--radius);padding:32px;text-align:center;">
+          <div style="font-size:3.5rem;margin-bottom:1rem;">🙏</div>
+          <h4 style="font-weight:800;color:#92400e;margin-bottom:0.5rem;">Terima kasih sudah peduli!</h4>
+          <p style="color:#b45309;font-size:0.95rem;line-height:1.7;max-width:480px;margin:0 auto 1.5rem;">
+            Setiap donasi akan digunakan untuk pengembangan platform, meningkatkan layanan mitra, dan memastikan Tolongin Dong bisa terus hadir untuk masyarakat Banda Aceh.
+          </p>
+
+          <!-- Placeholder rekening — isi nanti -->
+          <div style="background:#fff;border:1.5px dashed #fbbf24;border-radius:12px;padding:24px;margin-bottom:1.25rem;">
+            <div style="font-size:0.78rem;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;">Info Rekening Donasi</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+
+              <!-- Rekening 1 — isi nanti -->
+              <div style="background:#fef9f0;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:36px;height:36px;background:#1a6fc4;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.75rem;flex-shrink:0;">BSI</div>
+                  <div style="text-align:left;">
+                    <div style="font-weight:700;font-size:0.9rem;color:#1e293b;" id="donasi-rek1">— Segera diisi —</div>
+                    <div style="font-size:0.78rem;color:#64748b;">a.n. <span id="donasi-an1">Tolongin Dong</span></div>
+                  </div>
+                </div>
+                <button type="button" onclick="copyRek('donasi-rek1')" style="background:#1a6fc4;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.78rem;font-weight:600;cursor:pointer;white-space:nowrap;">
+                  <i class="bi bi-clipboard me-1"></i>Salin
+                </button>
+              </div>
+
+              <!-- Rekening 2 — isi nanti -->
+              <div style="background:#fef9f0;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:36px;height:36px;background:#22c55e;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.65rem;flex-shrink:0;">GoPay</div>
+                  <div style="text-align:left;">
+                    <div style="font-weight:700;font-size:0.9rem;color:#1e293b;" id="donasi-rek2">— Segera diisi —</div>
+                    <div style="font-size:0.78rem;color:#64748b;">a.n. <span id="donasi-an2">Tolongin Dong</span></div>
+                  </div>
+                </div>
+                <button type="button" onclick="copyRek('donasi-rek2')" style="background:#22c55e;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.78rem;font-weight:600;cursor:pointer;white-space:nowrap;">
+                  <i class="bi bi-clipboard me-1"></i>Salin
+                </button>
+              </div>
+
+            </div>
+            <p style="font-size:0.75rem;color:#b45309;margin-top:1rem;margin-bottom:0;"><i class="bi bi-info-circle me-1"></i>Info rekening akan segera kami update. Hubungi admin WA untuk konfirmasi donasi.</p>
+          </div>
+
+          <a href="https://wa.me/6282379078920?text=Halo%20admin%2C%20saya%20ingin%20berdonasi%20untuk%20Tolongin%20Dong%20%F0%9F%99%8F" target="_blank"
+            style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;border-radius:10px;padding:12px 24px;font-weight:700;font-size:0.95rem;text-decoration:none;transition:all 0.2s;">
+            <i class="bi bi-whatsapp"></i> Konfirmasi Donasi via WA
+          </a>
+        </div>
+      </div>
+
+      <!-- Kenapa donasi -->
+      <div class="col-lg-5">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px;height:100%;">
+          <h6 style="font-weight:700;color:var(--text);margin-bottom:1.2rem;"><i class="bi bi-heart-fill me-2" style="color:#ef4444;"></i>Donasimu untuk Apa?</h6>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="font-size:1.5rem;flex-shrink:0;">🌐</div>
+              <div>
+                <div style="font-weight:600;font-size:0.9rem;color:var(--text);">Pengembangan Platform</div>
+                <div style="font-size:0.82rem;color:var(--text3);line-height:1.6;">Biaya server, domain, dan pengembangan fitur baru agar layanan makin oke</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="font-size:1.5rem;flex-shrink:0;">🎓</div>
+              <div>
+                <div style="font-weight:600;font-size:0.9rem;color:var(--text);">Pelatihan Mitra</div>
+                <div style="font-size:0.82rem;color:var(--text3);line-height:1.6;">Meningkatkan skill dan kualitas layanan para mitra kita di lapangan</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="font-size:1.5rem;flex-shrink:0;">📣</div>
+              <div>
+                <div style="font-weight:600;font-size:0.9rem;color:var(--text);">Promosi & Jangkauan</div>
+                <div style="font-size:0.82rem;color:var(--text3);line-height:1.6;">Memperluas jangkauan layanan ke lebih banyak wilayah di Aceh</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="font-size:1.5rem;flex-shrink:0;">💪</div>
+              <div>
+                <div style="font-weight:600;font-size:0.9rem;color:var(--text);">Keberlangsungan Layanan</div>
+                <div style="font-size:0.82rem;color:var(--text3);line-height:1.6;">Memastikan Tolongin Dong tetap bisa melayani masyarakat setiap harinya</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--bg2);border-radius:10px;padding:14px;margin-top:1.5rem;text-align:center;">
+            <div style="font-size:0.82rem;color:var(--text3);">Tidak ada jumlah minimal. Semua donasi diterima dengan tangan terbuka. 🤗</div>
+          </div>
         </div>
       </div>
     </div>
@@ -953,7 +1283,8 @@ section { scroll-margin-top: 72px; }
         <div class="footer-social mt-3">
           <a href="#"><i class="bi bi-instagram"></i></a>
           <a href="#"><i class="bi bi-tiktok"></i></a>
-          <a href="#"><i class="bi bi-whatsapp"></i></a>
+          <!-- FIX: link WA footer konsisten dengan nomor yang benar -->
+          <a href="https://wa.me/6282379078920" target="_blank"><i class="bi bi-whatsapp"></i></a>
           <a href="#"><i class="bi bi-twitter-x"></i></a>
         </div>
       </div>
@@ -970,18 +1301,20 @@ section { scroll-margin-top: 72px; }
       <div class="col-md-2">
         <div class="footer-heading">Perusahaan</div>
         <ul class="footer-links">
-          <li><a href="#mitraSection">Jadi Mitra</a></li>
+          <li><a href="#lokerSection">Loker / Mitra</a></li>
+          <li><a href="#mitraSection">Daftar Mitra</a></li>
+          <li><a href="#komunitasSection">Komunitas</a></li>
+          <li><a href="#donasiSection">Donasi</a></li>
           <li><a href="#faqSection">FAQ</a></li>
-          <li><a href="#" onclick="showTC(event)">Syarat & Ketentuan</a></li>
+          <li><a href="#" onclick="showTC(event)">Syarat &amp; Ketentuan</a></li>
           <li><a href="#" onclick="showPrivacy(event)">Kebijakan Privasi</a></li>
-          <li><a href="#">Tentang Kami</a></li>
         </ul>
       </div>
       <div class="col-md-4">
-        <div class="footer-heading">Kontak & Jam Operasional</div>
+        <div class="footer-heading">Kontak &amp; Jam Operasional</div>
         <ul class="footer-links">
-          <li><i class="bi bi-whatsapp me-2" style="color:var(--accent)"></i><a href="https://wa.me/6282379078920">+62 82379078920</a></li>
-          <li><i class="bi bi-envelope me-2" style="color:var(--accent)"></i><a href="mailto:tolongindong13@gmail.com">tolongindong13@gmail.com</a></li>
+          <li><i class="bi bi-whatsapp me-2" style="color:var(--accent)"></i><a href="https://wa.me/6282379078920" target="_blank">+62 823-7907-8920</a></li>
+          <li><i class="bi bi-envelope me-2" style="color:var(--accent)"></i><a href="/cdn-cgi/l/email-protection#592d363536373e30373d36373e686a193e34383035773a3634"><span class="__cf_email__" data-cfemail="03776c6f6c6d646a6d676c6d64323043646e626a6f2d606c6e">[email&#160;protected]</span></a></li>
           <li><i class="bi bi-geo-alt me-2" style="color:var(--accent)"></i>Banda Aceh, Aceh</li>
           <li style="margin-top:8px;"><i class="bi bi-clock me-2" style="color:var(--accent)"></i>Senin – Minggu: 06.00–00.00 WIB</li>
         </ul>
@@ -991,7 +1324,7 @@ section { scroll-margin-top: 72px; }
       <div class="row align-items-center">
         <div class="col-md-6">© 2026 Tolongin Dong. Hak Cipta Dilindungi.</div>
         <div class="col-md-6 text-md-end" style="font-size:0.8rem;">
-          <a href="#" onclick="showTC(event)" style="color:#64748b;margin-right:16px;">Syarat & Ketentuan</a>
+          <a href="#" onclick="showTC(event)" style="color:#64748b;margin-right:16px;">Syarat &amp; Ketentuan</a>
           <a href="#" onclick="showPrivacy(event)" style="color:#64748b;">Kebijakan Privasi</a>
         </div>
       </div>
@@ -1004,25 +1337,25 @@ section { scroll-margin-top: 72px; }
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title fw-700"><i class="bi bi-file-text me-2 text-primary"></i>Syarat & Ketentuan</h5>
+        <h5 class="modal-title" style="font-weight:700;"><i class="bi bi-file-text me-2 text-primary"></i>Syarat &amp; Ketentuan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" style="font-size:0.9rem;line-height:1.8;color:var(--text2);">
-        <h6 class="fw-700 mt-2">1. Batasan Tanggung Jawab atas Barang</h6>
+        <h6 style="font-weight:700;" class="mt-2">1. Batasan Tanggung Jawab atas Barang</h6>
         <p>Tolongin Dong bertindak sebagai perantara antara pengguna dan mitra tasker. Kami tidak bertanggung jawab atas kerusakan atau kehilangan barang yang terjadi akibat kondisi barang itu sendiri, kemasan yang tidak memadai, atau force majeure. Untuk barang bernilai tinggi (elektronik, perhiasan, dokumen penting), kami mewajibkan pengguna untuk mendokumentasikan kondisi barang sebelum penyerahan kepada mitra.</p>
-        <h6 class="fw-700 mt-3">2. Kompensasi Kerusakan/Kehilangan</h6>
+        <h6 style="font-weight:700;" class="mt-3">2. Kompensasi Kerusakan/Kehilangan</h6>
         <p>Dalam hal kerusakan/kehilangan yang terbukti merupakan kelalaian mitra, Tolongin Dong akan memberikan kompensasi maksimal sebesar 5x (lima kali) tarif layanan yang dibayarkan, atau sebesar nilai barang yang dapat dibuktikan dengan bukti pembelian, mana yang lebih kecil. Klaim harus diajukan dalam 24 jam setelah tugas selesai.</p>
-        <h6 class="fw-700 mt-3">3. Pembatalan & Refund</h6>
+        <h6 style="font-weight:700;" class="mt-3">3. Pembatalan &amp; Refund</h6>
         <p>Pembatalan oleh pengguna sebelum mitra berangkat: refund penuh. Pembatalan setelah mitra berangkat namun sebelum tugas dimulai: dikenakan biaya perjalanan mitra sesuai jarak tempuh. Pembatalan saat tugas sedang berlangsung: tidak ada refund atas tarif dasar.</p>
-        <h6 class="fw-700 mt-3">4. Penggunaan Layanan yang Dilarang</h6>
+        <h6 style="font-weight:700;" class="mt-3">4. Penggunaan Layanan yang Dilarang</h6>
         <p>Pengguna dilarang menggunakan layanan untuk kegiatan ilegal, termasuk pengiriman barang terlarang, penipuan, atau kegiatan yang melanggar hukum Indonesia. Pelanggaran akan dilaporkan kepada pihak berwajib dan akun pengguna akan diblokir permanen.</p>
-        <h6 class="fw-700 mt-3">5. Privasi & Data Pengguna</h6>
+        <h6 style="font-weight:700;" class="mt-3">5. Privasi &amp; Data Pengguna</h6>
         <p>Data pribadi pengguna hanya digunakan untuk keperluan pemesanan dan tidak akan dibagikan kepada pihak ketiga tanpa persetujuan, kecuali diwajibkan oleh hukum yang berlaku.</p>
-        <h6 class="fw-700 mt-3">6. Perubahan Layanan</h6>
+        <h6 style="font-weight:700;" class="mt-3">6. Perubahan Layanan</h6>
         <p>Tolongin Dong berhak mengubah tarif, kebijakan, dan ketentuan layanan dengan pemberitahuan minimal 7 hari sebelumnya melalui media sosial resmi atau WhatsApp.</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-dismiss="modal">Mengerti & Setuju</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal">Mengerti &amp; Setuju</button>
       </div>
     </div>
   </div>
@@ -1033,16 +1366,16 @@ section { scroll-margin-top: 72px; }
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title fw-700"><i class="bi bi-shield-check me-2 text-primary"></i>Kebijakan Privasi</h5>
+        <h5 class="modal-title" style="font-weight:700;"><i class="bi bi-shield-check me-2 text-primary"></i>Kebijakan Privasi</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" style="font-size:0.9rem;line-height:1.8;color:var(--text2);">
         <p>Tolongin Dong menghargai privasi pengguna. Dokumen ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda.</p>
-        <h6 class="fw-700 mt-3">Data yang Dikumpulkan</h6>
+        <h6 style="font-weight:700;" class="mt-3">Data yang Dikumpulkan</h6>
         <p>Kami mengumpulkan nama, nomor WhatsApp, lokasi tugas, dan riwayat pesanan. Data lokasi hanya digunakan selama proses pemesanan berlangsung.</p>
-        <h6 class="fw-700 mt-3">Penggunaan Data</h6>
+        <h6 style="font-weight:700;" class="mt-3">Penggunaan Data</h6>
         <p>Data digunakan untuk: memproses pesanan, menghubungkan dengan mitra, meningkatkan kualitas layanan, dan mengirimkan notifikasi terkait pesanan.</p>
-        <h6 class="fw-700 mt-3">Keamanan Data</h6>
+        <h6 style="font-weight:700;" class="mt-3">Keamanan Data</h6>
         <p>Kami menggunakan enkripsi dan protokol keamanan standar industri untuk melindungi data pengguna dari akses tidak sah.</p>
       </div>
       <div class="modal-footer">
@@ -1059,13 +1392,16 @@ section { scroll-margin-top: 72px; }
     <div style="font-weight:700;font-size:0.9rem;">Install Tolongin Dong</div>
     <div style="font-size:0.78rem;color:var(--text3);">Akses lebih cepat dari layar utama</div>
   </div>
-  <button onclick="installPWA()" class="btn btn-primary btn-sm" style="white-space:nowrap;">Install</button>
-  <button onclick="document.getElementById('installBanner').classList.remove('show')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;">✕</button>
+  <button type="button" onclick="installPWA()" class="btn btn-primary btn-sm" style="white-space:nowrap;">Install</button>
+  <button type="button" onclick="document.getElementById('installBanner').classList.remove('show')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;">✕</button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// ===== NOMOR WA ADMIN (FIX: satu sumber kebenaran) =====
+const ADMIN_WA = '6282379078920';
+
 // ===== DARK MODE =====
 function toggleDark() {
   const html = document.documentElement;
@@ -1081,151 +1417,288 @@ function toggleDark() {
 })();
 
 // ===== MAP =====
+// Koordinat Banda Aceh yang benar
 let map, pickMarker, dropMarker, routeLine;
+let mapReady = false;
+
 document.addEventListener('DOMContentLoaded', function() {
-  map = L.map('map', { center: [-7.5667, 110.8167], zoom: 12 });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(map);
-  setTimeout(() => map.invalidateSize(), 300);
+  try {
+    map = L.map('map', { center: [5.5483, 95.3238], zoom: 13 });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
+    setTimeout(() => { map.invalidateSize(); mapReady = true; }, 400);
+  } catch(e) {
+    console.warn('Map init gagal:', e);
+    document.getElementById('map').innerHTML = '<div style="padding:20px;text-align:center;color:#64748b;font-size:0.85rem;"><i class="bi bi-map" style="font-size:2rem;display:block;margin-bottom:8px;"></i>Peta tidak tersedia.<br>Masukkan lokasi manual di kolom teks.</div>';
+  }
+
+  // Set min date untuk form
+  const today = new Date().toISOString().split('T')[0];
+  const dateEl = document.getElementById('taskDate');
+  if (dateEl) dateEl.min = today;
+
+  // Counter karakter textarea
+  const ta = document.getElementById('taskDesc');
+  if (ta) ta.addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length;
+  });
 });
 
-const greenIcon = L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png', shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png', iconAnchor: [12,41], popupAnchor: [1,-34] });
+// Fetch dengan timeout helper
+function fetchWithTimeout(url, ms = 6000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+}
+
+function showMapStatus(msg, isError = false) {
+  const el = document.getElementById('mapStatus');
+  if (!el) return;
+  el.style.display = 'block';
+  el.style.color = isError ? '#dc2626' : '#1a6fc4';
+  el.innerHTML = msg;
+}
+function hideMapStatus() {
+  const el = document.getElementById('mapStatus');
+  if (el) el.style.display = 'none';
+}
 
 let geocodeTimers = {};
 function geocodeDebounce(type) {
   clearTimeout(geocodeTimers[type]);
-  geocodeTimers[type] = setTimeout(() => geocodeLocation(type), 700);
+  geocodeTimers[type] = setTimeout(() => geocodeLocation(type), 800);
 }
 
 async function geocodeLocation(type) {
-  const val = document.getElementById(type === 'from' ? 'calcFrom' : 'calcTo').value;
+  if (!mapReady) return;
+  const inputId = type === 'from' ? 'calcFrom' : 'calcTo';
+  const val = document.getElementById(inputId).value.trim();
   if (val.length < 4) return;
+
+  showMapStatus('<i class="bi bi-hourglass-split me-1"></i>Mencari lokasi...');
   try {
-    const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val + ', Banda Aceh, Indonesia')}&format=json&limit=1`);
+    const res = await fetchWithTimeout(
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val + ', Banda Aceh, Aceh, Indonesia')}&format=json&limit=1`,
+      6000
+    );
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    if (data.length > 0) {
-      const { lat, lon } = data[0];
-      const latlng = [parseFloat(lat), parseFloat(lon)];
-      if (type === 'from') {
-        if (pickMarker) map.removeLayer(pickMarker);
-        pickMarker = L.marker(latlng, { title: 'Titik Awal' }).addTo(map).bindPopup('📍 Titik Awal').openPopup();
-      } else {
-        if (dropMarker) map.removeLayer(dropMarker);
-        dropMarker = L.marker(latlng, { title: 'Tujuan' }).addTo(map).bindPopup('🏁 Tujuan').openPopup();
-      }
-      if (pickMarker && dropMarker) {
-        const bounds = L.latLngBounds([pickMarker.getLatLng(), dropMarker.getLatLng()]);
-        map.fitBounds(bounds, { padding: [30, 30] });
-      } else {
-        map.setView(latlng, 14);
-      }
+
+    if (data.length === 0) {
+      showMapStatus('<i class="bi bi-exclamation-circle me-1"></i>Lokasi tidak ditemukan, coba kata kunci lain', true);
+      return;
     }
-  } catch(e) {}
+
+    const latlng = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+    if (type === 'from') {
+      if (pickMarker) map.removeLayer(pickMarker);
+      pickMarker = L.marker(latlng, { title: 'Titik Awal' }).addTo(map)
+        .bindPopup('<b>📍 Titik Awal</b><br>' + (data[0].display_name || val)).openPopup();
+    } else {
+      if (dropMarker) map.removeLayer(dropMarker);
+      dropMarker = L.marker(latlng, { title: 'Tujuan' }).addTo(map)
+        .bindPopup('<b>🏁 Tujuan</b><br>' + (data[0].display_name || val)).openPopup();
+    }
+
+    if (pickMarker && dropMarker) {
+      map.fitBounds(L.latLngBounds([pickMarker.getLatLng(), dropMarker.getLatLng()]), { padding: [40, 40] });
+      showMapStatus('<i class="bi bi-check-circle me-1"></i>Kedua lokasi ditemukan! Klik "Hitung Rute" untuk kalkulasi biaya.');
+    } else {
+      map.setView(latlng, 14);
+      hideMapStatus();
+    }
+  } catch(e) {
+    if (e.name === 'AbortError') {
+      showMapStatus('<i class="bi bi-wifi-off me-1"></i>Koneksi lambat, coba lagi', true);
+    } else {
+      showMapStatus('<i class="bi bi-exclamation-triangle me-1"></i>Gagal mencari lokasi. Input manual tetap bisa digunakan.', true);
+    }
+    console.warn('Geocode error:', e);
+  }
 }
 
 async function calculateRoute() {
   if (!pickMarker || !dropMarker) {
-    alert('Masukkan titik awal dan tujuan terlebih dahulu!');
+    showMapStatus('<i class="bi bi-exclamation-circle me-1"></i>Masukkan titik awal dan tujuan terlebih dahulu!', true);
     return;
   }
   const from = pickMarker.getLatLng();
-  const to = dropMarker.getLatLng();
+  const to   = dropMarker.getLatLng();
+  showMapStatus('<i class="bi bi-hourglass-split me-1"></i>Menghitung rute...');
+
+  // Selalu siapkan fallback haversine dulu
+  const haversineDist = haversine(from, to);
+
   try {
     const url = `https://router.project-osrm.org/route/v1/driving/${from.lng},${from.lat};${to.lng},${to.lat}?overview=full&geometries=geojson`;
-    const res = await fetch(url);
+    const res  = await fetchWithTimeout(url, 8000);
+    if (!res.ok) throw new Error('OSRM HTTP ' + res.status);
     const data = await res.json();
-    if (data.routes && data.routes.length > 0) {
-      const route = data.routes[0];
-      const distKm = route.distance / 1000;
-      const durationMin = Math.round(route.duration / 60);
-      if (routeLine) map.removeLayer(routeLine);
-      routeLine = L.geoJSON(route.geometry, { style: { color: '#1a6fc4', weight: 4, opacity: 0.8 } }).addTo(map);
-      map.fitBounds(routeLine.getBounds(), { padding: [20, 20] });
-      updateCalcWithDistance(distKm, durationMin);
-    }
+
+    if (data.code !== 'Ok' || !data.routes?.length) throw new Error('No route');
+
+    const route      = data.routes[0];
+    const distKm     = route.distance / 1000;
+    const durationMin = Math.round(route.duration / 60);
+
+    if (routeLine) map.removeLayer(routeLine);
+    routeLine = L.geoJSON(route.geometry, {
+      style: { color: '#1a6fc4', weight: 4, opacity: 0.85, dashArray: null }
+    }).addTo(map);
+    map.fitBounds(routeLine.getBounds(), { padding: [24, 24] });
+
+    updateCalcWithDistance(distKm, durationMin, false);
+    showMapStatus(`<i class="bi bi-check-circle me-1"></i>Rute ditemukan: ${distKm.toFixed(1)} km · ${durationMin} menit`);
+
   } catch(e) {
-    const R = 6371;
-    const dLat = (to.lat - from.lat) * Math.PI / 180;
-    const dLon = (to.lng - from.lng) * Math.PI / 180;
-    const a = Math.sin(dLat/2)**2 + Math.cos(from.lat*Math.PI/180)*Math.cos(to.lat*Math.PI/180)*Math.sin(dLon/2)**2;
-    const distKm = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    updateCalcWithDistance(distKm, null);
+    // Fallback haversine — tampilkan garis lurus di peta
+    console.info('OSRM gagal, pakai estimasi jarak lurus:', e.message);
+    if (routeLine) map.removeLayer(routeLine);
+    routeLine = L.polyline([from, to], {
+      color: '#f97316', weight: 3, opacity: 0.7, dashArray: '8,6'
+    }).addTo(map);
+    map.fitBounds([[from.lat, from.lng],[to.lat, to.lng]], { padding: [40, 40] });
+
+    updateCalcWithDistance(haversineDist, null, true);
+    showMapStatus(`<i class="bi bi-info-circle me-1"></i>Estimasi jarak lurus ±${haversineDist.toFixed(1)} km (rute aktual mungkin lebih jauh)`);
   }
 }
 
-function updateCalcWithDistance(distKm, durationMin) {
-  const base = parseInt(document.getElementById('calcTier').value);
-  const dist = Math.round(distKm * 10) / 10;
-  const distFee = Math.round(dist * 3000);
-  const total = base + distFee;
-  const fmt = n => 'Rp ' + n.toLocaleString('id-ID');
-  document.getElementById('calcBaseFee').textContent = fmt(base);
-  document.getElementById('calcDistFee').textContent = '+ ' + fmt(distFee);
-  document.getElementById('calcDistLabel').textContent = `Biaya Jarak (${dist} km)`;
-  document.getElementById('tb1').textContent = fmt(base);
-  document.getElementById('tb2').textContent = fmt(distFee);
-  document.getElementById('tb3').textContent = fmt(total);
+function haversine(from, to) {
+  const R = 6371;
+  const dLat = (to.lat - from.lat) * Math.PI / 180;
+  const dLon = (to.lng - from.lng) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 +
+    Math.cos(from.lat * Math.PI/180) * Math.cos(to.lat * Math.PI/180) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function updateCalcWithDistance(distKm, durationMin, isEstimate = false) {
+  const base    = parseInt(document.getElementById('calcTier').value) || 0;
+  const dist    = Math.round(distKm * 10) / 10;
+  const distFee = base === 0 ? 0 : Math.round(dist * 3000);
+  const total   = base + distFee;
+  const fmt     = n => 'Rp ' + n.toLocaleString('id-ID');
+  const isCustom = base === 0;
+
+  document.getElementById('calcBaseFee').textContent = isCustom ? 'Negosiasi' : fmt(base);
+  document.getElementById('calcDistFee').textContent = isCustom ? '—' : '+ ' + fmt(distFee);
+  document.getElementById('calcDistLabel').textContent = `Biaya Jarak (${dist} km${isEstimate ? ' est.' : ''})`;
+  document.getElementById('tb1').textContent = isCustom ? 'Negosiasi' : fmt(base);
+  document.getElementById('tb2').textContent = isCustom ? '—' : fmt(distFee);
+  document.getElementById('tb3').textContent = isCustom ? 'Negosiasi' : fmt(total);
+
   const el = document.getElementById('priceTotal');
-  el.textContent = fmt(total);
+  el.textContent = isCustom ? 'Negosiasi' : fmt(total);
   el.classList.remove('price-animated');
   void el.offsetWidth;
   el.classList.add('price-animated');
-  document.getElementById('priceBreakdown').textContent = `${getTierLabel()} + ${dist} km perjalanan`;
+
+  document.getElementById('priceBreakdown').textContent = isCustom
+    ? 'Harga disepakati bersama admin'
+    : `${getTierLabel()} + ${dist} km${isEstimate ? ' (estimasi)' : ''}`;
+
   const info = document.getElementById('routeInfo');
   if (durationMin) {
     info.style.display = 'block';
-    info.innerHTML = `<i class="bi bi-map me-1"></i> Jarak: ${dist} km &nbsp;|&nbsp; <i class="bi bi-clock me-1"></i> Estimasi: ${durationMin} menit`;
+    info.innerHTML = `<i class="bi bi-map me-1"></i> ${dist} km &nbsp;|&nbsp; <i class="bi bi-clock me-1"></i> ~${durationMin} menit`;
+  } else {
+    info.style.display = 'none';
   }
+
   window._calcData = { base, distFee, total, dist };
 }
 
 function updateCalc() {
   const base = parseInt(document.getElementById('calcTier').value);
-  document.getElementById('calcBaseFee').textContent = 'Rp ' + base.toLocaleString('id-ID');
-  document.getElementById('tb1').textContent = 'Rp ' + base.toLocaleString('id-ID');
-  document.getElementById('priceTotal').textContent = 'Rp ' + (base + (window._calcData ? window._calcData.distFee : 0)).toLocaleString('id-ID');
-  document.getElementById('tb3').textContent = 'Rp ' + (base + (window._calcData ? window._calcData.distFee : 0)).toLocaleString('id-ID');
-  document.getElementById('priceBreakdown').textContent = getTierLabel() + ' • Belum termasuk biaya jarak';
+  const distFee = window._calcData ? window._calcData.distFee : 0;
+  const total = base + distFee;
+  const fmt = n => 'Rp ' + n.toLocaleString('id-ID');
+  const isCustom = base === 0;
+
+  document.getElementById('calcBaseFee').textContent = isCustom ? 'Negosiasi' : fmt(base);
+  document.getElementById('tb1').textContent = isCustom ? 'Negosiasi' : fmt(base);
+  document.getElementById('tb3').textContent = isCustom ? 'Negosiasi' : fmt(total);
+
+  const el = document.getElementById('priceTotal');
+  el.textContent = isCustom ? 'Negosiasi' : fmt(total);
+  el.classList.remove('price-animated');
+  void el.offsetWidth;
+  el.classList.add('price-animated');
+
+  document.getElementById('priceBreakdown').textContent = isCustom
+    ? 'Harga disepakati bersama admin via WhatsApp'
+    : getTierLabel() + (distFee > 0 ? ` + Rp${distFee.toLocaleString('id-ID')} biaya jarak` : ' • Belum termasuk biaya jarak');
+
+  if (window._calcData) window._calcData.base = base;
 }
 
 function getTierLabel() {
   const v = document.getElementById('calcTier').value;
-  const m = {'15000':'Easy','35000':'Medium','75000':'Hard','150000':'Expert'};
+  const m = { '15000': 'Easy', '35000': 'Medium', '75000': 'Hard', '150000': 'Expert', '0': 'Custom' };
   return 'Tarif dasar ' + (m[v] || 'Medium');
 }
 
 // ===== TIER SELECTION =====
+// FIX: harga tierData diselaraskan dengan kalkulator & tampilan kartu
 const tierData = {
-  easy: { price: 15000, label: 'Easy', hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
-  medium: { price: 35000, label: 'Medium', hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
-  hard: { price: 75000, label: 'Hard', hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
-  expert: { price: 150000, label: 'Expert', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' }
+  easy:   { price: 15000,  label: 'Easy',   calcVal: '15000',  hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
+  medium: { price: 35000,  label: 'Medium', calcVal: '35000',  hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
+  hard:   { price: 75000,  label: 'Hard',   calcVal: '75000',  hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
+  expert: { price: 150000, label: 'Expert', calcVal: '150000', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' },
+  custom: { price: 0,      label: 'Custom', calcVal: '0',      hint: 'Kebutuhanmu unik dan tidak masuk kategori biasa? Ceritakan detailnya — admin akan diskusikan harga terbaik bersamamu.' }
 };
 let selectedTier = 'medium';
 
-function selectTier(t) { selectedTier = t; document.getElementById('pesanSection').scrollIntoView({behavior:'smooth'}); selectTierForm(t); }
+// Klik tier card di section layanan → scroll ke form & pilih tier
+function selectTier(t) {
+  selectedTier = t;
+  selectTierForm(t);
+  document.getElementById('pesanSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// FIX: selectTierForm juga update select kalkulator agar sinkron
 function selectTierForm(t) {
   selectedTier = t;
-  ['easy','medium','hard','expert'].forEach(k => {
+  ['easy', 'medium', 'hard', 'expert', 'custom'].forEach(k => {
     const el = document.getElementById('ts_' + k);
     if (el) el.classList.toggle('featured', k === t);
   });
-  document.getElementById('tierHintText').textContent = tierData[t].hint;
+  if (document.getElementById('tierHintText')) {
+    document.getElementById('tierHintText').textContent = tierData[t].hint;
+  }
+  // Sync kalkulator
+  const calcTierEl = document.getElementById('calcTier');
+  if (calcTierEl) {
+    calcTierEl.value = tierData[t].calcVal;
+    updateCalc();
+  }
 }
 selectTierForm('medium');
 
-function goToOrder() { document.getElementById('pesanSection').scrollIntoView({behavior:'smooth'}); }
+function goToOrder() {
+  document.getElementById('pesanSection').scrollIntoView({ behavior: 'smooth' });
+}
 
 // ===== STEPPER =====
 let currentStep = 1;
+
 function updateStepper(step) {
   for (let i = 1; i <= 4; i++) {
     const si = document.getElementById('si' + i);
     const circle = si.querySelector('.step-circle');
-    if (i < step) { si.className = 'step-item done'; circle.innerHTML = '<i class="bi bi-check-lg"></i>'; }
-    else if (i === step) { si.className = 'step-item active'; circle.textContent = i; }
-    else { si.className = 'step-item'; circle.textContent = i; }
+    if (i < step) {
+      si.className = 'step-item done';
+      circle.innerHTML = '<i class="bi bi-check-lg"></i>';
+    } else if (i === step) {
+      si.className = 'step-item active';
+      circle.textContent = i;
+    } else {
+      si.className = 'step-item';
+      circle.textContent = i;
+    }
     if (i < 4) {
       const line = document.getElementById('sl' + i);
       if (line) line.className = 'step-line' + (i < step ? ' done' : '');
@@ -1237,104 +1710,120 @@ function updateStepper(step) {
 }
 
 function nextStep(from) {
-  if (from === 1) {
-    currentStep = 2; updateStepper(2); return;
-  }
-  if (from === 2) {
-    if (!validateStep2()) return;
-    currentStep = 3; updateStepper(3); return;
-  }
-  if (from === 3) {
-    if (!validateStep3()) return;
-    buildPreview();
-    currentStep = 4; updateStepper(4); return;
-  }
+  if (from === 1) { currentStep = 2; updateStepper(2); return; }
+  if (from === 2) { if (!validateStep2()) return; currentStep = 3; updateStepper(3); return; }
+  if (from === 3) { if (!validateStep3()) return; buildPreview(); currentStep = 4; updateStepper(4); return; }
 }
 function prevStep(from) {
-  currentStep = from - 1; updateStepper(currentStep);
+  currentStep = from - 1;
+  updateStepper(currentStep);
 }
 
 function validateStep2() {
   let ok = true;
-  const desc = document.getElementById('taskDesc').value.trim();
+  const desc   = document.getElementById('taskDesc').value.trim();
   const pickup = document.getElementById('pickupLoc').value.trim();
-  const drop = document.getElementById('dropLoc').value.trim();
-  const date = document.getElementById('taskDate').value;
-  const time = document.getElementById('taskTime').value;
+  const drop   = document.getElementById('dropLoc').value.trim();
+  const date   = document.getElementById('taskDate').value;
+  const time   = document.getElementById('taskTime').value;
+
   if (desc.length < 20) { showErr('taskDesc','errDesc'); ok = false; } else hideErr('taskDesc','errDesc');
-  if (!pickup) { showErr('pickupLoc','errPickup'); ok = false; } else hideErr('pickupLoc','errPickup');
-  if (!drop) { showErr('dropLoc','errDrop'); ok = false; } else hideErr('dropLoc','errDrop');
-  if (!date) { showErr('taskDate','errDate'); ok = false; } else hideErr('taskDate','errDate');
-  if (!time) { showErr('taskTime','errTime'); ok = false; } else hideErr('taskTime','errTime');
+  if (!pickup)           { showErr('pickupLoc','errPickup'); ok = false; } else hideErr('pickupLoc','errPickup');
+  if (!drop)             { showErr('dropLoc','errDrop'); ok = false; } else hideErr('dropLoc','errDrop');
+  if (!date)             { showErr('taskDate','errDate'); ok = false; } else hideErr('taskDate','errDate');
+  if (!time)             { showErr('taskTime','errTime'); ok = false; } else hideErr('taskTime','errTime');
   return ok;
 }
+
 function validateStep3() {
   let ok = true;
-  const name = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.replace(/\D/g,'');
-  const tc = document.getElementById('agreeTC').checked;
-  if (!name) { showErr('custName','errName'); ok = false; } else hideErr('custName','errName');
+  const name  = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.replace(/\D/g, '');
+  const tc    = document.getElementById('agreeTC').checked;
+
+  if (!name)          { showErr('custName','errName'); ok = false; } else hideErr('custName','errName');
   if (phone.length < 9) { showErr('custPhone','errPhone'); ok = false; } else hideErr('custPhone','errPhone');
-  if (!tc) { document.getElementById('errTC').textContent = '⚠ Harap setujui syarat & ketentuan'; document.getElementById('errTC').style.display='block'; ok=false; }
-  else { document.getElementById('errTC').style.display='none'; }
+
+  const errTC = document.getElementById('errTC');
+  if (!tc) {
+    errTC.textContent = '⚠ Harap setujui syarat & ketentuan';
+    errTC.style.display = 'block';
+    ok = false;
+  } else {
+    errTC.style.display = 'none';
+  }
   return ok;
 }
+
 function showErr(fid, eid) {
   document.getElementById(fid).classList.add('is-invalid');
-  document.getElementById(eid).style.display = 'block';
+  const errEl = document.getElementById(eid);
+  if (errEl) errEl.style.display = 'block';
 }
 function hideErr(fid, eid) {
   document.getElementById(fid).classList.remove('is-invalid');
-  document.getElementById(eid).style.display = 'none';
+  const errEl = document.getElementById(eid);
+  if (errEl) errEl.style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const ta = document.getElementById('taskDesc');
-  if (ta) ta.addEventListener('input', function() { document.getElementById('charCount').textContent = this.value.length; });
-  const today = new Date().toISOString().split('T')[0];
-  const dateEl = document.getElementById('taskDate');
-  if (dateEl) dateEl.min = today;
-});
-
 function buildPreview() {
-  const tier = selectedTier;
-  const tData = tierData[tier];
-  const desc = document.getElementById('taskDesc').value;
+  const tData  = tierData[selectedTier];
+  const desc   = document.getElementById('taskDesc').value;
   const pickup = document.getElementById('pickupLoc').value;
-  const drop = document.getElementById('dropLoc').value;
-  const date = document.getElementById('taskDate').value;
-  const time = document.getElementById('taskTime').value;
-  const note = document.getElementById('taskNote').value;
-  const name = document.getElementById('custName').value;
-  const phone = document.getElementById('custPhone').value;
-  const distInfo = window._calcData ? ` + Rp${window._calcData.distFee.toLocaleString('id-ID')} (jarak)` : ' + biaya jarak';
+  const drop   = document.getElementById('dropLoc').value;
+  const date   = document.getElementById('taskDate').value;
+  const time   = document.getElementById('taskTime').value;
+  const note   = document.getElementById('taskNote').value;
+  const name   = document.getElementById('custName').value;
+  const phone  = document.getElementById('custPhone').value;
+  const isCustom = tData.price === 0;
+  const distInfo = isCustom
+    ? 'Negosiasi (akan didiskusikan via WhatsApp)'
+    : window._calcData
+      ? `Rp ${tData.price.toLocaleString('id-ID')} + Rp${window._calcData.distFee.toLocaleString('id-ID')} (jarak ${window._calcData.dist} km) = <strong>Rp ${window._calcData.total.toLocaleString('id-ID')}</strong>`
+      : `Rp ${tData.price.toLocaleString('id-ID')} + biaya jarak`;
+
   document.getElementById('orderPreview').innerHTML = `
     <div class="row g-2" style="font-size:0.9rem;">
       <div class="col-12 mb-2"><span style="font-weight:700;font-size:1rem;">Ringkasan Pesanan</span></div>
-      <div class="col-5" style="color:var(--text3);">Paket Layanan</div><div class="col-7" style="font-weight:600;">${tData.label} <span style="font-weight:400;font-size:0.83rem;color:var(--text3);">(Rp${tData.price.toLocaleString('id-ID')}${distInfo})</span></div>
-      <div class="col-5" style="color:var(--text3);">Detail Tugas</div><div class="col-7">${desc}</div>
-      <div class="col-5" style="color:var(--text3);">Lokasi Jemput</div><div class="col-7">${pickup}</div>
-      <div class="col-5" style="color:var(--text3);">Lokasi Tujuan</div><div class="col-7">${drop}</div>
-      <div class="col-5" style="color:var(--text3);">Waktu</div><div class="col-7">${date} pukul ${time} WIB</div>
+      <div class="col-5" style="color:var(--text3);">Paket Layanan</div>
+      <div class="col-7" style="font-weight:600;">${tData.label}</div>
+      <div class="col-5" style="color:var(--text3);">Estimasi Biaya</div>
+      <div class="col-7">${distInfo}</div>
+      <div class="col-5" style="color:var(--text3);">Detail Tugas</div>
+      <div class="col-7">${desc}</div>
+      <div class="col-5" style="color:var(--text3);">Lokasi Jemput</div>
+      <div class="col-7">${pickup}</div>
+      <div class="col-5" style="color:var(--text3);">Lokasi Tujuan</div>
+      <div class="col-7">${drop}</div>
+      <div class="col-5" style="color:var(--text3);">Waktu</div>
+      <div class="col-7">${date} pukul ${time} WIB</div>
       ${note ? `<div class="col-5" style="color:var(--text3);">Catatan</div><div class="col-7">${note}</div>` : ''}
       <div class="col-12"><div style="border-top:1px solid var(--border);margin:8px 0;"></div></div>
-      <div class="col-5" style="color:var(--text3);">Nama Pemesan</div><div class="col-7" style="font-weight:600;">${name}</div>
-      <div class="col-5" style="color:var(--text3);">No. WhatsApp</div><div class="col-7">+62${phone}</div>
+      <div class="col-5" style="color:var(--text3);">Nama Pemesan</div>
+      <div class="col-7" style="font-weight:600;">${name}</div>
+      <div class="col-5" style="color:var(--text3);">No. WhatsApp</div>
+      <div class="col-7">+62${phone}</div>
     </div>`;
 }
 
 function sendToWhatsApp() {
-  const tier = selectedTier;
-  const tData = tierData[tier];
-  const desc = document.getElementById('taskDesc').value;
+  const tData  = tierData[selectedTier];
+  const desc   = document.getElementById('taskDesc').value;
   const pickup = document.getElementById('pickupLoc').value;
-  const drop = document.getElementById('dropLoc').value;
-  const date = document.getElementById('taskDate').value;
-  const time = document.getElementById('taskTime').value;
-  const note = document.getElementById('taskNote').value;
-  const name = document.getElementById('custName').value;
-  const phone = document.getElementById('custPhone').value;
-  const distInfo = window._calcData ? `Rp${(window._calcData.total).toLocaleString('id-ID')} (termasuk biaya jarak ${window._calcData.dist} km)` : `Rp${tData.price.toLocaleString('id-ID')} + biaya jarak`;
+  const drop   = document.getElementById('dropLoc').value;
+  const date   = document.getElementById('taskDate').value;
+  const time   = document.getElementById('taskTime').value;
+  const note   = document.getElementById('taskNote').value;
+  const name   = document.getElementById('custName').value;
+  const phone  = document.getElementById('custPhone').value;
+  const isCustom = tData.price === 0;
+  const distInfo = isCustom
+    ? 'Negosiasi (akan didiskusikan)'
+    : window._calcData
+      ? `Rp ${window._calcData.total.toLocaleString('id-ID')} (tarif Rp${tData.price.toLocaleString('id-ID')} + jarak ${window._calcData.dist} km)`
+      : `Rp ${tData.price.toLocaleString('id-ID')} + biaya jarak (belum dihitung)`;
+
   const msg = `🤝 *PESANAN BARU - TOLONGIN DONG*\n\n` +
     `📦 *Paket:* ${tData.label}\n` +
     `💰 *Estimasi Biaya:* ${distInfo}\n\n` +
@@ -1342,27 +1831,26 @@ function sendToWhatsApp() {
     `📍 *Lokasi Jemput:* ${pickup}\n` +
     `🏁 *Lokasi Tujuan:* ${drop}\n` +
     `🕐 *Waktu:* ${date}, ${time} WIB\n` +
-    `${note ? `📌 *Catatan:* ${note}\n\n` : '\n'}` +
-    `👤 *Pemesan:* ${name}\n` +
-    `📱 *WA:* +62${phone}\n\n` +
-    `_Pesan dikirim via tolongindong.id_`;
-  window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(msg), '_blank');
+    `${note ? `📌 *Catatan:* ${note}\n` : ''}` +
+    `\n👤 *Pemesan:* ${name}\n` +
+    `📱 *WA Pemesan:* +62${phone}\n\n` +
+    `_Pesan dikirim via Tolongin Dong Web App_`;
+
+  // FIX: pakai konstanta ADMIN_WA agar konsisten
+  window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function submitMitra() {
-  const name = document.getElementById('mitraName').value;
-  const phone = document.getElementById('mitraPhone').value;
-  const age = document.getElementById('mitraAge').value;
-  const veh = document.getElementById('mitraVehicle').value;
-  const city = document.getElementById('mitraCity').value;
-  const time = document.getElementById('mitraTime').value;
-  const motiv = document.getElementById('mitraMotiv').value;
-  if (!name || !phone || !age || !veh || !city) { alert('Harap lengkapi data wajib terlebih dahulu!'); return; }
-  const msg = `🚀 *PENDAFTARAN MITRA BARU - TOLONGIN DONG*\n\n` +
-    `👤 *Nama:* ${name}\n📱 *WA:* ${phone}\n🎂 *Usia:* ${age} tahun\n` +
-    `🏍 *Kendaraan:* ${veh}\n📍 *Domisili:* ${city}\n⏰ *Ketersediaan:* ${time}\n` +
-    `${motiv ? `\n💬 *Motivasi:*\n${motiv}\n` : ''}\n_Daftar via tolongindong.id_`;
-  window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(msg), '_blank');
+function copyRek(elId) {
+  const el = document.getElementById(elId);
+  const text = el ? el.textContent.trim() : '';
+  if (!text || text.includes('—')) {
+    alert('Nomor rekening belum tersedia. Silakan hubungi admin via WhatsApp.');
+    return;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.closest('div[style*="flex"]')?.querySelector('button');
+    if (btn) { const orig = btn.innerHTML; btn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Disalin!'; setTimeout(() => btn.innerHTML = orig, 2000); }
+  }).catch(() => alert('Salin manual: ' + text));
 }
 
 function showTC(e) { e.preventDefault(); new bootstrap.Modal(document.getElementById('tcModal')).show(); }
@@ -1378,11 +1866,14 @@ window.addEventListener('beforeinstallprompt', (e) => {
 function installPWA() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => { document.getElementById('installBanner').classList.remove('show'); deferredPrompt = null; });
+    deferredPrompt.userChoice.then(() => {
+      document.getElementById('installBanner').classList.remove('show');
+      deferredPrompt = null;
+    });
   }
 }
 
-// Service Worker & Manifest injection
+// ===== PWA MANIFEST =====
 const manifest = {
   name: 'Tolongin Dong',
   short_name: 'TolonginDong',
@@ -1396,36 +1887,24 @@ const manifest = {
     { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%231a6fc4'/><text y='380' x='40' font-size='360'>🤝</text></svg>", sizes: '512x512', type: 'image/svg+xml' }
   ]
 };
-const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-const manifestUrl = URL.createObjectURL(manifestBlob);
-document.getElementById('manifest-link').setAttribute('href', manifestUrl);
+try {
+  const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  document.getElementById('manifest-link').setAttribute('href', URL.createObjectURL(manifestBlob));
+} catch(e) {}
 
-// Inline Service Worker
-const swCode = `
-self.addEventListener('install', e => { self.skipWaiting(); });
-self.addEventListener('activate', e => clients.claim());
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  e.respondWith(
-    caches.open('tolongin-v1').then(cache =>
-      fetch(e.request).then(res => { cache.put(e.request, res.clone()); return res; })
-      .catch(() => caches.match(e.request))
-    )
-  );
-});`;
+// ===== SERVICE WORKER — Vercel-safe =====
+// Blob URL SW tidak jalan di Vercel karena MIME-type restriction.
+// Solusi: inject SW sebagai data: URI via workaround, atau skip SW
+// dan andalkan cache HTTP headers dari Vercel. PWA tetap bisa diinstall
+// via manifest, hanya offline cache-nya minimal.
 if ('serviceWorker' in navigator) {
-  const swBlob = new Blob([swCode], {type: 'text/javascript'});
-  const swUrl = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swUrl).catch(()=>{});
+  // Coba register sw.js kalau ada (untuk deploy proper dengan file terpisah)
+  navigator.serviceWorker.register('/sw.js').catch(() => {
+    // Kalau sw.js tidak ada (single-file deploy), SW dilewati — tidak error
+    console.info('Tolongin Dong: SW tidak tersedia, mode online-only.');
+  });
 }
 
-// Smooth scroll for nav links
+// ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
-  });
-});
-</script>
-</body>
-</html>
+  a.addEventListener('click', functio
