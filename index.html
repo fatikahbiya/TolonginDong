@@ -373,7 +373,7 @@ section { scroll-margin-top: 72px; }
       <!-- EASY -->
       <div class="tier-card" style="--tier-color:#22c55e" onclick="selectTier('easy')">
         <div class="tier-badge" style="background:#dcfce7;color:#16a34a;"><i class="bi bi-emoji-smile-fill"></i> Easy</div>
-        <div class="tier-price">Rp 15.000 <span>/ tugas</span></div>
+        <div class="tier-price"> Start From Rp 5.000 <span>/ tugas</span></div>
         <p class="tier-desc">Tugas ringan tidak perlu keahlian khusus, bisa diselesaikan &lt;30 menit.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Beli makanan/minuman</li>
@@ -390,7 +390,7 @@ section { scroll-margin-top: 72px; }
       <div class="tier-card featured" style="--tier-color:#1a6fc4" onclick="selectTier('medium')">
         <div style="position:absolute;top:16px;right:16px;background:var(--primary);color:#fff;font-size:0.7rem;font-weight:700;border-radius:20px;padding:3px 10px;">POPULER</div>
         <div class="tier-badge" style="background:#dbeafe;color:#1d4ed8;"><i class="bi bi-star-fill"></i> Medium</div>
-        <div class="tier-price">Rp 35.000 <span>/ tugas</span></div>
+        <div class="tier-price">Start From Rp 15.000 <span>/ tugas</span></div>
         <p class="tier-desc">Tugas memerlukan sedikit usaha fisik atau koordinasi multi-lokasi.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Belanja bulanan supermarket/pasar</li>
@@ -405,7 +405,7 @@ section { scroll-margin-top: 72px; }
       <!-- HARD -->
       <div class="tier-card" style="--tier-color:#f97316" onclick="selectTier('hard')">
         <div class="tier-badge" style="background:#ffedd5;color:#c2410c;"><i class="bi bi-lightning-fill"></i> Hard</div>
-        <div class="tier-price">Rp 75.000 <span>/ tugas</span></div>
+        <div class="tier-price">Start From Rp 30.000 <span>/ tugas</span></div>
         <p class="tier-desc">Tugas butuh waktu &gt;1 jam, tenaga besar, atau keahlian tertentu.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Bantu pindahan kos/rumah</li>
@@ -420,7 +420,7 @@ section { scroll-margin-top: 72px; }
       <!-- EXPERT -->
       <div class="tier-card" style="--tier-color:#8b5cf6" onclick="selectTier('expert')">
         <div class="tier-badge" style="background:#ede9fe;color:#7c3aed;"><i class="bi bi-award-fill"></i> Expert</div>
-        <div class="tier-price">Rp 150.000 <span>/ tugas</span></div>
+        <div class="tier-price">Start From Rp 50.000 <span>/ tugas</span></div>
         <p class="tier-desc">Tugas spesialis butuh mitra dengan kompetensi & pengalaman khusus.</p>
         <ul class="tier-items list-unstyled">
           <li><i class="bi bi-check-circle-fill"></i>Bantu jadi MC atau Acara</li>
@@ -475,10 +475,10 @@ section { scroll-margin-top: 72px; }
             <div class="mb-4">
               <label class="form-label"><i class="bi bi-grid-3x3-gap-fill text-primary me-1"></i>Paket Layanan</label>
               <select class="form-select" id="calcTier" onchange="updateCalc()">
-                <option value="15000">Easy — Rp 15.000</option>
-                <option value="35000" selected>Medium — Rp 35.000</option>
-                <option value="75000">Hard — Rp 75.000</option>
-                <option value="150000">Expert — Rp 150.000</option>
+                <option value="15000">Easy Start From Rp 5.000</option>
+                <option value="35000" selected>Medium Start From Rp 15.000</option>
+                <option value="75000">Hard Start From Rp 30.000</option>
+                <option value="150000">Expert Start From Rp 50.000</option>
                 <option value="0">Custom — Negosiasi</option>
               </select>
             </div>
@@ -584,28 +584,28 @@ section { scroll-margin-top: 72px; }
                 <div class="tier-card text-center py-3 px-2" style="--tier-color:#22c55e;cursor:pointer;" id="ts_easy" onclick="selectTierForm('easy')">
                   <div style="font-size:1.8rem;">😊</div>
                   <div style="font-weight:700;font-size:0.92rem;">Easy</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 15.000</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Start From Rp 5.000</div>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg">
                 <div class="tier-card text-center py-3 px-2 featured" style="--tier-color:#1a6fc4;cursor:pointer;" id="ts_medium" onclick="selectTierForm('medium')">
                   <div style="font-size:1.8rem;">⭐</div>
                   <div style="font-weight:700;font-size:0.92rem;">Medium</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 35.000</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Start From Rp 15.000</div>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg">
                 <div class="tier-card text-center py-3 px-2" style="--tier-color:#f97316;cursor:pointer;" id="ts_hard" onclick="selectTierForm('hard')">
                   <div style="font-size:1.8rem;">⚡</div>
                   <div style="font-weight:700;font-size:0.92rem;">Hard</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 75.000</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Start From Rp 30.000</div>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg">
                 <div class="tier-card text-center py-3 px-2" style="--tier-color:#8b5cf6;cursor:pointer;" id="ts_expert" onclick="selectTierForm('expert')">
                   <div style="font-size:1.8rem;">🏆</div>
                   <div style="font-weight:700;font-size:0.92rem;">Expert</div>
-                  <div style="font-size:0.8rem;color:var(--text3);">Rp 150.000</div>
+                  <div style="font-size:0.8rem;color:var(--text3);">Start From Rp 50.000</div>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg">
@@ -1382,7 +1382,7 @@ function updateCalc() {
 
 function getTierLabel() {
   const v = document.getElementById('calcTier').value;
-  const m = { '15000': 'Easy', '35000': 'Medium', '75000': 'Hard', '150000': 'Expert', '0': 'Custom' };
+  const m = { '5000': 'Easy', '15000': 'Medium', '15000': 'Hard', '30000': 'Expert', '50000': 'Custom' };
   return 'Tarif dasar ' + (m[v] || 'Medium');
 }
 
@@ -1404,10 +1404,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== TIER SELECTION =====
 const tierData = {
-  easy:   { price: 15000,  label: 'Easy',   calcVal: '15000',  hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
-  medium: { price: 35000,  label: 'Medium', calcVal: '35000',  hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
-  hard:   { price: 75000,  label: 'Hard',   calcVal: '75000',  hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
-  expert: { price: 150000, label: 'Expert', calcVal: '150000', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' },
+  easy:   { price: 5000,  label: 'Easy',   calcVal: '5000',  hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
+  medium: { price: 15000,  label: 'Medium', calcVal: '15000',  hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
+  hard:   { price: 30000,  label: 'Hard',   calcVal: '30000',  hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
+  expert: { price: 50000, label: 'Expert', calcVal: '50000', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' },
   custom: { price: 0,      label: 'Custom', calcVal: '0',      hint: 'Kebutuhanmu unik dan tidak masuk kategori biasa? Ceritakan detailnya — admin akan diskusikan harga terbaik bersamamu.' }
 };
 let selectedTier = 'medium';
