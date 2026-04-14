@@ -127,7 +127,6 @@ a:hover { color: var(--primary-dark); }
 .price-animated { animation: priceUpdate 0.4s ease; }
 @keyframes priceUpdate { 0% { transform: scale(1.1); color: var(--accent); } 100% { transform: scale(1); } }
 
-/* Jarak input */
 .dist-input-group { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .dist-input-group input[type=range] { flex: 1; accent-color: var(--primary); }
 .dist-badge { background: var(--primary-light); color: var(--primary); font-weight: 700; border-radius: 8px; padding: 6px 14px; font-size: 1rem; min-width: 68px; text-align: center; border: 1px solid rgba(26,111,196,0.2); }
@@ -154,6 +153,15 @@ a:hover { color: var(--primary-dark); }
 .btn-accent { background: var(--accent); border: none; color: #fff; border-radius: 8px; font-weight: 600; padding: 12px 24px; transition: all var(--transition); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
 .btn-accent:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,115,22,0.3); }
 .order-summary { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+
+/* MITRA PREFERENCE CARDS */
+.mitra-pref-card { border: 1.5px solid var(--border); background: var(--card-bg); border-radius: 10px; padding: 14px 8px; text-align: center; transition: all 0.18s ease; cursor: pointer; }
+.mitra-pref-card:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-2px); }
+.mitra-pref-card.selected { border-color: var(--primary); background: var(--primary-light); }
+.mitra-pref-card .pref-icon { font-size: 1.6rem; margin-bottom: 4px; }
+.mitra-pref-card .pref-label { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.mitra-pref-card .pref-sub { font-size: 0.73rem; color: var(--text3); margin-top: 2px; }
+.mitra-pref-note { margin-top: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: var(--text3); transition: all 0.2s; }
 
 /* TESTIMONIALS */
 #testimoniSection { background: var(--bg2); }
@@ -453,7 +461,7 @@ section { scroll-margin-top: 72px; }
   </div>
 </section>
 
-<!-- CALCULATOR (tanpa peta) -->
+<!-- CALCULATOR -->
 <section class="py-5" id="calcSection">
   <div class="container py-4">
     <div class="row align-items-center mb-5">
@@ -662,6 +670,54 @@ section { scroll-margin-top: 72px; }
               <label class="form-label">Catatan Tambahan</label>
               <input type="text" class="form-control" id="taskNote" placeholder="Cth: Tolong foto struk belanja ya"/>
             </div>
+
+            <!-- ===== PREFERENSI MITRA ===== -->
+            <div class="mt-4">
+              <label class="form-label">
+                Preferensi Jenis Mitra
+                <span style="font-size:0.75rem;color:var(--text3);font-weight:400;margin-left:6px;">(Opsional)</span>
+              </label>
+              <p style="font-size:0.8rem;color:var(--text3);margin:2px 0 12px;line-height:1.5;">
+                Kami akan berusaha memenuhi preferensimu, namun ketersediaan mitra tidak selalu bisa dijamin.
+              </p>
+              <div class="row g-2">
+                <div class="col-4">
+                  <label style="cursor:pointer;display:block;" onclick="selectMitraPref('any')">
+                    <input type="radio" name="mitraPref" value="Bebas" style="display:none;" checked/>
+                    <div class="mitra-pref-card selected" id="mpcard-any">
+                      <div class="pref-icon">🤝</div>
+                      <div class="pref-label">Bebas</div>
+                      <div class="pref-sub">Siapa saja ok</div>
+                    </div>
+                  </label>
+                </div>
+                <div class="col-4">
+                  <label style="cursor:pointer;display:block;" onclick="selectMitraPref('male')">
+                    <input type="radio" name="mitraPref" value="Laki-laki" style="display:none;"/>
+                    <div class="mitra-pref-card" id="mpcard-male">
+                      <div class="pref-icon">👨</div>
+                      <div class="pref-label">Laki-laki</div>
+                      <div class="pref-sub">Mitra pria</div>
+                    </div>
+                  </label>
+                </div>
+                <div class="col-4">
+                  <label style="cursor:pointer;display:block;" onclick="selectMitraPref('female')">
+                    <input type="radio" name="mitraPref" value="Perempuan" style="display:none;"/>
+                    <div class="mitra-pref-card" id="mpcard-female">
+                      <div class="pref-icon">👩</div>
+                      <div class="pref-label">Perempuan</div>
+                      <div class="pref-sub">Mitra wanita</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="mitra-pref-note" id="mitraPrefNote">
+                <i class="bi bi-info-circle me-1"></i>Tidak ada preferensi khusus — mitra tersedia pertama yang akan ditugaskan.
+              </div>
+            </div>
+            <!-- ===== END PREFERENSI MITRA ===== -->
+
             <div class="d-flex gap-3 justify-content-between mt-4">
               <button type="button" class="btn btn-outline-secondary" onclick="prevStep(2)"><i class="bi bi-arrow-left me-1"></i> Kembali</button>
               <button type="button" class="btn btn-primary" onclick="nextStep(2)">Lanjut: Identitas <i class="bi bi-arrow-right ms-1"></i></button>
@@ -783,45 +839,6 @@ section { scroll-margin-top: 72px; }
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="testimoni-card">
-          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Sebagai pegawai kantoran, Tolongin Dong udah kayak asisten pribadi. Tiap minggu pakai Medium buat belanja kebutuhan bulanan. Admin responsif, laporan foto produk juga dikasih."</p>
-          <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#ede9fe;color:#7c3aed;">AR</div>
-            <div>
-              <div style="font-weight:700;font-size:0.9rem;">Arkan</div>
-              <div style="font-size:0.78rem;color:var(--text3);">Karyawan Swasta • Medium</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="testimoni-card">
-          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Pakai Expert buat urusin surprise ultah adek. Beli kue, dekorasi sampe MC semuanya dihandle. Hasilnya melebihi ekspektasi! Gak nyangka bisa seprofesional itu."</p>
-          <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#fce7f3;color:#be185d;">AD</div>
-            <div>
-              <div style="font-weight:700;font-size:0.9rem;">Adam</div>
-              <div style="font-size:0.78rem;color:var(--text3);">Pelajar SMA • Expert</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="testimoni-card">
-          <div class="stars mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-          <p style="font-size:0.92rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;">"Anak saya lansia, sering butuh bantu beli obat di apotek yang jauh. Tolongin Dong sangat membantu. Mitranya sabar & amanah, obat selalu dikasih nota dan foto struk."</p>
-          <div class="d-flex align-items-center gap-3">
-            <div class="avatar" style="background:#d1fae5;color:#065f46;">SR</div>
-            <div>
-              <div style="font-weight:700;font-size:0.9rem;">Siti R.</div>
-              <div style="font-size:0.78rem;color:var(--text3);">Ibu Rumah Tangga • Easy</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -845,7 +862,7 @@ section { scroll-margin-top: 72px; }
               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Bagaimana cara memesan layanan Tolongin Dong?</button>
             </h2>
             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-              <div class="accordion-body">Kamu cukup mengisi formulir pemesanan di halaman ini, pilih paket layanan (Easy/Medium/Hard/Expert), isi detail tugas dan lokasi, kemudian tekan tombol "Kirim ke WhatsApp Admin". Pesananmu akan diformat otomatis dan dikirim ke admin kami untuk segera dicarikan mitra terbaik.</div>
+              <div class="accordion-body">Kamu cukup mengisi formulir pemesanan di halaman ini, pilih paket layanan (Easy/Medium/Hard/Expert/Custom), isi detail tugas dan lokasi, kemudian tekan tombol "Kirim ke WhatsApp Admin". Pesananmu akan diformat otomatis dan dikirim ke admin kami untuk segera dicarikan mitra terbaik.</div>
             </div>
           </div>
           <div class="accordion-item mb-2 border-0">
@@ -894,7 +911,7 @@ section { scroll-margin-top: 72px; }
   </div>
 </section>
 
-<!-- LOKER / INFO MITRA -->
+<!-- LOKER -->
 <section class="py-5" id="lokerSection" style="background:var(--bg2);">
   <div class="container py-4">
     <div class="text-center mb-5">
@@ -949,7 +966,6 @@ section { scroll-margin-top: 72px; }
         </div>
       </div>
     </div>
-
     <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:2.5rem;">
       <h5 style="font-weight:700;text-align:center;margin-bottom:1.5rem;color:var(--text);">🎁 Keuntungan Jadi Bagian Tolongin Dong</h5>
       <div class="row g-3 text-center">
@@ -975,7 +991,6 @@ section { scroll-margin-top: 72px; }
         </div>
       </div>
     </div>
-
     <div class="text-center">
       <p style="color:var(--text3);font-size:0.95rem;margin-bottom:1.2rem;">Tertarik? Yuk daftar sekarang — prosesnya cepat dan mudah lewat Google Form kami! 🚀</p>
       <a href="https://bit.ly/DaftarJadiMitraTolonginDong" target="_blank" class="btn-accent text-decoration-none" style="border-radius:10px;padding:14px 36px;font-size:1rem;display:inline-flex;align-items:center;gap:8px;">
@@ -1071,18 +1086,9 @@ section { scroll-margin-top: 72px; }
           </div>
         </div>
         <div style="display:flex;gap:24px;flex-wrap:wrap;">
-          <div style="text-align:center;">
-            <div style="font-size:1.8rem;font-weight:800;color:#fff;">200+</div>
-            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Member Aktif</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-size:1.8rem;font-weight:800;color:#fff;">Daily</div>
-            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Update Rutin</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-size:1.8rem;font-weight:800;color:#fff;">Free</div>
-            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Gratis Selamanya</div>
-          </div>
+          <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#fff;">200+</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Member Aktif</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#fff;">Daily</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Update Rutin</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#fff;">Free</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">Gratis Selamanya</div></div>
         </div>
       </div>
       <div class="col-lg-6">
@@ -1095,7 +1101,7 @@ section { scroll-margin-top: 72px; }
               <div style="flex:1;"><div style="color:#fff;font-weight:700;font-size:0.95rem;">WhatsApp Group</div><div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Chat langsung, respons cepat</div></div>
               <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
             </a>
-            <a href="https://instagram.com/tolongindong.bg" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(225,48,108,0.15);border:1px solid rgba(225,48,108,0.3);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(225,48,108,0.25)'" onmouseout="this.style.background='rgba(225,48,108,0.15)'">
+            <a href="https://instagram.com/tolongindong_aceh" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(225,48,108,0.15);border:1px solid rgba(225,48,108,0.3);border-radius:12px;padding:16px 20px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(225,48,108,0.25)'" onmouseout="this.style.background='rgba(225,48,108,0.15)'">
               <div style="width:44px;height:44px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-instagram" style="color:#fff;font-size:1.3rem;"></i></div>
               <div style="flex:1;"><div style="color:#fff;font-weight:700;font-size:0.95rem;">Instagram</div><div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Update konten, tips & promo visual</div></div>
               <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
@@ -1105,7 +1111,6 @@ section { scroll-margin-top: 72px; }
               <div style="flex:1;"><div style="color:#fff;font-weight:700;font-size:0.95rem;">TikTok</div><div style="color:rgba(255,255,255,0.55);font-size:0.78rem;">Behind the scenes & konten seru</div></div>
               <i class="bi bi-arrow-right" style="color:rgba(255,255,255,0.4);"></i>
             </a>
-
           </div>
           <p style="font-size:0.73rem;color:rgba(255,255,255,0.35);text-align:center;margin-top:1.25rem;margin-bottom:0;"><i class="bi bi-shield-check me-1"></i>Komunitas bebas spam, dimoderasi tim Tolongin Dong</p>
         </div>
@@ -1328,9 +1333,8 @@ function toggleDark() {
   if (saved === 'dark') document.getElementById('darkBtn').innerHTML = '<i class="bi bi-sun-fill"></i>';
 })();
 
-// ===== CALCULATOR (tanpa peta) =====
-// State jarak dari slider/input
-let _calcDist = 3; // km default
+// ===== CALCULATOR =====
+let _calcDist = 3;
 
 function syncDistInput(val) {
   _calcDist = parseFloat(val) || 0;
@@ -1341,8 +1345,7 @@ function syncDistInput(val) {
 
 function syncDistSlider(val) {
   _calcDist = parseFloat(val) || 0;
-  const sliderMax = 30;
-  document.getElementById('calcDistSlider').value = Math.min(_calcDist, sliderMax);
+  document.getElementById('calcDistSlider').value = Math.min(_calcDist, 30);
   document.getElementById('distBadge').textContent = _calcDist + ' km';
   updateCalc();
 }
@@ -1357,7 +1360,7 @@ function updateCalc() {
 
   document.getElementById('calcBaseFee').textContent = isCustom ? 'Negosiasi' : fmt(base);
   document.getElementById('calcDistFee').textContent = isCustom ? '—' : '+ ' + fmt(distFee);
-  document.getElementById('calcDistLabel').textContent = `Biaya Jarak (${dist} km)`;
+  document.getElementById('calcDistLabel').textContent = 'Biaya Jarak (' + dist + ' km)';
   document.getElementById('tb1').textContent = isCustom ? 'Negosiasi' : fmt(base);
   document.getElementById('tb2').textContent = isCustom ? '—' : fmt(distFee);
   document.getElementById('tb3').textContent = isCustom ? 'Negosiasi' : fmt(total);
@@ -1371,28 +1374,22 @@ function updateCalc() {
   const tierLabel = getTierLabel();
   document.getElementById('priceBreakdown').textContent = isCustom
     ? 'Harga disepakati bersama admin via WhatsApp'
-    : `${tierLabel} + ${dist} km × Rp 3.000`;
+    : tierLabel + ' + ' + dist + ' km × Rp 3.000';
 
-  // Simpan untuk dipakai di form
   window._calcData = { base, distFee, total, dist };
 }
 
 function getTierLabel() {
   const v = document.getElementById('calcTier').value;
-  const m = { '5000': 'Easy', '15000': 'Medium', '15000': 'Hard', '30000': 'Expert', '50000': 'Custom' };
+  const m = { '15000': 'Easy', '35000': 'Medium', '75000': 'Hard', '150000': 'Expert', '0': 'Custom' };
   return 'Tarif dasar ' + (m[v] || 'Medium');
 }
 
-// Init kalkulator
 document.addEventListener('DOMContentLoaded', function() {
   updateCalc();
-
-  // Set min date untuk form
   const today = new Date().toISOString().split('T')[0];
   const dateEl = document.getElementById('taskDate');
   if (dateEl) dateEl.min = today;
-
-  // Counter karakter textarea
   const ta = document.getElementById('taskDesc');
   if (ta) ta.addEventListener('input', function() {
     document.getElementById('charCount').textContent = this.value.length;
@@ -1401,11 +1398,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== TIER SELECTION =====
 const tierData = {
-  easy:   { price: 5000,  label: 'Easy',   calcVal: '5000',  hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
-  medium: { price: 15000,  label: 'Medium', calcVal: '15000',  hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
-  hard:   { price: 30000,  label: 'Hard',   calcVal: '30000',  hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
-  expert: { price: 50000, label: 'Expert', calcVal: '50000', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' },
-  custom: { price: 0,      label: 'Custom', calcVal: '0',      hint: 'Kebutuhanmu unik dan tidak masuk kategori biasa? Ceritakan detailnya — admin akan diskusikan harga terbaik bersamamu.' }
+  easy:   { price: 5000,  label: 'Easy',   calcVal: '15000', hint: 'Cocok untuk tugas ringan seperti beli makanan, fotokopi, dan antre yang bisa selesai dalam 30 menit.' },
+  medium: { price: 15000, label: 'Medium',  calcVal: '35000', hint: 'Untuk belanja bulanan, antar jemput dokumen, atau koordinasi beberapa lokasi.' },
+  hard:   { price: 30000, label: 'Hard',    calcVal: '75000', hint: 'Tugas membutuhkan tenaga besar atau waktu lebih dari 1 jam, seperti pindahan kos.' },
+  expert: { price: 50000, label: 'Expert',  calcVal: '150000', hint: 'Layanan spesialis dengan mitra berpengalaman untuk tugas kompleks dan presisi tinggi.' },
+  custom: { price: 0,     label: 'Custom',  calcVal: '0',      hint: 'Kebutuhanmu unik dan tidak masuk kategori biasa? Ceritakan detailnya — admin akan diskusikan harga terbaik bersamamu.' }
 };
 let selectedTier = 'medium';
 
@@ -1434,6 +1431,40 @@ selectTierForm('medium');
 
 function goToOrder() {
   document.getElementById('pesanSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== PREFERENSI MITRA =====
+let selectedMitraPref = 'any';
+
+function selectMitraPref(val) {
+  selectedMitraPref = val;
+
+  // Update radio button
+  const radioMap = { any: 'Bebas', male: 'Laki-laki', female: 'Perempuan' };
+  document.querySelectorAll('input[name="mitraPref"]').forEach(r => {
+    r.checked = (r.value === radioMap[val]);
+  });
+
+  // Update card styles
+  const cards = { any: 'mpcard-any', male: 'mpcard-male', female: 'mpcard-female' };
+  Object.keys(cards).forEach(k => {
+    const el = document.getElementById(cards[k]);
+    if (!el) return;
+    if (k === val) {
+      el.classList.add('selected');
+    } else {
+      el.classList.remove('selected');
+    }
+  });
+
+  // Update info note
+  const notes = {
+    any:    '<i class="bi bi-info-circle me-1"></i>Tidak ada preferensi khusus — mitra tersedia pertama yang akan ditugaskan.',
+    male:   '<i class="bi bi-person-check me-1"></i>Kami akan mencarikan mitra <strong>laki-laki</strong>. Ketersediaan tergantung jadwal mitra aktif saat itu.',
+    female: '<i class="bi bi-person-check me-1"></i>Kami akan mencarikan mitra <strong>perempuan</strong>. Ketersediaan tergantung jadwal mitra aktif saat itu.'
+  };
+  const noteEl = document.getElementById('mitraPrefNote');
+  if (noteEl) noteEl.innerHTML = notes[val];
 }
 
 // ===== STEPPER =====
@@ -1520,6 +1551,11 @@ function hideErr(fid, eid) {
   if (errEl) errEl.style.display = 'none';
 }
 
+function getMitraPrefLabel() {
+  const map = { any: 'Bebas (siapa saja)', male: 'Laki-laki', female: 'Perempuan' };
+  return map[selectedMitraPref] || 'Bebas';
+}
+
 function buildPreview() {
   const tData  = tierData[selectedTier];
   const desc   = document.getElementById('taskDesc').value;
@@ -1530,35 +1566,46 @@ function buildPreview() {
   const note   = document.getElementById('taskNote').value;
   const name   = document.getElementById('custName').value;
   const phone  = document.getElementById('custPhone').value;
+  const pref   = getMitraPrefLabel();
   const isCustom = tData.price === 0;
   const distInfo = isCustom
     ? 'Negosiasi (akan didiskusikan via WhatsApp)'
     : window._calcData
-      ? `Rp ${tData.price.toLocaleString('id-ID')} + Rp${window._calcData.distFee.toLocaleString('id-ID')} (jarak ${window._calcData.dist} km) = <strong>Rp ${window._calcData.total.toLocaleString('id-ID')}</strong>`
-      : `Rp ${tData.price.toLocaleString('id-ID')} + biaya jarak`;
+      ? 'Rp ' + tData.price.toLocaleString('id-ID') + ' + Rp' + window._calcData.distFee.toLocaleString('id-ID') + ' (jarak ' + window._calcData.dist + ' km) = <strong>Rp ' + window._calcData.total.toLocaleString('id-ID') + '</strong>'
+      : 'Rp ' + tData.price.toLocaleString('id-ID') + ' + biaya jarak';
 
-  document.getElementById('orderPreview').innerHTML = `
-    <div class="row g-2" style="font-size:0.9rem;">
-      <div class="col-12 mb-2"><span style="font-weight:700;font-size:1rem;">Ringkasan Pesanan</span></div>
-      <div class="col-5" style="color:var(--text3);">Paket Layanan</div>
-      <div class="col-7" style="font-weight:600;">${tData.label}</div>
-      <div class="col-5" style="color:var(--text3);">Estimasi Biaya</div>
-      <div class="col-7">${distInfo}</div>
-      <div class="col-5" style="color:var(--text3);">Detail Tugas</div>
-      <div class="col-7">${desc}</div>
-      <div class="col-5" style="color:var(--text3);">Lokasi Jemput</div>
-      <div class="col-7">${pickup}</div>
-      <div class="col-5" style="color:var(--text3);">Lokasi Tujuan</div>
-      <div class="col-7">${drop}</div>
-      <div class="col-5" style="color:var(--text3);">Waktu</div>
-      <div class="col-7">${date} pukul ${time} WIB</div>
-      ${note ? `<div class="col-5" style="color:var(--text3);">Catatan</div><div class="col-7">${note}</div>` : ''}
-      <div class="col-12"><div style="border-top:1px solid var(--border);margin:8px 0;"></div></div>
-      <div class="col-5" style="color:var(--text3);">Nama Pemesan</div>
-      <div class="col-7" style="font-weight:600;">${name}</div>
-      <div class="col-5" style="color:var(--text3);">No. WhatsApp</div>
-      <div class="col-7">+62${phone}</div>
-    </div>`;
+  // Badge for pref
+  const prefBadgeMap = {
+    'Bebas (siapa saja)': 'background:#f1f5f9;color:#374151;',
+    'Laki-laki': 'background:#dbeafe;color:#1d4ed8;',
+    'Perempuan': 'background:#fce7f3;color:#be185d;'
+  };
+  const prefBadgeStyle = prefBadgeMap[pref] || 'background:#f1f5f9;color:#374151;';
+
+  document.getElementById('orderPreview').innerHTML =
+    '<div class="row g-2" style="font-size:0.9rem;">' +
+    '<div class="col-12 mb-2"><span style="font-weight:700;font-size:1rem;">Ringkasan Pesanan</span></div>' +
+    '<div class="col-5" style="color:var(--text3);">Paket Layanan</div>' +
+    '<div class="col-7" style="font-weight:600;">' + tData.label + '</div>' +
+    '<div class="col-5" style="color:var(--text3);">Estimasi Biaya</div>' +
+    '<div class="col-7">' + distInfo + '</div>' +
+    '<div class="col-5" style="color:var(--text3);">Preferensi Mitra</div>' +
+    '<div class="col-7"><span style="' + prefBadgeStyle + 'border-radius:20px;padding:2px 10px;font-size:0.8rem;font-weight:600;">' + pref + '</span></div>' +
+    '<div class="col-5" style="color:var(--text3);">Detail Tugas</div>' +
+    '<div class="col-7">' + desc + '</div>' +
+    '<div class="col-5" style="color:var(--text3);">Lokasi Jemput</div>' +
+    '<div class="col-7">' + pickup + '</div>' +
+    '<div class="col-5" style="color:var(--text3);">Lokasi Tujuan</div>' +
+    '<div class="col-7">' + drop + '</div>' +
+    '<div class="col-5" style="color:var(--text3);">Waktu</div>' +
+    '<div class="col-7">' + date + ' pukul ' + time + ' WIB</div>' +
+    (note ? '<div class="col-5" style="color:var(--text3);">Catatan</div><div class="col-7">' + note + '</div>' : '') +
+    '<div class="col-12"><div style="border-top:1px solid var(--border);margin:8px 0;"></div></div>' +
+    '<div class="col-5" style="color:var(--text3);">Nama Pemesan</div>' +
+    '<div class="col-7" style="font-weight:600;">' + name + '</div>' +
+    '<div class="col-5" style="color:var(--text3);">No. WhatsApp</div>' +
+    '<div class="col-7">+62' + phone + '</div>' +
+    '</div>';
 }
 
 function sendToWhatsApp() {
@@ -1571,26 +1618,29 @@ function sendToWhatsApp() {
   const note   = document.getElementById('taskNote').value;
   const name   = document.getElementById('custName').value;
   const phone  = document.getElementById('custPhone').value;
+  const pref   = getMitraPrefLabel();
   const isCustom = tData.price === 0;
   const distInfo = isCustom
     ? 'Negosiasi (akan didiskusikan)'
     : window._calcData
-      ? `Rp ${window._calcData.total.toLocaleString('id-ID')} (tarif Rp${tData.price.toLocaleString('id-ID')} + jarak ${window._calcData.dist} km)`
-      : `Rp ${tData.price.toLocaleString('id-ID')} + biaya jarak (belum dihitung)`;
+      ? 'Rp ' + window._calcData.total.toLocaleString('id-ID') + ' (tarif Rp' + tData.price.toLocaleString('id-ID') + ' + jarak ' + window._calcData.dist + ' km)'
+      : 'Rp ' + tData.price.toLocaleString('id-ID') + ' + biaya jarak (belum dihitung)';
 
-  const msg = `🤝 *PESANAN BARU - TOLONGIN DONG*\n\n` +
-    `📦 *Paket:* ${tData.label}\n` +
-    `💰 *Estimasi Biaya:* ${distInfo}\n\n` +
-    `📝 *Detail Tugas:*\n${desc}\n\n` +
-    `📍 *Lokasi Jemput:* ${pickup}\n` +
-    `🏁 *Lokasi Tujuan:* ${drop}\n` +
-    `🕐 *Waktu:* ${date}, ${time} WIB\n` +
-    `${note ? `📌 *Catatan:* ${note}\n` : ''}` +
-    `\n👤 *Pemesan:* ${name}\n` +
-    `📱 *WA Pemesan:* +62${phone}\n\n` +
-    `_Pesan dikirim via Tolongin Dong Web App_`;
+  const msg =
+    '🤝 *PESANAN BARU - TOLONGIN DONG*\n\n' +
+    '📦 *Paket:* ' + tData.label + '\n' +
+    '💰 *Estimasi Biaya:* ' + distInfo + '\n' +
+    '👤 *Preferensi Mitra:* ' + pref + '\n\n' +
+    '📝 *Detail Tugas:*\n' + desc + '\n\n' +
+    '📍 *Lokasi Jemput:* ' + pickup + '\n' +
+    '🏁 *Lokasi Tujuan:* ' + drop + '\n' +
+    '🕐 *Waktu:* ' + date + ', ' + time + ' WIB\n' +
+    (note ? '📌 *Catatan:* ' + note + '\n' : '') +
+    '\n👤 *Pemesan:* ' + name + '\n' +
+    '📱 *WA Pemesan:* +62' + phone + '\n\n' +
+    '_Pesan dikirim via Tolongin Dong Web App_';
 
-  window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open('https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 function copyRek(elId) {
@@ -1626,15 +1676,11 @@ function installPWA() {
   }
 }
 
-// ===== PWA MANIFEST =====
 const manifest = {
-  name: 'Tolongin Dong',
-  short_name: 'TolonginDong',
+  name: 'Tolongin Dong', short_name: 'TolonginDong',
   description: 'Platform on-demand errands Banda Aceh',
-  start_url: '/',
-  display: 'standalone',
-  background_color: '#ffffff',
-  theme_color: '#1a6fc4',
+  start_url: '/', display: 'standalone',
+  background_color: '#ffffff', theme_color: '#1a6fc4',
   icons: [
     { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='38' fill='%231a6fc4'/><text y='140' x='20' font-size='130'>🤝</text></svg>", sizes: '192x192', type: 'image/svg+xml' },
     { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%231a6fc4'/><text y='380' x='40' font-size='360'>🤝</text></svg>", sizes: '512x512', type: 'image/svg+xml' }
@@ -1645,21 +1691,16 @@ try {
   document.getElementById('manifest-link').setAttribute('href', URL.createObjectURL(manifestBlob));
 } catch(e) {}
 
-// ===== SERVICE WORKER =====
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {
     console.info('Tolongin Dong: SW tidak tersedia, mode online-only.');
   });
 }
 
-// ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', function(e) {
     const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
 </script>
